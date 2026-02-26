@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог проектов — ZOD.RU</title>
+  <link rel="stylesheet" href="../ios-ui-kit.css">
+  <style>
+    /* ---- Section-specific styles ---- */
+
+    /* Image placeholder with gradient & icon */
+    .catalog-card__image {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .catalog-card__image--1 {
+      background: linear-gradient(135deg, #5D4037 0%, #8D6E63 40%, #A1887F 70%, #BCAAA4 100%);
+    }
+
+    .catalog-card__image--2 {
+      background: linear-gradient(135deg, #33691E 0%, #558B2F 40%, #7CB342 70%, #9CCC65 100%);
+    }
+
+    .catalog-card__image--3 {
+      background: linear-gradient(135deg, #4E342E 0%, #6D4C41 40%, #8D6E63 70%, #A1887F 100%);
+    }
+
+    .catalog-card__image--4 {
+      background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 40%, #43A047 70%, #66BB6A 100%);
+    }
+
+    .catalog-card__image--5 {
+      background: linear-gradient(135deg, #3E2723 0%, #5D4037 40%, #795548 70%, #A1887F 100%);
+    }
+
+    .catalog-card__image--6 {
+      background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 40%, #81C784 70%, #A5D6A7 100%);
+    }
+
+    .catalog-card__icon {
+      font-size: 48px;
+      line-height: 1;
+      opacity: 0.55;
+      filter: grayscale(20%);
+      z-index: 1;
+    }
+
+    .catalog-card__image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        transparent 50%,
+        rgba(0, 0, 0, 0.15) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Title + badge row */
+    .catalog-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      margin-bottom: var(--space-2);
+    }
+
+    /* Meta items with icons */
+    .catalog-card__meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--text-footnote);
+      color: var(--color-text-tertiary);
+    }
+
+    .catalog-card__meta-item span.meta-icon {
+      font-size: var(--text-subhead);
+      line-height: 1;
+    }
+
+    /* Price spacing */
+    .catalog-card__price-row {
+      margin-top: var(--space-3);
+    }
+
+    /* Footer link */
+    .catalog-card__link {
+      font-size: var(--text-subhead);
+      font-weight: var(--weight-medium);
+      color: var(--color-blue);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .catalog-card__link::after {
+      content: '\203A';
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    /* Bottom CTA alignment */
+    .catalog-bottom {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--space-10);
+    }
+
+    /* Pills row spacing */
+    .catalog-filters {
+      margin-bottom: var(--space-8);
+    }
+  </style>
+</head>
+<body>
+
+  <section class="ios-section ios-bg-grouped">
+    <div class="ios-container">
+
+      <!-- Section Header -->
+      <div class="ios-section__header">
+        <h2 class="ios-section__title">Каталог проектов</h2>
+        <p class="ios-section__subtitle">Более 250 проектов домов и бань</p>
+      </div>
+
+      <!-- Filter Pills -->
+      <div class="ios-pills catalog-filters" role="tablist">
+        <button class="ios-pill ios-pill--active" role="tab" aria-selected="true">Все</button>
+        <button class="ios-pill" role="tab" aria-selected="false">Коттеджи</button>
+        <button class="ios-pill" role="tab" aria-selected="false">Большие дома</button>
+        <button class="ios-pill" role="tab" aria-selected="false">Дачные дома</button>
+        <button class="ios-pill" role="tab" aria-selected="false">Одноэтажные</button>
+        <button class="ios-pill" role="tab" aria-selected="false">Бани</button>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div class="ios-grid ios-grid--3">
+
+        <!-- Card 1: Весна 1 -->
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--1">
+            <span class="catalog-card__icon" aria-hidden="true">&#127968;</span>
+          </div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header">
+              <h3 class="ios-card__title">Весна 1</h3>
+              <span class="ios-badge ios-badge--green">Каркас</span>
+            </div>
+            <div class="ios-card__meta">
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#9634;</span> 45.41 м&sup2;
+              </span>
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#8596;</span> 7&times;7 м
+              </span>
+            </div>
+            <div class="catalog-card__price-row">
+              <span class="ios-card__price">1 850 000 &#8381;</span>
+            </div>
+          </div>
+          <div class="ios-card__footer">
+            <a href="#" class="catalog-card__link">Подробнее</a>
+            <button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button>
+          </div>
+        </article>
+
+        <!-- Card 2: Валдай 2 -->
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--2">
+            <span class="catalog-card__icon" aria-hidden="true">&#127968;</span>
+          </div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header">
+              <h3 class="ios-card__title">Валдай 2</h3>
+              <span class="ios-badge ios-badge--wood">Брус</span>
+            </div>
+            <div class="ios-card__meta">
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#9634;</span> 73.30 м&sup2;
+              </span>
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#8596;</span> 8&times;8 м
+              </span>
+            </div>
+            <div class="catalog-card__price-row">
+              <span class="ios-card__price">2 769 800 &#8381;</span>
+            </div>
+          </div>
+          <div class="ios-card__footer">
+            <a href="#" class="catalog-card__link">Подробнее</a>
+            <button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button>
+          </div>
+        </article>
+
+        <!-- Card 3: Аврора 11 -->
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--3">
+            <span class="catalog-card__icon" aria-hidden="true">&#127968;</span>
+          </div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header">
+              <h3 class="ios-card__title">Аврора 11</h3>
+              <span class="ios-badge ios-badge--green">Каркас</span>
+            </div>
+            <div class="ios-card__meta">
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#9634;</span> 134.20 м&sup2;
+              </span>
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#8596;</span> 8&times;10 м
+              </span>
+            </div>
+            <div class="catalog-card__price-row">
+              <span class="ios-card__price">3 879 800 &#8381;</span>
+            </div>
+          </div>
+          <div class="ios-card__footer">
+            <a href="#" class="catalog-card__link">Подробнее</a>
+            <button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button>
+          </div>
+        </article>
+
+        <!-- Card 4: Феникс 22 -->
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--4">
+            <span class="catalog-card__icon" aria-hidden="true">&#127968;</span>
+          </div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header">
+              <h3 class="ios-card__title">Феникс 22</h3>
+              <span class="ios-badge ios-badge--wood">Брус</span>
+            </div>
+            <div class="ios-card__meta">
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#9634;</span> 94.26 м&sup2;
+              </span>
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#8596;</span> 6&times;9 м
+              </span>
+            </div>
+            <div class="catalog-card__price-row">
+              <span class="ios-card__price">2 989 800 &#8381;</span>
+            </div>
+          </div>
+          <div class="ios-card__footer">
+            <a href="#" class="catalog-card__link">Подробнее</a>
+            <button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button>
+          </div>
+        </article>
+
+        <!-- Card 5: Уэльс 2 -->
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--5">
+            <span class="catalog-card__icon" aria-hidden="true">&#127968;</span>
+          </div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header">
+              <h3 class="ios-card__title">Уэльс 2</h3>
+              <span class="ios-badge ios-badge--green">Каркас</span>
+            </div>
+            <div class="ios-card__meta">
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#9634;</span> 138.38 м&sup2;
+              </span>
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#8596;</span> 11&times;9 м
+              </span>
+            </div>
+            <div class="catalog-card__price-row">
+              <span class="ios-card__price">4 989 800 &#8381;</span>
+            </div>
+          </div>
+          <div class="ios-card__footer">
+            <a href="#" class="catalog-card__link">Подробнее</a>
+            <button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button>
+          </div>
+        </article>
+
+        <!-- Card 6: Канадец 14 -->
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--6">
+            <span class="catalog-card__icon" aria-hidden="true">&#127968;</span>
+          </div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header">
+              <h3 class="ios-card__title">Канадец 14</h3>
+              <span class="ios-badge ios-badge--green">Каркас</span>
+            </div>
+            <div class="ios-card__meta">
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#9634;</span> 129.14 м&sup2;
+              </span>
+              <span class="catalog-card__meta-item">
+                <span class="meta-icon" aria-hidden="true">&#8596;</span> 9.5&times;8 м
+              </span>
+            </div>
+            <div class="catalog-card__price-row">
+              <span class="ios-card__price">4 199 800 &#8381;</span>
+            </div>
+          </div>
+          <div class="ios-card__footer">
+            <a href="#" class="catalog-card__link">Подробнее</a>
+            <button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Bottom CTA -->
+      <div class="catalog-bottom">
+        <button class="ios-btn ios-btn--secondary ios-btn--pill">Показать все проекты</button>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

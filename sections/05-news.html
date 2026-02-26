@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZOD.RU — Новости</title>
+  <link rel="stylesheet" href="../ios-ui-kit.css">
+  <style>
+    /* News section-specific styles */
+    .ios-section--news {
+      background: var(--color-bg-secondary);
+    }
+
+    .ios-section__header-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--space-8);
+    }
+
+    .ios-section__header-row .ios-section__title {
+      margin: 0;
+    }
+
+    .ios-section__header-link {
+      font-size: var(--text-subhead);
+      font-weight: var(--weight-medium);
+      color: var(--color-blue);
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: var(--space-4);
+    }
+
+    /* Article image placeholder with gradient and icon */
+    .ios-article__image-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ios-article__image-placeholder--blue {
+      background: linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #AF52DE 100%);
+    }
+
+    .ios-article__image-placeholder--green {
+      background: linear-gradient(135deg, #34C759 0%, #30D158 40%, #2E7D32 100%);
+    }
+
+    .ios-article__image-placeholder--orange {
+      background: linear-gradient(135deg, #FF9500 0%, #FF6B35 50%, #FF3B30 100%);
+    }
+
+    .ios-article__image-icon {
+      font-size: 48px;
+      opacity: 0.35;
+      filter: grayscale(20%);
+      line-height: 1;
+    }
+
+    /* Article card refinements */
+    .ios-article {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .ios-article__body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ios-article__excerpt {
+      flex: 1;
+    }
+
+    .ios-article__link {
+      align-self: flex-start;
+    }
+
+    /* Responsive refinements */
+    @media (max-width: 768px) {
+      .ios-section__header-row {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .ios-section__header-link {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== NEWS SECTION ====== -->
+  <section class="ios-section ios-section--news">
+    <div class="ios-container">
+
+      <!-- Section Header -->
+      <div class="ios-section__header-row">
+        <h2 class="ios-section__title">Новости</h2>
+        <a href="#" class="ios-section__header-link">Все новости &rarr;</a>
+      </div>
+
+      <!-- News Grid -->
+      <div class="ios-grid ios-grid--3">
+
+        <!-- Article 1 -->
+        <article class="ios-article">
+          <div class="ios-article__image-placeholder ios-article__image-placeholder--blue">
+            <span class="ios-article__image-icon">📰</span>
+          </div>
+          <div class="ios-article__body">
+            <span class="ios-article__date">20 октября 2023</span>
+            <h3 class="ios-article__title">Финансирование для активов</h3>
+            <p class="ios-article__excerpt">Новые возможности кредитования строительства деревянных домов для наших клиентов</p>
+            <a href="#" class="ios-article__link">Читать далее</a>
+          </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="ios-article">
+          <div class="ios-article__image-placeholder ios-article__image-placeholder--green">
+            <span class="ios-article__image-icon">📰</span>
+          </div>
+          <div class="ios-article__body">
+            <span class="ios-article__date">31 августа 2023</span>
+            <h3 class="ios-article__title">Компания представила новую линейку дачных домов</h3>
+            <p class="ios-article__excerpt">Обновленные проекты дачных домов с улучшенной планировкой и современными материалами</p>
+            <a href="#" class="ios-article__link">Читать далее</a>
+          </div>
+        </article>
+
+        <!-- Article 3 -->
+        <article class="ios-article">
+          <div class="ios-article__image-placeholder ios-article__image-placeholder--orange">
+            <span class="ios-article__image-icon">📰</span>
+          </div>
+          <div class="ios-article__body">
+            <span class="ios-article__date">25 июля 2023</span>
+            <h3 class="ios-article__title">Особенности многоэтажных деревянных домов</h3>
+            <p class="ios-article__excerpt">Современные технологии позволяют строить деревянные дома в несколько этажей</p>
+            <a href="#" class="ios-article__link">Читать далее</a>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZOD.RU — Строительство деревянных домов под ключ</title>
+  <link rel="stylesheet" href="../ios-ui-kit.css">
+  <style>
+    /* Hero section-specific styles */
+    .ios-hero {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F2F2F7 100%);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 90vh;
+    }
+
+    .ios-hero__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ios-hero__eyebrow {
+      display: inline-block;
+      background: var(--color-brand-bg);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+    }
+
+    .ios-hero__title {
+      margin-top: var(--space-5);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .ios-hero__subtitle {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .ios-hero__actions {
+      justify-content: center;
+    }
+
+    .ios-hero__stats {
+      justify-content: center;
+      width: 100%;
+      padding-top: var(--space-12);
+      border-top: 0.5px solid var(--color-separator);
+    }
+
+    .ios-stat {
+      flex: 0 0 auto;
+      min-width: 140px;
+    }
+
+    /* Subtle decorative gradient orbs for Apple keynote feel */
+    .ios-hero__decor {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .ios-hero__decor--1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--color-brand-light), transparent 70%);
+      top: -100px;
+      right: -100px;
+    }
+
+    .ios-hero__decor--2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--color-teal), transparent 70%);
+      bottom: -50px;
+      left: -80px;
+      opacity: 0.2;
+    }
+
+    /* Responsive refinements */
+    @media (max-width: 768px) {
+      .ios-hero {
+        min-height: auto;
+      }
+
+      .ios-hero__stats {
+        padding-top: var(--space-8);
+      }
+
+      .ios-stat {
+        min-width: auto;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .ios-hero__title {
+        font-size: clamp(28px, 7vw, 34px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== HERO SECTION ====== -->
+  <section class="ios-hero">
+    <!-- Decorative gradient orbs -->
+    <div class="ios-hero__decor ios-hero__decor--1"></div>
+    <div class="ios-hero__decor ios-hero__decor--2"></div>
+
+    <div class="ios-container">
+      <div class="ios-hero__inner">
+
+        <!-- Eyebrow -->
+        <span class="ios-hero__eyebrow">С 1989 года на рынке</span>
+
+        <!-- Main Title -->
+        <h1 class="ios-hero__title hero-title">Строительство деревянных домов под ключ</h1>
+
+        <!-- Subtitle -->
+        <p class="ios-hero__subtitle">Полный цикл от заготовки сырья до строительства. Более 250 типовых проектов на выбор.</p>
+
+        <!-- Action Buttons -->
+        <div class="ios-hero__actions">
+          <a href="#" class="ios-btn ios-btn--primary ios-btn--lg ios-btn--pill">Выбрать проект</a>
+          <a href="#" class="ios-btn ios-btn--ghost ios-btn--lg ios-btn--pill">Получить консультацию</a>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="ios-hero__stats">
+          <div class="ios-stat">
+            <div class="ios-stat__number">1989</div>
+            <div class="ios-stat__label">Год основания</div>
+          </div>
+          <div class="ios-stat">
+            <div class="ios-stat__number">211 000+</div>
+            <div class="ios-stat__label">Домов построено</div>
+          </div>
+          <div class="ios-stat">
+            <div class="ios-stat__number">250+</div>
+            <div class="ios-stat__label">Типовых проектов</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

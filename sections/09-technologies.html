@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Технологии строительства — ZOD.RU</title>
+  <link rel="stylesheet" href="../ios-ui-kit.css">
+  <style>
+    /* === Technologies Section Custom Styles === */
+
+    /* Section header centered */
+    .tech-header {
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+
+    /* Segmented control wrapper - centered */
+    .tech-segmented-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-10);
+    }
+
+    .tech-segmented-wrap .ios-segmented {
+      padding: 3px;
+      border-radius: var(--radius-md);
+    }
+
+    .tech-segmented-wrap .ios-segmented__item {
+      padding: var(--space-2) var(--space-6);
+      font-size: var(--text-subhead);
+      font-weight: var(--weight-semibold);
+      border-radius: var(--radius-sm);
+      transition: all var(--duration-normal) var(--ease-ios);
+    }
+
+    /* Technology card structure */
+    .tech-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Large image / visual area */
+    .tech-card__visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .tech-card__visual--wood {
+      background: linear-gradient(145deg, #5D4037 0%, #8D6E63 25%, #A1887F 45%, #BCAAA4 65%, #D7CCC8 85%, #EFEBE9 100%);
+    }
+
+    .tech-card__visual--frame {
+      background: linear-gradient(145deg, #004D40 0%, #00695C 20%, #00897B 40%, #26A69A 60%, #4DB6AC 80%, #B2DFDB 100%);
+    }
+
+    /* Subtle light/depth overlay */
+    .tech-card__visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 25% 35%, rgba(255, 255, 255, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 75%, rgba(0, 0, 0, 0.1) 0%, transparent 50%);
+      z-index: 1;
+    }
+
+    /* Floating icon in visual area */
+    .tech-card__icon {
+      position: relative;
+      z-index: 2;
+      font-size: 80px;
+      line-height: 1;
+      filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.25));
+      transition: transform var(--duration-slow) var(--ease-spring);
+    }
+
+    .tech-card:hover .tech-card__icon {
+      transform: scale(1.12) translateY(-6px);
+    }
+
+    /* Badge positioned over the image */
+    .tech-card__badge {
+      position: absolute;
+      top: var(--space-4);
+      left: var(--space-4);
+      z-index: 3;
+      padding: var(--space-1) var(--space-3);
+      font-size: var(--text-caption1);
+      font-weight: var(--weight-semibold);
+      border-radius: var(--radius-full);
+      letter-spacing: var(--tracking-wide);
+      backdrop-filter: blur(var(--blur-sm));
+      -webkit-backdrop-filter: blur(var(--blur-sm));
+    }
+
+    .tech-card__badge--brand {
+      background: rgba(46, 125, 50, 0.85);
+      color: #FFFFFF;
+    }
+
+    .tech-card__badge--blue {
+      background: rgba(0, 122, 255, 0.85);
+      color: #FFFFFF;
+    }
+
+    /* Card body */
+    .tech-card__body {
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .tech-card__title {
+      font-size: var(--text-title2);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .tech-card__description {
+      font-size: var(--text-body);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-6);
+    }
+
+    /* Feature list with checkmarks */
+    .tech-card__features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .tech-card__feature {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-subhead);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-primary);
+      line-height: var(--leading-normal);
+    }
+
+    .tech-card__feature-check {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: var(--weight-bold);
+      flex-shrink: 0;
+    }
+
+    .tech-card--wood .tech-card__feature-check {
+      background: rgba(46, 125, 50, 0.1);
+      color: var(--color-brand);
+    }
+
+    .tech-card--frame .tech-card__feature-check {
+      background: rgba(0, 122, 255, 0.1);
+      color: var(--color-blue);
+    }
+
+    /* CTA block at bottom */
+    .tech-cta {
+      margin-top: var(--space-12);
+      text-align: center;
+      padding: var(--space-10) var(--space-6);
+      background: var(--color-bg-elevated);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+    }
+
+    .tech-cta__text {
+      font-size: var(--text-title2);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-6);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .tech-card__body {
+        padding: var(--space-5);
+      }
+
+      .tech-card__icon {
+        font-size: 60px;
+      }
+
+      .tech-card__title {
+        font-size: var(--text-title3);
+      }
+
+      .tech-cta {
+        padding: var(--space-8) var(--space-5);
+        margin-top: var(--space-8);
+      }
+
+      .tech-cta__text {
+        font-size: var(--text-title3);
+      }
+
+      .tech-segmented-wrap .ios-segmented__item {
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--text-footnote);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======== TECHNOLOGIES SECTION ======== -->
+  <section class="ios-section ios-bg-grouped">
+    <div class="ios-container">
+
+      <!-- Section Header -->
+      <div class="ios-section__header tech-header">
+        <h2 class="ios-section__title">Технологии строительства</h2>
+        <p class="ios-section__subtitle" style="margin-left: auto; margin-right: auto;">
+          Используем проверенные временем методы
+        </p>
+      </div>
+
+      <!-- Segmented Control -->
+      <div class="tech-segmented-wrap">
+        <div class="ios-segmented">
+          <button class="ios-segmented__item ios-segmented__item--active" type="button">
+            Клееный брус
+          </button>
+          <button class="ios-segmented__item" type="button">
+            Каркасная технология
+          </button>
+        </div>
+      </div>
+
+      <!-- Two Technology Cards Grid -->
+      <div class="ios-grid ios-grid--2">
+
+        <!-- Card 1: Клееный брус -->
+        <div class="ios-card tech-card tech-card--wood">
+          <div class="tech-card__visual tech-card__visual--wood">
+            <span class="tech-card__badge tech-card__badge--brand">Премиум</span>
+            <span class="tech-card__icon" role="img" aria-label="Клееный брус">&#x1FAB5;</span>
+          </div>
+          <div class="tech-card__body">
+            <h3 class="tech-card__title">Клееный брус</h3>
+            <p class="tech-card__description">
+              Изготавливается из подготовленного дерева. Несколько ламелей склеиваются между собой.
+              Пазы для быстрой и точной сборки. Гладкие и ровные стены без дополнительной отделки.
+            </p>
+            <ul class="tech-card__features">
+              <li class="tech-card__feature">
+                <span class="tech-card__feature-check" aria-hidden="true">&#10003;</span>
+                Экологичный натуральный материал
+              </li>
+              <li class="tech-card__feature">
+                <span class="tech-card__feature-check" aria-hidden="true">&#10003;</span>
+                Минимальная усадка
+              </li>
+              <li class="tech-card__feature">
+                <span class="tech-card__feature-check" aria-hidden="true">&#10003;</span>
+                Быстрая сборка на участке
+              </li>
+              <li class="tech-card__feature">
+                <span class="tech-card__feature-check" aria-hidden="true">&#10003;</span>
+                Не требует внутренней отделки
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 2: Каркасная технология -->
+        <div class="ios-card tech-card tech-card--frame">
+          <div class="tech-card__visual tech-card__visual--frame">
+            <span class="tech-card__badge tech-card__badge--blue">Популярное</span>
+            <span class="tech-card__icon" role="img" aria-label="Каркасная технология">&#x1F3D7;&#xFE0F;</span>
+          </div>
+          <div class="tech-card__body">
+            <h3 class="tech-card__title">Каркасная технология</h3>
+            <p class="tech-card__description">
+              Несущие конструктивные элементы с утеплителем. Быстрая сборка на участке.
+              Подходит для дач и круглогодичных коттеджей.
+            </p>
+            <ul class="tech-card__features">
+              <li class="tech-card__feature">
+                <span class="tech-card__feature-check" aria-hidden="true">&#10003;</span>
+                Быстрое возведение
+              </li>
+              <li class="tech-card__feature">
+                <span class="tech-card__feature-check" aria-hidden="true">&#10003;</span>
+                Отличная теплоизоляция
+              </li>
+              <li class="tech-card__feature">
+                <span class="tech-card__feature-check" aria-hidden="true">&#10003;</span>
+                Доступная стоимость
+              </li>
+              <li class="tech-card__feature">
+                <span class="tech-card__feature-check" aria-hidden="true">&#10003;</span>
+                Разнообразие планировок
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA Block -->
+      <div class="tech-cta">
+        <p class="tech-cta__text">Мечтаете о собственном доме?</p>
+        <a href="#" class="ios-btn ios-btn--primary ios-btn--lg ios-btn--pill">Начать проект</a>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

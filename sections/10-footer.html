@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZOD.RU — Подвал сайта</title>
+  <link rel="stylesheet" href="../ios-ui-kit.css">
+  <style>
+    /* Footer section-specific styles */
+
+    .ios-footer__column-contacts .ios-footer__phone {
+      font-size: var(--text-title1);
+      font-weight: var(--weight-bold);
+      color: #FFFFFF;
+      display: block;
+      margin-bottom: var(--space-4);
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--leading-snug);
+    }
+
+    .ios-footer__column-contacts .ios-footer__phone:hover {
+      color: #FFFFFF;
+      opacity: 0.85;
+    }
+
+    .ios-footer__buttons {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+
+    .ios-footer__buttons .ios-btn--ghost {
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.35);
+      background: transparent;
+    }
+
+    .ios-footer__buttons .ios-btn--ghost:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .ios-footer__social {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .ios-footer__social a {
+      font-size: var(--text-subhead);
+      font-weight: var(--weight-medium);
+      color: rgba(255, 255, 255, 0.55);
+      transition: color var(--duration-fast) var(--ease-default);
+    }
+
+    .ios-footer__social a:hover {
+      color: #FFFFFF;
+      opacity: 1;
+    }
+
+    .ios-footer__social-separator {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: var(--text-caption1);
+      user-select: none;
+    }
+
+    .ios-footer__bottom-links {
+      display: flex;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .ios-footer__bottom-links a {
+      font-size: var(--text-footnote);
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .ios-footer__bottom-links a:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .ios-footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+      }
+
+      .ios-footer__column-contacts .ios-footer__phone {
+        font-size: var(--text-title2);
+      }
+
+      .ios-footer__buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .ios-footer__buttons {
+        flex-direction: column;
+      }
+
+      .ios-footer__buttons .ios-btn {
+        width: 100%;
+      }
+
+      .ios-footer__bottom-links {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== FOOTER SECTION ====== -->
+  <footer class="ios-footer">
+    <div class="ios-container">
+
+      <!-- Footer Grid: 4 Columns -->
+      <div class="ios-footer__grid">
+
+        <!-- Column 1: Каталог -->
+        <div class="ios-footer__column">
+          <h4 class="ios-footer__heading">Каталог</h4>
+          <ul class="ios-footer__list">
+            <li><a href="#">Коттеджи</a></li>
+            <li><a href="#">Большие дома</a></li>
+            <li><a href="#">Дачные дома</a></li>
+            <li><a href="#">Бани</a></li>
+            <li><a href="#">Индивидуальные проекты</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 2: Услуги -->
+        <div class="ios-footer__column">
+          <h4 class="ios-footer__heading">Услуги</h4>
+          <ul class="ios-footer__list">
+            <li><a href="#">Достройка</a></li>
+            <li><a href="#">Инженерные коммуникации</a></li>
+            <li><a href="#">Фундаменты</a></li>
+            <li><a href="#">Кредитование</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: О компании -->
+        <div class="ios-footer__column">
+          <h4 class="ios-footer__heading">О компании</h4>
+          <ul class="ios-footer__list">
+            <li><a href="#">Новости</a></li>
+            <li><a href="#">Акции</a></li>
+            <li><a href="#">Технология</a></li>
+            <li><a href="#">Отзывы</a></li>
+            <li><a href="#">Контакты</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Контакты -->
+        <div class="ios-footer__column ios-footer__column-contacts">
+          <h4 class="ios-footer__heading">Контакты</h4>
+
+          <a href="tel:+74955329099" class="ios-footer__phone">+7 (495) 532-90-99</a>
+
+          <div class="ios-footer__buttons">
+            <button class="ios-btn ios-btn--primary ios-btn--sm">Обратный звонок</button>
+            <button class="ios-btn ios-btn--ghost ios-btn--sm">Задать вопрос</button>
+          </div>
+
+          <div class="ios-footer__social">
+            <a href="#">Дзен</a>
+            <span class="ios-footer__social-separator">&middot;</span>
+            <a href="#">VK</a>
+            <span class="ios-footer__social-separator">&middot;</span>
+            <a href="#">OK</a>
+            <span class="ios-footer__social-separator">&middot;</span>
+            <a href="#">YouTube</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="ios-footer__bottom">
+        <div class="ios-footer__copyright">
+          &copy; 2000&ndash;2026 ООО ЗОДЧИЙ. Строительство деревянных домов и бань под ключ.
+        </div>
+        <div class="ios-footer__bottom-links">
+          <a href="#">Карта сайта</a>
+          <a href="#">Политика конфиденциальности</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>

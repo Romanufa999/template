@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ЗОДЧИЙ — Строительство деревянных домов под ключ | iOS UI Kit</title>
+  <link rel="stylesheet" href="ios-ui-kit.css">
+  <style>
+    /* ============================================
+       Section-specific styles — assembled from
+       10 parallel agent outputs
+       ============================================ */
+
+    /* ---- 01. HEADER ---- */
+    .header-topbar {
+      background: var(--color-bg-tertiary);
+      border-bottom: 0.5px solid var(--color-separator);
+      font-size: var(--text-caption1);
+      color: var(--color-text-tertiary);
+    }
+    .header-topbar__inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--content-padding);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 32px;
+      gap: var(--space-6);
+    }
+    .header-topbar__phone {
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      font-size: var(--text-footnote);
+    }
+    .header-topbar__phone:hover { color: var(--color-brand); opacity: 1; }
+    .header-socials { display: flex; align-items: center; gap: var(--space-1); }
+    .header-social-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: var(--radius-xs);
+      font-size: var(--text-caption2); font-weight: var(--weight-bold);
+      color: var(--color-text-tertiary); text-decoration: none;
+      transition: all var(--duration-fast) var(--ease-default);
+    }
+    .header-social-icon:hover { color: var(--color-brand); background: var(--color-brand-bg); opacity: 1; }
+    .header-phone-link {
+      font-size: var(--text-subhead); font-weight: var(--weight-semibold);
+      color: var(--color-text-primary); white-space: nowrap;
+    }
+    .header-phone-link:hover { color: var(--color-brand); opacity: 1; }
+    .header-hamburger {
+      display: none; align-items: center; justify-content: center;
+      width: 44px; height: 44px; background: none; border: none;
+      font-size: 24px; color: var(--color-text-primary); cursor: pointer;
+      -webkit-tap-highlight-color: transparent; border-radius: var(--radius-sm);
+      transition: background var(--duration-fast) var(--ease-default);
+    }
+    .header-hamburger:hover { background: var(--color-fill-quaternary); }
+    .header-mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 200; background: rgba(0,0,0,0.3); opacity: 0;
+      transition: opacity var(--duration-normal) var(--ease-ios);
+    }
+    .header-mobile-menu.is-open { opacity: 1; }
+    .header-mobile-menu__panel {
+      position: absolute; top: 0; right: 0; width: 300px; max-width: 85vw; height: 100%;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: saturate(180%) blur(var(--blur-xl));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--blur-xl));
+      box-shadow: var(--shadow-xl); transform: translateX(100%);
+      transition: transform var(--duration-slow) var(--ease-ios);
+      overflow-y: auto;
+    }
+    .header-mobile-menu.is-open .header-mobile-menu__panel { transform: translateX(0); }
+    .header-mobile-menu__header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-4) var(--space-5); border-bottom: 0.5px solid var(--color-separator);
+    }
+    .header-mobile-menu__close {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: var(--radius-full);
+      background: var(--color-fill-tertiary); border: none;
+      font-size: 18px; color: var(--color-text-secondary); cursor: pointer;
+    }
+    .header-mobile-menu__nav { padding: var(--space-2) 0; }
+    .header-mobile-menu__link {
+      display: block; padding: var(--space-3) var(--space-5);
+      font-size: var(--text-body); font-weight: var(--weight-medium);
+      color: var(--color-text-primary); transition: background var(--duration-fast) var(--ease-default);
+    }
+    .header-mobile-menu__link:hover { background: var(--color-fill-quaternary); opacity: 1; }
+    .header-mobile-menu__footer {
+      padding: var(--space-5); border-top: 0.5px solid var(--color-separator);
+      display: flex; flex-direction: column; gap: var(--space-4);
+    }
+    .header-mobile-menu__phone { font-size: var(--text-title3); font-weight: var(--weight-bold); color: var(--color-text-primary); }
+    .header-mobile-menu__socials { display: flex; gap: var(--space-2); }
+    .header-mobile-social {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      background: var(--color-fill-quaternary); font-size: var(--text-caption1);
+      font-weight: var(--weight-bold); color: var(--color-text-secondary); text-decoration: none;
+      transition: all var(--duration-fast) var(--ease-default);
+    }
+    .header-mobile-social:hover { background: var(--color-brand-bg); color: var(--color-brand); opacity: 1; }
+
+    /* ---- 02. HERO ---- */
+    .ios-hero {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F2F2F7 100%);
+      text-align: center; display: flex; align-items: center;
+      justify-content: center; min-height: 90vh;
+    }
+    .ios-hero__inner { display: flex; flex-direction: column; align-items: center; }
+    .ios-hero__eyebrow {
+      display: inline-block; background: var(--color-brand-bg);
+      padding: var(--space-2) var(--space-4); border-radius: var(--radius-full);
+    }
+    .ios-hero__title { margin-top: var(--space-5); max-width: 800px; margin-left: auto; margin-right: auto; }
+    .ios-hero__subtitle { max-width: 600px; margin-left: auto; margin-right: auto; }
+    .ios-hero__actions { justify-content: center; }
+    .ios-hero__stats {
+      justify-content: center; width: 100%;
+      padding-top: var(--space-12); border-top: 0.5px solid var(--color-separator);
+    }
+    .ios-stat { flex: 0 0 auto; min-width: 140px; }
+    .ios-hero__decor {
+      position: absolute; border-radius: 50%; filter: blur(80px);
+      opacity: 0.35; pointer-events: none; z-index: -1;
+    }
+    .ios-hero__decor--1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, var(--color-brand-light), transparent 70%);
+      top: -100px; right: -100px;
+    }
+    .ios-hero__decor--2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, var(--color-teal), transparent 70%);
+      bottom: -50px; left: -80px; opacity: 0.2;
+    }
+
+    /* ---- 03. CATALOG ---- */
+    .catalog-card__image {
+      width: 100%; aspect-ratio: 16/10; display: flex;
+      align-items: center; justify-content: center; position: relative; overflow: hidden;
+    }
+    .catalog-card__image--1 { background: linear-gradient(135deg, #5D4037 0%, #8D6E63 40%, #A1887F 70%, #BCAAA4 100%); }
+    .catalog-card__image--2 { background: linear-gradient(135deg, #33691E 0%, #558B2F 40%, #7CB342 70%, #9CCC65 100%); }
+    .catalog-card__image--3 { background: linear-gradient(135deg, #4E342E 0%, #6D4C41 40%, #8D6E63 70%, #A1887F 100%); }
+    .catalog-card__image--4 { background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 40%, #43A047 70%, #66BB6A 100%); }
+    .catalog-card__image--5 { background: linear-gradient(135deg, #3E2723 0%, #5D4037 40%, #795548 70%, #A1887F 100%); }
+    .catalog-card__image--6 { background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 40%, #81C784 70%, #A5D6A7 100%); }
+    .catalog-card__icon { font-size: 48px; line-height: 1; opacity: 0.55; filter: grayscale(20%); z-index: 1; }
+    .catalog-card__image::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.15) 100%); pointer-events: none;
+    }
+    .catalog-card__header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-2); }
+    .catalog-card__meta-item { display: flex; align-items: center; gap: var(--space-1); font-size: var(--text-footnote); color: var(--color-text-tertiary); }
+    .catalog-card__meta-item span.meta-icon { font-size: var(--text-subhead); line-height: 1; }
+    .catalog-card__price-row { margin-top: var(--space-3); }
+    .catalog-card__link { font-size: var(--text-subhead); font-weight: var(--weight-medium); color: var(--color-blue); display: inline-flex; align-items: center; gap: var(--space-1); }
+    .catalog-card__link::after { content: '\203A'; font-size: 18px; line-height: 1; }
+    .catalog-bottom { display: flex; justify-content: center; margin-top: var(--space-10); }
+    .catalog-filters { margin-bottom: var(--space-8); }
+
+    /* ---- 04. SERVICES ---- */
+    .services-card { display: flex; flex-direction: column; }
+    .services-card__image {
+      position: relative; width: 100%; aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .services-card__image--construction { background: linear-gradient(145deg, #1B5E20 0%, #2E7D32 30%, #43A047 55%, #66BB6A 80%, #A5D6A7 100%); }
+    .services-card__image--renovation { background: linear-gradient(145deg, #4E342E 0%, #5D4037 25%, #8D6E63 50%, #A1887F 75%, #D7CCC8 100%); }
+    .services-card__image::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 70%, rgba(0,0,0,0.08) 0%, transparent 50%);
+      z-index: 1;
+    }
+    .services-card__icon {
+      position: relative; z-index: 2; font-size: 72px; line-height: 1;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.2));
+      transition: transform var(--duration-slow) var(--ease-spring);
+    }
+    .services-card:hover .services-card__icon { transform: scale(1.1) translateY(-4px); }
+    .services-card__body { padding: var(--space-6) var(--space-6) var(--space-8); display: flex; flex-direction: column; flex: 1; }
+    .services-card__title { font-size: var(--text-title2); font-weight: var(--weight-bold); letter-spacing: var(--tracking-tight); color: var(--color-text-primary); margin-bottom: var(--space-3); }
+    .services-card__description { font-size: var(--text-body); color: var(--color-text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-5); }
+    .services-card__features { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-6); flex: 1; }
+    .services-card__feature { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-subhead); font-weight: var(--weight-medium); color: var(--color-text-primary); }
+    .services-card__feature::before { content: ''; width: 6px; height: 6px; border-radius: var(--radius-full); flex-shrink: 0; }
+    .services-card--construction .services-card__feature::before { background: var(--color-brand); }
+    .services-card--renovation .services-card__feature::before { background: var(--color-wood); }
+    .services-card__action { margin-top: auto; }
+    .services-header { text-align: center; margin-bottom: var(--space-10); }
+
+    /* ---- 05. NEWS ---- */
+    .ios-section--news { background: var(--color-bg-secondary); }
+    .ios-section__header-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--space-8); }
+    .ios-section__header-row .ios-section__title { margin: 0; }
+    .ios-section__header-link { font-size: var(--text-subhead); font-weight: var(--weight-medium); color: var(--color-blue); white-space: nowrap; flex-shrink: 0; margin-left: var(--space-4); }
+    .ios-article__image-placeholder {
+      width: 100%; aspect-ratio: 16/9; display: flex;
+      align-items: center; justify-content: center; position: relative; overflow: hidden;
+    }
+    .ios-article__image-placeholder--blue { background: linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #AF52DE 100%); }
+    .ios-article__image-placeholder--green { background: linear-gradient(135deg, #34C759 0%, #30D158 40%, #2E7D32 100%); }
+    .ios-article__image-placeholder--orange { background: linear-gradient(135deg, #FF9500 0%, #FF6B35 50%, #FF3B30 100%); }
+    .ios-article__image-icon { font-size: 48px; opacity: 0.35; filter: grayscale(20%); line-height: 1; }
+    .ios-article { display: flex; flex-direction: column; cursor: pointer; }
+    .ios-article__body { flex: 1; display: flex; flex-direction: column; }
+    .ios-article__excerpt { flex: 1; }
+    .ios-article__link { align-self: flex-start; }
+
+    /* ---- 06. PRESS ---- */
+    .press-section { background: var(--color-bg-grouped); }
+    .press-section .ios-section__header { text-align: center; }
+    .press-section .ios-section__subtitle { margin-left: auto; margin-right: auto; }
+    .press-list { max-width: 640px; margin: 0 auto; }
+    .press-section .ios-grouped-card__item { cursor: pointer; text-decoration: none; color: inherit; }
+    .ios-grouped-card__icon--blue { background: rgba(0,122,255,0.12); }
+    .ios-grouped-card__icon--green { background: rgba(52,199,89,0.12); }
+    .ios-grouped-card__icon--orange { background: rgba(255,149,0,0.14); }
+    .ios-grouped-card__label-source { font-size: var(--text-subhead); font-weight: var(--weight-semibold); color: var(--color-text-primary); }
+    .ios-grouped-card__label-date { font-size: var(--text-caption1); color: var(--color-text-tertiary); margin-top: 2px; }
+    .ios-grouped-card__label-title { font-size: var(--text-subhead); color: var(--color-text-secondary); margin-top: var(--space-1); line-height: var(--leading-normal); }
+
+    /* ---- 07. ABOUT ---- */
+    .about-section { background: var(--color-bg-primary); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); align-items: start; }
+    .about-text { display: flex; flex-direction: column; }
+    .about-lead { font-size: var(--text-title3); font-weight: var(--weight-regular); line-height: var(--leading-relaxed); color: var(--color-text-secondary); margin-top: var(--space-6); max-width: 520px; }
+    .about-features { margin-top: var(--space-8); }
+    .about-showcase { display: flex; flex-direction: column; gap: var(--space-6); }
+    .about-showcase__card {
+      position: relative; border-radius: var(--radius-2xl); overflow: hidden;
+      background: linear-gradient(145deg, #FFF8E1 0%, #FFECB3 30%, #FFE0B2 60%, #D7CCC8 100%);
+      aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-lg);
+      transition: transform var(--duration-normal) var(--ease-ios), box-shadow var(--duration-normal) var(--ease-ios);
+    }
+    .about-showcase__card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+    .about-showcase__icon { font-size: 96px; line-height: 1; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1)); transition: transform var(--duration-slow) var(--ease-spring); }
+    .about-showcase__card:hover .about-showcase__icon { transform: scale(1.08); }
+    .about-showcase__overlay {
+      position: absolute; bottom: var(--space-5); left: var(--space-5); right: var(--space-5);
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: saturate(180%) blur(var(--blur-lg));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--blur-lg));
+      border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); box-shadow: var(--shadow-sm);
+    }
+    .about-showcase__overlay-title { font-size: var(--text-headline); font-weight: var(--weight-semibold); color: var(--color-text-primary); }
+    .about-showcase__overlay-sub { font-size: var(--text-footnote); color: var(--color-text-tertiary); margin-top: var(--space-1); }
+    .about-showcase__action { text-align: center; }
+    .about-icon--green { background: var(--color-green); color: #FFFFFF; }
+    .about-icon--blue { background: var(--color-blue); color: #FFFFFF; }
+    .about-icon--purple { background: var(--color-purple); color: #FFFFFF; }
+
+    /* ---- 08. ADVANTAGES ---- */
+    .advantages-header { text-align: center; margin-bottom: var(--space-10); }
+    .advantages-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-4); }
+    .advantage-card { display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--space-6) var(--space-4); }
+    .advantage-card__icon {
+      width: 56px; height: 56px; border-radius: var(--radius-lg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; line-height: 1; margin-bottom: var(--space-4); flex-shrink: 0;
+      transition: transform var(--duration-normal) var(--ease-spring);
+    }
+    .advantage-card:hover .advantage-card__icon { transform: scale(1.1); }
+    .advantage-card__icon--orange { background: rgba(255,149,0,0.14); }
+    .advantage-card__icon--blue { background: rgba(0,122,255,0.12); }
+    .advantage-card__icon--purple { background: rgba(175,82,222,0.12); }
+    .advantage-card__icon--green { background: rgba(52,199,89,0.12); }
+    .advantage-card__icon--red { background: rgba(255,59,48,0.12); }
+    .advantage-card__icon--teal { background: rgba(90,200,250,0.14); }
+    .advantage-card__icon--pink { background: rgba(255,45,85,0.12); }
+    .advantage-card__icon--indigo { background: rgba(88,86,214,0.12); }
+    .advantage-card__icon--yellow { background: rgba(255,204,0,0.16); }
+    .advantage-card__icon--brand { background: rgba(46,125,50,0.12); }
+    .advantage-card__title { font-size: var(--text-subhead); font-weight: var(--weight-semibold); color: var(--color-text-primary); margin-bottom: var(--space-1); line-height: var(--leading-snug); }
+    .advantage-card__desc { font-size: var(--text-footnote); color: var(--color-text-tertiary); line-height: var(--leading-normal); }
+
+    /* ---- 09. TECHNOLOGIES ---- */
+    .tech-header { text-align: center; margin-bottom: var(--space-6); }
+    .tech-segmented-wrap { display: flex; justify-content: center; margin-bottom: var(--space-10); }
+    .tech-segmented-wrap .ios-segmented { padding: 3px; border-radius: var(--radius-md); }
+    .tech-segmented-wrap .ios-segmented__item { padding: var(--space-2) var(--space-6); font-size: var(--text-subhead); font-weight: var(--weight-semibold); border-radius: var(--radius-sm); transition: all var(--duration-normal) var(--ease-ios); }
+    .tech-card { display: flex; flex-direction: column; }
+    .tech-card__visual {
+      position: relative; width: 100%; aspect-ratio: 16/10;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .tech-card__visual--wood { background: linear-gradient(145deg, #5D4037 0%, #8D6E63 25%, #A1887F 45%, #BCAAA4 65%, #D7CCC8 85%, #EFEBE9 100%); }
+    .tech-card__visual--frame { background: linear-gradient(145deg, #004D40 0%, #00695C 20%, #00897B 40%, #26A69A 60%, #4DB6AC 80%, #B2DFDB 100%); }
+    .tech-card__visual::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 25% 35%, rgba(255,255,255,0.18) 0%, transparent 55%),
+                  radial-gradient(ellipse at 75% 75%, rgba(0,0,0,0.1) 0%, transparent 50%);
+      z-index: 1;
+    }
+    .tech-card__icon {
+      position: relative; z-index: 2; font-size: 80px; line-height: 1;
+      filter: drop-shadow(0 10px 28px rgba(0,0,0,0.25));
+      transition: transform var(--duration-slow) var(--ease-spring);
+    }
+    .tech-card:hover .tech-card__icon { transform: scale(1.12) translateY(-6px); }
+    .tech-card__badge {
+      position: absolute; top: var(--space-4); left: var(--space-4); z-index: 3;
+      padding: var(--space-1) var(--space-3); font-size: var(--text-caption1);
+      font-weight: var(--weight-semibold); border-radius: var(--radius-full);
+      letter-spacing: var(--tracking-wide);
+      backdrop-filter: blur(var(--blur-sm)); -webkit-backdrop-filter: blur(var(--blur-sm));
+    }
+    .tech-card__badge--brand { background: rgba(46,125,50,0.85); color: #FFFFFF; }
+    .tech-card__badge--blue { background: rgba(0,122,255,0.85); color: #FFFFFF; }
+    .tech-card__body { padding: var(--space-6); display: flex; flex-direction: column; flex: 1; }
+    .tech-card__title { font-size: var(--text-title2); font-weight: var(--weight-bold); letter-spacing: var(--tracking-tight); color: var(--color-text-primary); margin-bottom: var(--space-3); }
+    .tech-card__description { font-size: var(--text-body); color: var(--color-text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-6); }
+    .tech-card__features { list-style: none; display: flex; flex-direction: column; gap: var(--space-3); }
+    .tech-card__feature { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-subhead); font-weight: var(--weight-medium); color: var(--color-text-primary); line-height: var(--leading-normal); }
+    .tech-card__feature-check {
+      width: 24px; height: 24px; border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: var(--weight-bold); flex-shrink: 0;
+    }
+    .tech-card--wood .tech-card__feature-check { background: rgba(46,125,50,0.1); color: var(--color-brand); }
+    .tech-card--frame .tech-card__feature-check { background: rgba(0,122,255,0.1); color: var(--color-blue); }
+    .tech-cta {
+      margin-top: var(--space-12); text-align: center;
+      padding: var(--space-10) var(--space-6); background: var(--color-bg-elevated);
+      border-radius: var(--radius-xl); box-shadow: var(--shadow-card);
+    }
+    .tech-cta__text { font-size: var(--text-title2); font-weight: var(--weight-bold); letter-spacing: var(--tracking-tight); color: var(--color-text-primary); margin-bottom: var(--space-6); }
+
+    /* ---- 10. FOOTER ---- */
+    .ios-footer__column-contacts .ios-footer__phone {
+      font-size: var(--text-title1); font-weight: var(--weight-bold); color: #FFFFFF;
+      display: block; margin-bottom: var(--space-4); letter-spacing: var(--tracking-tight); line-height: var(--leading-snug);
+    }
+    .ios-footer__column-contacts .ios-footer__phone:hover { color: #FFFFFF; opacity: 0.85; }
+    .ios-footer__buttons { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-5); }
+    .ios-footer__buttons .ios-btn--ghost { color: #FFFFFF; border-color: rgba(255,255,255,0.35); background: transparent; }
+    .ios-footer__buttons .ios-btn--ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.6); }
+    .ios-footer__social { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+    .ios-footer__social a { font-size: var(--text-subhead); font-weight: var(--weight-medium); color: rgba(255,255,255,0.55); transition: color var(--duration-fast) var(--ease-default); }
+    .ios-footer__social a:hover { color: #FFFFFF; opacity: 1; }
+    .ios-footer__social-separator { color: rgba(255,255,255,0.2); font-size: var(--text-caption1); user-select: none; }
+    .ios-footer__bottom-links { display: flex; gap: var(--space-6); flex-wrap: wrap; }
+    .ios-footer__bottom-links a { font-size: var(--text-footnote); color: rgba(255,255,255,0.4); }
+    .ios-footer__bottom-links a:hover { color: rgba(255,255,255,0.8); }
+
+    /* ============================================
+       Responsive overrides
+       ============================================ */
+    @media (max-width: 1024px) {
+      .header-topbar__inner { gap: var(--space-4); }
+      .ios-navbar__link { padding: var(--space-2); font-size: var(--text-footnote); }
+      .ios-navbar__links { gap: 0; }
+      .advantages-grid { grid-template-columns: repeat(3, 1fr); }
+      .about-grid { gap: var(--space-10); }
+    }
+
+    @media (max-width: 768px) {
+      .header-topbar { display: none; }
+      .header-hamburger { display: flex; }
+      .header-phone-link { font-size: var(--text-footnote); }
+      .header-mobile-menu { display: block; pointer-events: none; }
+      .header-mobile-menu.is-open { pointer-events: auto; }
+      .ios-navbar__actions .ios-btn { display: none; }
+
+      .ios-hero { min-height: auto; }
+      .ios-hero__stats { padding-top: var(--space-8); }
+      .ios-stat { min-width: auto; text-align: left; }
+
+      .services-card__body { padding: var(--space-5); }
+      .services-card__icon { font-size: 56px; }
+      .services-card__features { grid-template-columns: 1fr; gap: var(--space-2); }
+      .services-card__title { font-size: var(--text-title3); }
+
+      .ios-section__header-row { flex-direction: column; gap: var(--space-2); }
+      .ios-section__header-link { margin-left: 0; }
+
+      .about-grid { grid-template-columns: 1fr; gap: var(--space-10); }
+      .about-lead { max-width: 100%; }
+      .about-showcase__card { aspect-ratio: 16/10; }
+      .about-showcase__icon { font-size: 72px; }
+      .about-showcase__action { text-align: left; }
+
+      .advantages-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+      .advantage-card { padding: var(--space-4) var(--space-3); }
+      .advantage-card__icon { width: 48px; height: 48px; font-size: 22px; margin-bottom: var(--space-3); }
+
+      .tech-card__body { padding: var(--space-5); }
+      .tech-card__icon { font-size: 60px; }
+      .tech-card__title { font-size: var(--text-title3); }
+      .tech-cta { padding: var(--space-8) var(--space-5); margin-top: var(--space-8); }
+      .tech-cta__text { font-size: var(--text-title3); }
+      .tech-segmented-wrap .ios-segmented__item { padding: var(--space-2) var(--space-4); font-size: var(--text-footnote); }
+
+      .ios-footer__bottom { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+      .ios-footer__column-contacts .ios-footer__phone { font-size: var(--text-title2); }
+      .ios-footer__buttons { flex-direction: row; flex-wrap: wrap; }
+    }
+
+    @media (max-width: 480px) {
+      .header-phone-link { display: none; }
+      .ios-hero__title { font-size: clamp(28px, 7vw, 34px); }
+      .about-showcase__card { aspect-ratio: 3/2; }
+      .about-showcase__icon { font-size: 56px; }
+      .about-showcase__overlay { left: var(--space-3); right: var(--space-3); bottom: var(--space-3); padding: var(--space-3) var(--space-4); }
+      .ios-footer__buttons { flex-direction: column; }
+      .ios-footer__buttons .ios-btn { width: 100%; }
+      .ios-footer__bottom-links { flex-direction: column; gap: var(--space-2); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================
+       01. HEADER
+       ============================================ -->
+  <div class="header-topbar">
+    <div class="header-topbar__inner">
+      <div class="header-socials">
+        <a href="#" class="header-social-icon" title="Дзен">Д</a>
+        <a href="#" class="header-social-icon" title="ВКонтакте">VK</a>
+        <a href="#" class="header-social-icon" title="Одноклассники">OK</a>
+        <a href="#" class="header-social-icon" title="YouTube">YT</a>
+      </div>
+      <a href="tel:+74955329099" class="header-topbar__phone">+7 (495) 532-90-99</a>
+    </div>
+  </div>
+
+  <header class="ios-navbar" role="banner">
+    <nav class="ios-navbar__inner" aria-label="Основная навигация">
+      <a href="/" class="ios-navbar__logo">ЗОДЧИЙ</a>
+      <ul class="ios-navbar__links">
+        <li><a href="#catalog" class="ios-navbar__link">Каталог</a></li>
+        <li><a href="#cottages" class="ios-navbar__link">Коттеджи</a></li>
+        <li><a href="#big-houses" class="ios-navbar__link">Большие дома</a></li>
+        <li><a href="#dachas" class="ios-navbar__link">Дачные дома</a></li>
+        <li><a href="#baths" class="ios-navbar__link">Бани</a></li>
+        <li><a href="#completion" class="ios-navbar__link">Достройка</a></li>
+        <li><a href="#credit" class="ios-navbar__link">Кредит</a></li>
+      </ul>
+      <div class="ios-navbar__actions">
+        <a href="tel:+74955329099" class="header-phone-link">+7 (495) 532-90-99</a>
+        <button class="ios-btn ios-btn--primary ios-btn--sm" type="button">Обратный звонок</button>
+        <button class="header-hamburger" type="button" aria-label="Открыть меню" aria-expanded="false" onclick="toggleMobileMenu()">&#9776;</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="header-mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="header-mobile-menu__panel">
+      <div class="header-mobile-menu__header">
+        <span class="ios-navbar__logo" style="font-size: var(--text-title3);">ЗОДЧИЙ</span>
+        <button class="header-mobile-menu__close" type="button" onclick="toggleMobileMenu()">&times;</button>
+      </div>
+      <nav class="header-mobile-menu__nav">
+        <a href="#catalog" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Каталог</a>
+        <a href="#cottages" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Коттеджи</a>
+        <a href="#big-houses" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Большие дома</a>
+        <a href="#dachas" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Дачные дома</a>
+        <a href="#baths" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Бани</a>
+        <a href="#completion" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Достройка</a>
+        <a href="#credit" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Кредит</a>
+      </nav>
+      <div class="header-mobile-menu__footer">
+        <a href="tel:+74955329099" class="header-mobile-menu__phone">+7 (495) 532-90-99</a>
+        <button class="ios-btn ios-btn--primary ios-btn--full" type="button">Обратный звонок</button>
+        <div class="header-mobile-menu__socials">
+          <a href="#" class="header-mobile-social">Д</a>
+          <a href="#" class="header-mobile-social">VK</a>
+          <a href="#" class="header-mobile-social">OK</a>
+          <a href="#" class="header-mobile-social">YT</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       02. HERO
+       ============================================ -->
+  <section class="ios-hero">
+    <div class="ios-hero__decor ios-hero__decor--1"></div>
+    <div class="ios-hero__decor ios-hero__decor--2"></div>
+    <div class="ios-container">
+      <div class="ios-hero__inner">
+        <span class="ios-hero__eyebrow">С 1989 года на рынке</span>
+        <h1 class="ios-hero__title hero-title">Строительство деревянных домов под ключ</h1>
+        <p class="ios-hero__subtitle">Полный цикл от заготовки сырья до строительства. Более 250 типовых проектов на выбор.</p>
+        <div class="ios-hero__actions">
+          <a href="#catalog" class="ios-btn ios-btn--primary ios-btn--lg ios-btn--pill">Выбрать проект</a>
+          <a href="#" class="ios-btn ios-btn--ghost ios-btn--lg ios-btn--pill">Получить консультацию</a>
+        </div>
+        <div class="ios-hero__stats">
+          <div class="ios-stat">
+            <div class="ios-stat__number">1989</div>
+            <div class="ios-stat__label">Год основания</div>
+          </div>
+          <div class="ios-stat">
+            <div class="ios-stat__number">211 000+</div>
+            <div class="ios-stat__label">Домов построено</div>
+          </div>
+          <div class="ios-stat">
+            <div class="ios-stat__number">250+</div>
+            <div class="ios-stat__label">Типовых проектов</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       03. CATALOG
+       ============================================ -->
+  <section class="ios-section ios-bg-grouped" id="catalog">
+    <div class="ios-container">
+      <div class="ios-section__header">
+        <h2 class="ios-section__title">Каталог проектов</h2>
+        <p class="ios-section__subtitle">Более 250 проектов домов и бань</p>
+      </div>
+      <div class="ios-pills catalog-filters" role="tablist">
+        <button class="ios-pill ios-pill--active" role="tab">Все</button>
+        <button class="ios-pill" role="tab">Коттеджи</button>
+        <button class="ios-pill" role="tab">Большие дома</button>
+        <button class="ios-pill" role="tab">Дачные дома</button>
+        <button class="ios-pill" role="tab">Одноэтажные</button>
+        <button class="ios-pill" role="tab">Бани</button>
+      </div>
+      <div class="ios-grid ios-grid--3">
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--1"><span class="catalog-card__icon">&#127968;</span></div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header"><h3 class="ios-card__title">Весна 1</h3><span class="ios-badge ios-badge--green">Каркас</span></div>
+            <div class="ios-card__meta"><span class="catalog-card__meta-item"><span class="meta-icon">&#9634;</span> 45.41 м&sup2;</span><span class="catalog-card__meta-item"><span class="meta-icon">&#8596;</span> 7&times;7 м</span></div>
+            <div class="catalog-card__price-row"><span class="ios-card__price">1 850 000 &#8381;</span></div>
+          </div>
+          <div class="ios-card__footer"><a href="#" class="catalog-card__link">Подробнее</a><button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button></div>
+        </article>
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--2"><span class="catalog-card__icon">&#127968;</span></div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header"><h3 class="ios-card__title">Валдай 2</h3><span class="ios-badge ios-badge--wood">Брус</span></div>
+            <div class="ios-card__meta"><span class="catalog-card__meta-item"><span class="meta-icon">&#9634;</span> 73.30 м&sup2;</span><span class="catalog-card__meta-item"><span class="meta-icon">&#8596;</span> 8&times;8 м</span></div>
+            <div class="catalog-card__price-row"><span class="ios-card__price">2 769 800 &#8381;</span></div>
+          </div>
+          <div class="ios-card__footer"><a href="#" class="catalog-card__link">Подробнее</a><button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button></div>
+        </article>
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--3"><span class="catalog-card__icon">&#127968;</span></div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header"><h3 class="ios-card__title">Аврора 11</h3><span class="ios-badge ios-badge--green">Каркас</span></div>
+            <div class="ios-card__meta"><span class="catalog-card__meta-item"><span class="meta-icon">&#9634;</span> 134.20 м&sup2;</span><span class="catalog-card__meta-item"><span class="meta-icon">&#8596;</span> 8&times;10 м</span></div>
+            <div class="catalog-card__price-row"><span class="ios-card__price">3 879 800 &#8381;</span></div>
+          </div>
+          <div class="ios-card__footer"><a href="#" class="catalog-card__link">Подробнее</a><button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button></div>
+        </article>
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--4"><span class="catalog-card__icon">&#127968;</span></div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header"><h3 class="ios-card__title">Феникс 22</h3><span class="ios-badge ios-badge--wood">Брус</span></div>
+            <div class="ios-card__meta"><span class="catalog-card__meta-item"><span class="meta-icon">&#9634;</span> 94.26 м&sup2;</span><span class="catalog-card__meta-item"><span class="meta-icon">&#8596;</span> 6&times;9 м</span></div>
+            <div class="catalog-card__price-row"><span class="ios-card__price">2 989 800 &#8381;</span></div>
+          </div>
+          <div class="ios-card__footer"><a href="#" class="catalog-card__link">Подробнее</a><button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button></div>
+        </article>
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--5"><span class="catalog-card__icon">&#127968;</span></div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header"><h3 class="ios-card__title">Уэльс 2</h3><span class="ios-badge ios-badge--green">Каркас</span></div>
+            <div class="ios-card__meta"><span class="catalog-card__meta-item"><span class="meta-icon">&#9634;</span> 138.38 м&sup2;</span><span class="catalog-card__meta-item"><span class="meta-icon">&#8596;</span> 11&times;9 м</span></div>
+            <div class="catalog-card__price-row"><span class="ios-card__price">4 989 800 &#8381;</span></div>
+          </div>
+          <div class="ios-card__footer"><a href="#" class="catalog-card__link">Подробнее</a><button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button></div>
+        </article>
+        <article class="ios-card">
+          <div class="catalog-card__image catalog-card__image--6"><span class="catalog-card__icon">&#127968;</span></div>
+          <div class="ios-card__body">
+            <div class="catalog-card__header"><h3 class="ios-card__title">Канадец 14</h3><span class="ios-badge ios-badge--green">Каркас</span></div>
+            <div class="ios-card__meta"><span class="catalog-card__meta-item"><span class="meta-icon">&#9634;</span> 129.14 м&sup2;</span><span class="catalog-card__meta-item"><span class="meta-icon">&#8596;</span> 9.5&times;8 м</span></div>
+            <div class="catalog-card__price-row"><span class="ios-card__price">4 199 800 &#8381;</span></div>
+          </div>
+          <div class="ios-card__footer"><a href="#" class="catalog-card__link">Подробнее</a><button class="ios-btn ios-btn--primary ios-btn--sm">Консультация</button></div>
+        </article>
+      </div>
+      <div class="catalog-bottom"><button class="ios-btn ios-btn--secondary ios-btn--pill">Показать все проекты</button></div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       04. SERVICES
+       ============================================ -->
+  <section class="ios-section ios-bg-white">
+    <div class="ios-container">
+      <div class="ios-section__header services-header"><h2 class="ios-section__title">Наши услуги</h2></div>
+      <div class="ios-grid ios-grid--2">
+        <div class="ios-card services-card services-card--construction">
+          <div class="services-card__image services-card__image--construction">
+            <span class="services-card__icon" role="img" aria-label="Строительство">&#x1F3D7;&#xFE0F;</span>
+          </div>
+          <div class="services-card__body">
+            <h3 class="services-card__title">Строительство и производство</h3>
+            <p class="services-card__description">Полный цикл строительства деревянных домов — от проекта до сдачи объекта под ключ</p>
+            <ul class="services-card__features">
+              <li class="services-card__feature">Проектирование</li>
+              <li class="services-card__feature">Производство</li>
+              <li class="services-card__feature">Доставка</li>
+              <li class="services-card__feature">Монтаж</li>
+            </ul>
+            <div class="services-card__action"><a href="#" class="ios-btn ios-btn--primary ios-btn--full ios-btn--pill">Подробнее</a></div>
+          </div>
+        </div>
+        <div class="ios-card services-card services-card--renovation">
+          <div class="services-card__image services-card__image--renovation">
+            <span class="services-card__icon" role="img" aria-label="Достройка">&#x1F528;</span>
+          </div>
+          <div class="services-card__body">
+            <h3 class="services-card__title">Достройка и реконструкция</h3>
+            <p class="services-card__description">Достройка, реконструкция и модернизация существующих деревянных домов</p>
+            <ul class="services-card__features">
+              <li class="services-card__feature">Достройка</li>
+              <li class="services-card__feature">Реконструкция</li>
+              <li class="services-card__feature">Утепление</li>
+              <li class="services-card__feature">Отделка</li>
+            </ul>
+            <div class="services-card__action"><a href="#" class="ios-btn ios-btn--primary ios-btn--full ios-btn--pill">Подробнее</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       05. NEWS
+       ============================================ -->
+  <section class="ios-section ios-section--news">
+    <div class="ios-container">
+      <div class="ios-section__header-row">
+        <h2 class="ios-section__title">Новости</h2>
+        <a href="#" class="ios-section__header-link">Все новости &rarr;</a>
+      </div>
+      <div class="ios-grid ios-grid--3">
+        <article class="ios-article">
+          <div class="ios-article__image-placeholder ios-article__image-placeholder--blue"><span class="ios-article__image-icon">&#x1F4F0;</span></div>
+          <div class="ios-article__body">
+            <span class="ios-article__date">20 октября 2023</span>
+            <h3 class="ios-article__title">Финансирование для активов</h3>
+            <p class="ios-article__excerpt">Новые возможности кредитования строительства деревянных домов для наших клиентов</p>
+            <a href="#" class="ios-article__link">Читать далее</a>
+          </div>
+        </article>
+        <article class="ios-article">
+          <div class="ios-article__image-placeholder ios-article__image-placeholder--green"><span class="ios-article__image-icon">&#x1F4F0;</span></div>
+          <div class="ios-article__body">
+            <span class="ios-article__date">31 августа 2023</span>
+            <h3 class="ios-article__title">Компания представила новую линейку дачных домов</h3>
+            <p class="ios-article__excerpt">Обновленные проекты дачных домов с улучшенной планировкой и современными материалами</p>
+            <a href="#" class="ios-article__link">Читать далее</a>
+          </div>
+        </article>
+        <article class="ios-article">
+          <div class="ios-article__image-placeholder ios-article__image-placeholder--orange"><span class="ios-article__image-icon">&#x1F4F0;</span></div>
+          <div class="ios-article__body">
+            <span class="ios-article__date">25 июля 2023</span>
+            <h3 class="ios-article__title">Особенности многоэтажных деревянных домов</h3>
+            <p class="ios-article__excerpt">Современные технологии позволяют строить деревянные дома в несколько этажей</p>
+            <a href="#" class="ios-article__link">Читать далее</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       06. PRESS
+       ============================================ -->
+  <section class="ios-section press-section">
+    <div class="ios-container">
+      <div class="ios-section__header">
+        <h2 class="ios-section__title">Пресса о нас</h2>
+        <p class="ios-section__subtitle">Что пишут о компании Зодчий ведущие СМИ</p>
+      </div>
+      <div class="press-list">
+        <div class="ios-grouped-card">
+          <a href="#" class="ios-grouped-card__item">
+            <div class="ios-grouped-card__icon ios-grouped-card__icon--blue">&#x1F4C4;</div>
+            <div class="ios-grouped-card__label">
+              <div class="ios-grouped-card__label-source">Рослесинфорг</div>
+              <div class="ios-grouped-card__label-date">11 августа 2022</div>
+              <div class="ios-grouped-card__label-title">Деревянные дома предпочитают россияне</div>
+            </div>
+            <span class="ios-grouped-card__chevron"></span>
+          </a>
+          <a href="#" class="ios-grouped-card__item">
+            <div class="ios-grouped-card__icon ios-grouped-card__icon--green">&#x1F4F0;</div>
+            <div class="ios-grouped-card__label">
+              <div class="ios-grouped-card__label-source">Строительный портал</div>
+              <div class="ios-grouped-card__label-date">Декабрь 2018</div>
+              <div class="ios-grouped-card__label-title">Дом мечты: как его построить и не разориться</div>
+            </div>
+            <span class="ios-grouped-card__chevron"></span>
+          </a>
+          <a href="#" class="ios-grouped-card__item">
+            <div class="ios-grouped-card__icon ios-grouped-card__icon--orange">&#x1F3E0;</div>
+            <div class="ios-grouped-card__label">
+              <div class="ios-grouped-card__label-source">Домашний журнал</div>
+              <div class="ios-grouped-card__label-date">Июнь 2018</div>
+              <div class="ios-grouped-card__label-title">Три правила уюта для современного дома</div>
+            </div>
+            <span class="ios-grouped-card__chevron"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       07. ABOUT
+       ============================================ -->
+  <section class="ios-section about-section" id="about">
+    <div class="ios-container">
+      <div class="ios-section__header"><h2 class="ios-section__title">О компании Зодчий</h2></div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="about-lead">Компания &laquo;Зодчий&raquo; &mdash; лидер рынка деревянного домостроения с 1989 года. Мы обеспечиваем полный цикл: от заготовки сырья до строительства дома под ключ.</p>
+          <div class="about-features">
+            <div class="ios-feature-row">
+              <div class="ios-feature-row__icon about-icon--green">&#11088;</div>
+              <div class="ios-feature-row__content">
+                <div class="ios-feature-row__title">Отличное качество</div>
+                <div class="ios-feature-row__desc">Опытные специалисты и проверенные материалы. Более 211 000 построенных домов</div>
+              </div>
+            </div>
+            <div class="ios-feature-row">
+              <div class="ios-feature-row__icon about-icon--blue">&#9889;</div>
+              <div class="ios-feature-row__content">
+                <div class="ios-feature-row__title">Оптимальные сроки</div>
+                <div class="ios-feature-row__desc">Бани — от 20 дней, коттеджи — от 60 дней. Чёткое соблюдение графика</div>
+              </div>
+            </div>
+            <div class="ios-feature-row">
+              <div class="ios-feature-row__icon about-icon--purple">&#128260;</div>
+              <div class="ios-feature-row__content">
+                <div class="ios-feature-row__title">Полный цикл работ</div>
+                <div class="ios-feature-row__desc">Проектирование, производство, доставка, строительство и отделка</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-showcase">
+          <div class="about-showcase__card">
+            <span class="about-showcase__icon">&#127969;</span>
+            <div class="about-showcase__overlay">
+              <div class="about-showcase__overlay-title">Более 35 лет на рынке</div>
+              <div class="about-showcase__overlay-sub">Полный цикл деревянного домостроения</div>
+            </div>
+          </div>
+          <div class="about-showcase__action"><a href="#" class="ios-btn ios-btn--primary ios-btn--pill">Узнать больше</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       08. ADVANTAGES
+       ============================================ -->
+  <section class="ios-section ios-bg-grouped">
+    <div class="ios-container">
+      <div class="ios-section__header advantages-header">
+        <h2 class="ios-section__title">Почему выбирают Зодчий</h2>
+        <p class="ios-section__subtitle" style="margin-left:auto;margin-right:auto;">10 причин доверить строительство нам</p>
+      </div>
+      <div class="advantages-grid">
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--orange"><span>&#x1F3C6;</span></div><h3 class="advantage-card__title">Опыт более 30 лет</h3><p class="advantage-card__desc">Работаем с 1989 года, построили 211 000+ домов</p></div>
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--blue"><span>&#x1F3E2;</span></div><h3 class="advantage-card__title">Представительства</h3><p class="advantage-card__desc">Офисы в Москве, Туле и 18 регионах России</p></div>
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--purple"><span>&#x1F465;</span></div><h3 class="advantage-card__title">Сотни тысяч клиентов</h3><p class="advantage-card__desc">Доверие подтверждено реальными отзывами</p></div>
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--green"><span>&#x1F3ED;</span></div><h3 class="advantage-card__title">Собственное производство</h3><p class="advantage-card__desc">Полный контроль качества на каждом этапе</p></div>
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--red"><span>&#x1F477;</span></div><h3 class="advantage-card__title">Опытные бригады</h3><p class="advantage-card__desc">Профессиональные строители с многолетним стажем</p></div>
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--teal"><span>&#x23F1;&#xFE0F;</span></div><h3 class="advantage-card__title">Короткие сроки</h3><p class="advantage-card__desc">Бани от 20 дней, дома от 60 дней</p></div>
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--pink"><span>&#x1F4B3;</span></div><h3 class="advantage-card__title">Кредитование</h3><p class="advantage-card__desc">Рассрочка и ипотека, материнский капитал</p></div>
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--indigo"><span>&#x1F30D;</span></div><h3 class="advantage-card__title">Помощь с участком</h3><p class="advantage-card__desc">Подбор участка через партнёрскую сеть</p></div>
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--yellow"><span>&#x1F4D0;</span></div><h3 class="advantage-card__title">Индивидуальные проекты</h3><p class="advantage-card__desc">Разработка уникального дома по вашим пожеланиям</p></div>
+        <div class="ios-card advantage-card"><div class="advantage-card__icon advantage-card__icon--brand"><span>&#x1F6E1;&#xFE0F;</span></div><h3 class="advantage-card__title">Гарантия качества</h3><p class="advantage-card__desc">Официальная гарантия на все виды работ</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       09. TECHNOLOGIES
+       ============================================ -->
+  <section class="ios-section ios-bg-white">
+    <div class="ios-container">
+      <div class="ios-section__header tech-header">
+        <h2 class="ios-section__title">Технологии строительства</h2>
+        <p class="ios-section__subtitle" style="margin-left:auto;margin-right:auto;">Используем проверенные временем методы</p>
+      </div>
+      <div class="tech-segmented-wrap">
+        <div class="ios-segmented">
+          <button class="ios-segmented__item ios-segmented__item--active" type="button">Клееный брус</button>
+          <button class="ios-segmented__item" type="button">Каркасная технология</button>
+        </div>
+      </div>
+      <div class="ios-grid ios-grid--2">
+        <div class="ios-card tech-card tech-card--wood">
+          <div class="tech-card__visual tech-card__visual--wood">
+            <span class="tech-card__badge tech-card__badge--brand">Премиум</span>
+            <span class="tech-card__icon" role="img" aria-label="Клееный брус">&#x1FAB5;</span>
+          </div>
+          <div class="tech-card__body">
+            <h3 class="tech-card__title">Клееный брус</h3>
+            <p class="tech-card__description">Изготавливается из подготовленного дерева. Несколько ламелей склеиваются между собой. Пазы для быстрой и точной сборки. Гладкие и ровные стены без дополнительной отделки.</p>
+            <ul class="tech-card__features">
+              <li class="tech-card__feature"><span class="tech-card__feature-check">&#10003;</span>Экологичный натуральный материал</li>
+              <li class="tech-card__feature"><span class="tech-card__feature-check">&#10003;</span>Минимальная усадка</li>
+              <li class="tech-card__feature"><span class="tech-card__feature-check">&#10003;</span>Быстрая сборка на участке</li>
+              <li class="tech-card__feature"><span class="tech-card__feature-check">&#10003;</span>Не требует внутренней отделки</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ios-card tech-card tech-card--frame">
+          <div class="tech-card__visual tech-card__visual--frame">
+            <span class="tech-card__badge tech-card__badge--blue">Популярное</span>
+            <span class="tech-card__icon" role="img" aria-label="Каркас">&#x1F3D7;&#xFE0F;</span>
+          </div>
+          <div class="tech-card__body">
+            <h3 class="tech-card__title">Каркасная технология</h3>
+            <p class="tech-card__description">Несущие конструктивные элементы с утеплителем. Быстрая сборка на участке. Подходит для дач и круглогодичных коттеджей.</p>
+            <ul class="tech-card__features">
+              <li class="tech-card__feature"><span class="tech-card__feature-check">&#10003;</span>Быстрое возведение</li>
+              <li class="tech-card__feature"><span class="tech-card__feature-check">&#10003;</span>Отличная теплоизоляция</li>
+              <li class="tech-card__feature"><span class="tech-card__feature-check">&#10003;</span>Доступная стоимость</li>
+              <li class="tech-card__feature"><span class="tech-card__feature-check">&#10003;</span>Разнообразие планировок</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="tech-cta">
+        <p class="tech-cta__text">Мечтаете о собственном доме?</p>
+        <a href="#" class="ios-btn ios-btn--primary ios-btn--lg ios-btn--pill">Начать проект</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       10. FOOTER
+       ============================================ -->
+  <footer class="ios-footer">
+    <div class="ios-container">
+      <div class="ios-footer__grid">
+        <div class="ios-footer__column">
+          <h4 class="ios-footer__heading">Каталог</h4>
+          <ul class="ios-footer__list">
+            <li><a href="#">Коттеджи</a></li>
+            <li><a href="#">Большие дома</a></li>
+            <li><a href="#">Дачные дома</a></li>
+            <li><a href="#">Бани</a></li>
+            <li><a href="#">Индивидуальные проекты</a></li>
+          </ul>
+        </div>
+        <div class="ios-footer__column">
+          <h4 class="ios-footer__heading">Услуги</h4>
+          <ul class="ios-footer__list">
+            <li><a href="#">Достройка</a></li>
+            <li><a href="#">Инженерные коммуникации</a></li>
+            <li><a href="#">Фундаменты</a></li>
+            <li><a href="#">Кредитование</a></li>
+          </ul>
+        </div>
+        <div class="ios-footer__column">
+          <h4 class="ios-footer__heading">О компании</h4>
+          <ul class="ios-footer__list">
+            <li><a href="#">Новости</a></li>
+            <li><a href="#">Акции</a></li>
+            <li><a href="#">Технология</a></li>
+            <li><a href="#">Отзывы</a></li>
+            <li><a href="#">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="ios-footer__column ios-footer__column-contacts">
+          <h4 class="ios-footer__heading">Контакты</h4>
+          <a href="tel:+74955329099" class="ios-footer__phone">+7 (495) 532-90-99</a>
+          <div class="ios-footer__buttons">
+            <button class="ios-btn ios-btn--primary ios-btn--sm">Обратный звонок</button>
+            <button class="ios-btn ios-btn--ghost ios-btn--sm">Задать вопрос</button>
+          </div>
+          <div class="ios-footer__social">
+            <a href="#">Дзен</a><span class="ios-footer__social-separator">&middot;</span>
+            <a href="#">VK</a><span class="ios-footer__social-separator">&middot;</span>
+            <a href="#">OK</a><span class="ios-footer__social-separator">&middot;</span>
+            <a href="#">YouTube</a>
+          </div>
+        </div>
+      </div>
+      <div class="ios-footer__bottom">
+        <div class="ios-footer__copyright">&copy; 2000&ndash;2026 ООО ЗОДЧИЙ. Строительство деревянных домов и бань под ключ.</div>
+        <div class="ios-footer__bottom-links">
+          <a href="#">Карта сайта</a>
+          <a href="#">Политика конфиденциальности</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================
+       JavaScript
+       ============================================ -->
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.header-hamburger');
+      const isOpen = menu.classList.contains('is-open');
+      if (isOpen) {
+        menu.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      } else {
+        menu.classList.add('is-open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    document.getElementById('mobileMenu').addEventListener('click', function(e) {
+      if (e.target === this) toggleMobileMenu();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const menu = document.getElementById('mobileMenu');
+        if (menu.classList.contains('is-open')) toggleMobileMenu();
+      }
+    });
+  </script>
+
+</body>
+</html>

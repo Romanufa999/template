@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ЗОДЧИЙ — Строительство деревянных домов</title>
+  <link rel="stylesheet" href="../ios-ui-kit.css">
+  <style>
+    /* ---- Header Section-Specific Styles ---- */
+
+    /* Top utility bar */
+    .header-topbar {
+      background: var(--color-bg-tertiary);
+      border-bottom: 0.5px solid var(--color-separator);
+      font-size: var(--text-caption1);
+      color: var(--color-text-tertiary);
+    }
+
+    .header-topbar__inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--content-padding);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 32px;
+      gap: var(--space-6);
+    }
+
+    .header-topbar__phone {
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      font-size: var(--text-footnote);
+      letter-spacing: var(--tracking-normal);
+    }
+
+    .header-topbar__phone:hover {
+      color: var(--color-brand);
+      opacity: 1;
+    }
+
+    .header-socials {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .header-social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-xs);
+      font-size: var(--text-caption2);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+      transition: all var(--duration-fast) var(--ease-default);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .header-social-icon:hover {
+      color: var(--color-brand);
+      background: var(--color-brand-bg);
+      opacity: 1;
+    }
+
+    /* Navbar adjustments */
+    .ios-navbar__actions {
+      gap: var(--space-3);
+    }
+
+    .header-phone-link {
+      font-size: var(--text-subhead);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      white-space: nowrap;
+      letter-spacing: var(--tracking-normal);
+    }
+
+    .header-phone-link:hover {
+      color: var(--color-brand);
+      opacity: 1;
+    }
+
+    /* Hamburger button for mobile */
+    .header-hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--color-text-primary);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      border-radius: var(--radius-sm);
+      transition: background var(--duration-fast) var(--ease-default);
+    }
+
+    .header-hamburger:hover {
+      background: var(--color-fill-quaternary);
+    }
+
+    .header-hamburger:active {
+      background: var(--color-fill-tertiary);
+    }
+
+    /* Mobile menu overlay */
+    .header-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity var(--duration-normal) var(--ease-ios);
+    }
+
+    .header-mobile-menu.is-open {
+      opacity: 1;
+    }
+
+    .header-mobile-menu__panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 300px;
+      max-width: 85vw;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: saturate(180%) blur(var(--blur-xl));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--blur-xl));
+      box-shadow: var(--shadow-xl);
+      transform: translateX(100%);
+      transition: transform var(--duration-slow) var(--ease-ios);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .header-mobile-menu.is-open .header-mobile-menu__panel {
+      transform: translateX(0);
+    }
+
+    .header-mobile-menu__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 0.5px solid var(--color-separator);
+    }
+
+    .header-mobile-menu__close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--color-fill-tertiary);
+      border: none;
+      font-size: 18px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .header-mobile-menu__nav {
+      padding: var(--space-2) 0;
+    }
+
+    .header-mobile-menu__link {
+      display: block;
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--text-body);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-primary);
+      transition: background var(--duration-fast) var(--ease-default);
+    }
+
+    .header-mobile-menu__link:hover {
+      background: var(--color-fill-quaternary);
+      opacity: 1;
+    }
+
+    .header-mobile-menu__footer {
+      padding: var(--space-5);
+      border-top: 0.5px solid var(--color-separator);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .header-mobile-menu__phone {
+      font-size: var(--text-title3);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+    }
+
+    .header-mobile-menu__socials {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .header-mobile-social {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--color-fill-quaternary);
+      font-size: var(--text-caption1);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: all var(--duration-fast) var(--ease-default);
+    }
+
+    .header-mobile-social:hover {
+      background: var(--color-brand-bg);
+      color: var(--color-brand);
+      opacity: 1;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 1024px) {
+      .header-topbar__inner {
+        gap: var(--space-4);
+      }
+
+      .ios-navbar__link {
+        padding: var(--space-2);
+        font-size: var(--text-footnote);
+      }
+
+      .ios-navbar__links {
+        gap: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-topbar {
+        display: none;
+      }
+
+      .header-hamburger {
+        display: flex;
+      }
+
+      .header-phone-link {
+        font-size: var(--text-footnote);
+      }
+
+      .header-mobile-menu {
+        display: block;
+        pointer-events: none;
+      }
+
+      .header-mobile-menu.is-open {
+        pointer-events: auto;
+      }
+
+      .ios-navbar__actions .ios-btn {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-phone-link {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Utility Bar -->
+  <div class="header-topbar">
+    <div class="header-topbar__inner">
+      <div class="header-socials">
+        <a href="#" class="header-social-icon" title="Дзен" aria-label="Яндекс Дзен">Д</a>
+        <a href="#" class="header-social-icon" title="ВКонтакте" aria-label="ВКонтакте">VK</a>
+        <a href="#" class="header-social-icon" title="Одноклассники" aria-label="Одноклассники">OK</a>
+        <a href="#" class="header-social-icon" title="YouTube" aria-label="YouTube">YT</a>
+      </div>
+      <a href="tel:+74955329099" class="header-topbar__phone">+7 (495) 532-90-99</a>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <header class="ios-navbar" role="banner">
+    <nav class="ios-navbar__inner" aria-label="Основная навигация">
+
+      <!-- Logo -->
+      <a href="/" class="ios-navbar__logo" aria-label="ЗОДЧИЙ — На главную">
+        ЗОДЧИЙ
+      </a>
+
+      <!-- Navigation Links -->
+      <ul class="ios-navbar__links">
+        <li><a href="#catalog" class="ios-navbar__link">Каталог</a></li>
+        <li><a href="#cottages" class="ios-navbar__link">Коттеджи</a></li>
+        <li><a href="#big-houses" class="ios-navbar__link">Большие дома</a></li>
+        <li><a href="#dachas" class="ios-navbar__link">Дачные дома</a></li>
+        <li><a href="#baths" class="ios-navbar__link">Бани</a></li>
+        <li><a href="#completion" class="ios-navbar__link">Достройка</a></li>
+        <li><a href="#credit" class="ios-navbar__link">Кредит</a></li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="ios-navbar__actions">
+        <a href="tel:+74955329099" class="header-phone-link">+7 (495) 532-90-99</a>
+        <button class="ios-btn ios-btn--primary ios-btn--sm" type="button" onclick="alert('Форма обратного звонка')">
+          Обратный звонок
+        </button>
+        <button class="header-hamburger" type="button" aria-label="Открыть меню" aria-expanded="false" onclick="toggleMobileMenu()">
+          &#9776;
+        </button>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="header-mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-label="Мобильное меню">
+    <div class="header-mobile-menu__panel">
+      <div class="header-mobile-menu__header">
+        <span class="ios-navbar__logo" style="font-size: var(--text-title3);">ЗОДЧИЙ</span>
+        <button class="header-mobile-menu__close" type="button" aria-label="Закрыть меню" onclick="toggleMobileMenu()">
+          &times;
+        </button>
+      </div>
+      <nav class="header-mobile-menu__nav" aria-label="Мобильная навигация">
+        <a href="#catalog" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Каталог</a>
+        <a href="#cottages" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Коттеджи</a>
+        <a href="#big-houses" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Большие дома</a>
+        <a href="#dachas" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Дачные дома</a>
+        <a href="#baths" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Бани</a>
+        <a href="#completion" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Достройка</a>
+        <a href="#credit" class="header-mobile-menu__link" onclick="toggleMobileMenu()">Кредит</a>
+      </nav>
+      <div class="header-mobile-menu__footer">
+        <a href="tel:+74955329099" class="header-mobile-menu__phone">+7 (495) 532-90-99</a>
+        <button class="ios-btn ios-btn--primary ios-btn--full" type="button" onclick="alert('Форма обратного звонка')">
+          Обратный звонок
+        </button>
+        <div class="header-mobile-menu__socials">
+          <a href="#" class="header-mobile-social" title="Дзен" aria-label="Яндекс Дзен">Д</a>
+          <a href="#" class="header-mobile-social" title="ВКонтакте" aria-label="ВКонтакте">VK</a>
+          <a href="#" class="header-mobile-social" title="Одноклассники" aria-label="Одноклассники">OK</a>
+          <a href="#" class="header-mobile-social" title="YouTube" aria-label="YouTube">YT</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spacer content to demonstrate sticky behavior -->
+  <main class="ios-container" style="padding-top: var(--space-8); padding-bottom: var(--space-24);">
+    <div style="height: 200vh; display:flex; align-items:flex-start; padding-top: var(--space-8);">
+      <p class="ios-subhead">Прокрутите страницу, чтобы увидеть эффект закрепленной навигации с размытием.</p>
+    </div>
+  </main>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.header-hamburger');
+      const isOpen = menu.classList.contains('is-open');
+
+      if (isOpen) {
+        menu.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      } else {
+        menu.classList.add('is-open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // Close mobile menu on backdrop click
+    document.getElementById('mobileMenu').addEventListener('click', function(e) {
+      if (e.target === this) {
+        toggleMobileMenu();
+      }
+    });
+
+    // Close mobile menu on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const menu = document.getElementById('mobileMenu');
+        if (menu.classList.contains('is-open')) {
+          toggleMobileMenu();
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

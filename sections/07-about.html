@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>О компании Зодчий — ZOD.RU</title>
+  <link rel="stylesheet" href="../ios-ui-kit.css">
+  <style>
+    /* ---- About Section-Specific Styles ---- */
+
+    .about-section {
+      background: var(--color-bg-primary);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: start;
+    }
+
+    /* Left column */
+    .about-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .about-lead {
+      font-size: var(--text-title3);
+      font-weight: var(--weight-regular);
+      line-height: var(--leading-relaxed);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-6);
+      max-width: 520px;
+    }
+
+    .about-features {
+      margin-top: var(--space-8);
+    }
+
+    /* Right column — showcase card */
+    .about-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .about-showcase__card {
+      position: relative;
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      background: linear-gradient(145deg, #FFF8E1 0%, #FFECB3 30%, #FFE0B2 60%, #D7CCC8 100%);
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+      transition: transform var(--duration-normal) var(--ease-ios),
+                  box-shadow var(--duration-normal) var(--ease-ios);
+    }
+
+    .about-showcase__card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .about-showcase__icon {
+      font-size: 96px;
+      line-height: 1;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+      transition: transform var(--duration-slow) var(--ease-spring);
+    }
+
+    .about-showcase__card:hover .about-showcase__icon {
+      transform: scale(1.08);
+    }
+
+    /* Subtle overlay label on the card */
+    .about-showcase__overlay {
+      position: absolute;
+      bottom: var(--space-5);
+      left: var(--space-5);
+      right: var(--space-5);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: saturate(180%) blur(var(--blur-lg));
+      -webkit-backdrop-filter: saturate(180%) blur(var(--blur-lg));
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-5);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .about-showcase__overlay-title {
+      font-size: var(--text-headline);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .about-showcase__overlay-sub {
+      font-size: var(--text-footnote);
+      color: var(--color-text-tertiary);
+      margin-top: var(--space-1);
+    }
+
+    .about-showcase__action {
+      text-align: center;
+    }
+
+    /* Feature icon color variants */
+    .about-icon--green {
+      background: var(--color-green);
+      color: #FFFFFF;
+    }
+
+    .about-icon--blue {
+      background: var(--color-blue);
+      color: #FFFFFF;
+    }
+
+    .about-icon--purple {
+      background: var(--color-purple);
+      color: #FFFFFF;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 1024px) {
+      .about-grid {
+        gap: var(--space-10);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-10);
+      }
+
+      .about-lead {
+        max-width: 100%;
+      }
+
+      .about-showcase__card {
+        aspect-ratio: 16 / 10;
+      }
+
+      .about-showcase__icon {
+        font-size: 72px;
+      }
+
+      .about-showcase__action {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-showcase__card {
+        aspect-ratio: 3 / 2;
+      }
+
+      .about-showcase__icon {
+        font-size: 56px;
+      }
+
+      .about-showcase__overlay {
+        left: var(--space-3);
+        right: var(--space-3);
+        bottom: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== ABOUT COMPANY SECTION ====== -->
+  <section class="ios-section about-section" id="about">
+    <div class="ios-container">
+
+      <!-- Section Header -->
+      <div class="ios-section__header">
+        <h2 class="ios-section__title">О компании Зодчий</h2>
+      </div>
+
+      <!-- Two-Column Layout -->
+      <div class="about-grid">
+
+        <!-- LEFT COLUMN — Text Content -->
+        <div class="about-text">
+
+          <!-- Lead Paragraph -->
+          <p class="about-lead">Компания &laquo;Зодчий&raquo; &mdash; лидер рынка деревянного домостроения с 1989 года. Мы обеспечиваем полный цикл: от заготовки сырья до строительства дома под ключ.</p>
+
+          <!-- Feature Rows -->
+          <div class="about-features">
+
+            <!-- Feature 1: Quality -->
+            <div class="ios-feature-row">
+              <div class="ios-feature-row__icon about-icon--green">
+                &#11088;
+              </div>
+              <div class="ios-feature-row__content">
+                <div class="ios-feature-row__title">Отличное качество</div>
+                <div class="ios-feature-row__desc">Опытные специалисты и проверенные материалы. Более 211 000 построенных домов</div>
+              </div>
+            </div>
+
+            <!-- Feature 2: Speed -->
+            <div class="ios-feature-row">
+              <div class="ios-feature-row__icon about-icon--blue">
+                &#9889;
+              </div>
+              <div class="ios-feature-row__content">
+                <div class="ios-feature-row__title">Оптимальные сроки</div>
+                <div class="ios-feature-row__desc">Бани — от 20 дней, коттеджи — от 60 дней. Чёткое соблюдение графика</div>
+              </div>
+            </div>
+
+            <!-- Feature 3: Full cycle -->
+            <div class="ios-feature-row">
+              <div class="ios-feature-row__icon about-icon--purple">
+                &#128260;
+              </div>
+              <div class="ios-feature-row__content">
+                <div class="ios-feature-row__title">Полный цикл работ</div>
+                <div class="ios-feature-row__desc">Проектирование, производство, доставка, строительство и отделка</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN — Showcase Image Card + Button -->
+        <div class="about-showcase">
+
+          <!-- Showcase Card with Warm Gradient -->
+          <div class="about-showcase__card">
+            <span class="about-showcase__icon">&#127969;</span>
+            <!-- Glass overlay label -->
+            <div class="about-showcase__overlay">
+              <div class="about-showcase__overlay-title">Более 35 лет на рынке</div>
+              <div class="about-showcase__overlay-sub">Полный цикл деревянного домостроения</div>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="about-showcase__action">
+            <a href="#" class="ios-btn ios-btn--primary ios-btn--pill">Узнать больше</a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

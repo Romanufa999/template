@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Почему выбирают Зодчий — ZOD.RU</title>
+  <link rel="stylesheet" href="../ios-ui-kit.css">
+  <style>
+    /* === Advantages Section Custom Styles === */
+
+    .advantages-header {
+      text-align: center;
+      margin-bottom: var(--space-10);
+    }
+
+    /* 5-column grid on desktop, responsive down */
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-4);
+    }
+
+    /* Individual advantage card */
+    .advantage-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: var(--space-6) var(--space-4);
+    }
+
+    /* Icon circle */
+    .advantage-card__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      line-height: 1;
+      margin-bottom: var(--space-4);
+      flex-shrink: 0;
+      transition: transform var(--duration-normal) var(--ease-spring);
+    }
+
+    .advantage-card:hover .advantage-card__icon {
+      transform: scale(1.1);
+    }
+
+    /* Icon color variants using iOS system colors */
+    .advantage-card__icon--orange {
+      background: rgba(255, 149, 0, 0.14);
+    }
+
+    .advantage-card__icon--blue {
+      background: rgba(0, 122, 255, 0.12);
+    }
+
+    .advantage-card__icon--purple {
+      background: rgba(175, 82, 222, 0.12);
+    }
+
+    .advantage-card__icon--green {
+      background: rgba(52, 199, 89, 0.12);
+    }
+
+    .advantage-card__icon--red {
+      background: rgba(255, 59, 48, 0.12);
+    }
+
+    .advantage-card__icon--teal {
+      background: rgba(90, 200, 250, 0.14);
+    }
+
+    .advantage-card__icon--pink {
+      background: rgba(255, 45, 85, 0.12);
+    }
+
+    .advantage-card__icon--indigo {
+      background: rgba(88, 86, 214, 0.12);
+    }
+
+    .advantage-card__icon--yellow {
+      background: rgba(255, 204, 0, 0.16);
+    }
+
+    .advantage-card__icon--brand {
+      background: rgba(46, 125, 50, 0.12);
+    }
+
+    /* Card title */
+    .advantage-card__title {
+      font-size: var(--text-subhead);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-1);
+      line-height: var(--leading-snug);
+    }
+
+    /* Card description */
+    .advantage-card__desc {
+      font-size: var(--text-footnote);
+      color: var(--color-text-tertiary);
+      line-height: var(--leading-normal);
+    }
+
+    /* Responsive: tablet — 3 columns + 2 columns on second row */
+    @media (max-width: 1024px) {
+      .advantages-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Responsive: mobile — 2 columns */
+    @media (max-width: 768px) {
+      .advantages-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
+      }
+
+      .advantage-card {
+        padding: var(--space-4) var(--space-3);
+      }
+
+      .advantage-card__icon {
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+        margin-bottom: var(--space-3);
+      }
+    }
+
+    /* Responsive: small mobile — 1 column */
+    @media (max-width: 480px) {
+      .advantages-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======== ADVANTAGES SECTION ======== -->
+  <section class="ios-section ios-bg-grouped">
+    <div class="ios-container">
+
+      <!-- Section Header -->
+      <div class="ios-section__header advantages-header">
+        <h2 class="ios-section__title">Почему выбирают Зодчий</h2>
+        <p class="ios-section__subtitle" style="margin-left: auto; margin-right: auto;">
+          10 причин доверить строительство нам
+        </p>
+      </div>
+
+      <!-- Advantages Grid: 5×2 on desktop -->
+      <div class="advantages-grid">
+
+        <!-- 1. Опыт более 30 лет -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--orange">
+            <span role="img" aria-label="Опыт">🏆</span>
+          </div>
+          <h3 class="advantage-card__title">Опыт более 30 лет</h3>
+          <p class="advantage-card__desc">Работаем с 1989 года, построили 211 000+ домов</p>
+        </div>
+
+        <!-- 2. Представительства -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--blue">
+            <span role="img" aria-label="Представительства">🏢</span>
+          </div>
+          <h3 class="advantage-card__title">Представительства</h3>
+          <p class="advantage-card__desc">Офисы в Москве, Туле и 18 регионах России</p>
+        </div>
+
+        <!-- 3. Сотни тысяч клиентов -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--purple">
+            <span role="img" aria-label="Клиенты">👥</span>
+          </div>
+          <h3 class="advantage-card__title">Сотни тысяч клиентов</h3>
+          <p class="advantage-card__desc">Доверие подтверждено реальными отзывами</p>
+        </div>
+
+        <!-- 4. Собственное производство -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--green">
+            <span role="img" aria-label="Производство">🏭</span>
+          </div>
+          <h3 class="advantage-card__title">Собственное производство</h3>
+          <p class="advantage-card__desc">Полный контроль качества на каждом этапе</p>
+        </div>
+
+        <!-- 5. Опытные бригады -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--red">
+            <span role="img" aria-label="Бригады">👷</span>
+          </div>
+          <h3 class="advantage-card__title">Опытные бригады</h3>
+          <p class="advantage-card__desc">Профессиональные строители с многолетним стажем</p>
+        </div>
+
+        <!-- 6. Короткие сроки -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--teal">
+            <span role="img" aria-label="Сроки">⏱️</span>
+          </div>
+          <h3 class="advantage-card__title">Короткие сроки</h3>
+          <p class="advantage-card__desc">Бани от 20 дней, дома от 60 дней</p>
+        </div>
+
+        <!-- 7. Кредитование -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--pink">
+            <span role="img" aria-label="Кредитование">💳</span>
+          </div>
+          <h3 class="advantage-card__title">Кредитование</h3>
+          <p class="advantage-card__desc">Рассрочка и ипотека, материнский капитал</p>
+        </div>
+
+        <!-- 8. Помощь с земельным участком -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--indigo">
+            <span role="img" aria-label="Земельный участок">🌍</span>
+          </div>
+          <h3 class="advantage-card__title">Помощь с земельным участком</h3>
+          <p class="advantage-card__desc">Подбор участка через партнёрскую сеть</p>
+        </div>
+
+        <!-- 9. Индивидуальные проекты -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--yellow">
+            <span role="img" aria-label="Проекты">📐</span>
+          </div>
+          <h3 class="advantage-card__title">Индивидуальные проекты</h3>
+          <p class="advantage-card__desc">Разработка уникального дома по вашим пожеланиям</p>
+        </div>
+
+        <!-- 10. Гарантия качества -->
+        <div class="ios-card advantage-card">
+          <div class="advantage-card__icon advantage-card__icon--brand">
+            <span role="img" aria-label="Гарантия">🛡️</span>
+          </div>
+          <h3 class="advantage-card__title">Гарантия качества</h3>
+          <p class="advantage-card__desc">Официальная гарантия на все виды работ</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

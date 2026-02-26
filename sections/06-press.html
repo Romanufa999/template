@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZOD.RU — Пресса о нас</title>
+  <link rel="stylesheet" href="../ios-ui-kit.css">
+  <style>
+    /* Press section-specific styles */
+    .press-section {
+      background: var(--color-bg-grouped);
+    }
+
+    .ios-section__header {
+      text-align: center;
+    }
+
+    .ios-section__subtitle {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .press-list {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .ios-grouped-card__item {
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .ios-grouped-card__icon--blue {
+      background: rgba(0, 122, 255, 0.12);
+    }
+
+    .ios-grouped-card__icon--green {
+      background: rgba(52, 199, 89, 0.12);
+    }
+
+    .ios-grouped-card__icon--orange {
+      background: rgba(255, 149, 0, 0.14);
+    }
+
+    .ios-grouped-card__label-source {
+      font-size: var(--text-subhead);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .ios-grouped-card__label-date {
+      font-size: var(--text-caption1);
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+
+    .ios-grouped-card__label-title {
+      font-size: var(--text-subhead);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-1);
+      line-height: var(--leading-normal);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== PRESS / MEDIA SECTION ====== -->
+  <section class="ios-section press-section">
+    <div class="ios-container">
+
+      <!-- Section Header -->
+      <div class="ios-section__header">
+        <h2 class="ios-section__title">Пресса о нас</h2>
+        <p class="ios-section__subtitle">Что пишут о компании Зодчий ведущие СМИ</p>
+      </div>
+
+      <!-- Press Mentions List -->
+      <div class="press-list">
+        <div class="ios-grouped-card">
+
+          <!-- 1. Рослесинфорг -->
+          <a href="#" class="ios-grouped-card__item">
+            <div class="ios-grouped-card__icon ios-grouped-card__icon--blue">📄</div>
+            <div class="ios-grouped-card__label">
+              <div class="ios-grouped-card__label-source">Рослесинфорг</div>
+              <div class="ios-grouped-card__label-date">11 августа 2022</div>
+              <div class="ios-grouped-card__label-title">Деревянные дома предпочитают россияне</div>
+            </div>
+            <span class="ios-grouped-card__chevron"></span>
+          </a>
+
+          <!-- 2. Строительный портал -->
+          <a href="#" class="ios-grouped-card__item">
+            <div class="ios-grouped-card__icon ios-grouped-card__icon--green">📰</div>
+            <div class="ios-grouped-card__label">
+              <div class="ios-grouped-card__label-source">Строительный портал</div>
+              <div class="ios-grouped-card__label-date">Декабрь 2018</div>
+              <div class="ios-grouped-card__label-title">Дом мечты: как его построить и не разориться</div>
+            </div>
+            <span class="ios-grouped-card__chevron"></span>
+          </a>
+
+          <!-- 3. Домашний журнал -->
+          <a href="#" class="ios-grouped-card__item">
+            <div class="ios-grouped-card__icon ios-grouped-card__icon--orange">🏠</div>
+            <div class="ios-grouped-card__label">
+              <div class="ios-grouped-card__label-source">Домашний журнал</div>
+              <div class="ios-grouped-card__label-date">Июнь 2018</div>
+              <div class="ios-grouped-card__label-title">Три правила уюта для современного дома</div>
+            </div>
+            <span class="ios-grouped-card__chevron"></span>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>
