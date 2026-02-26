@@ -24,11 +24,11 @@
 |-----|------------------------|--------|
 | 89  | 1header                | 11410  |
 | 100 | 2hero                  | 12691  |
-| 96  | 3benefits              | 4531   |
-| 99  | 3services              | 11766  |
-| 91  | 4catalog               | 27114  |
+| 101 | 3benefits              | 12447  |
+| 102 | 3services              | 16810  |
+| 103 | 4catalog               | 32331  |
 | 92  | 5portfolio             | 19468  |
 | 93  | 6technology            | 12800  |
 | 94  | 7reviews               | 12439  |
-| 95  | 8about                 | 16862  |
-| 98  | 9faq-contacts-footer   | 22409  |
+| 104 | 8about                 | 25304  |
+| 105 | 9faq-contacts-footer   | 40822  |
