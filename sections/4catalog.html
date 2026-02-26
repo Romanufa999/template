@@ -1,0 +1,502 @@
+<section id="catalog" class="relative bg-[#030303] py-24 sm:py-32 lg:py-40 overflow-hidden font-['Manrope',_sans-serif]">
+
+  <!-- Ambient background glows -->
+  <div class="absolute top-1/4 left-1/4 w-[900px] h-[900px] rounded-full bg-white/[0.007] blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full bg-white/[0.005] blur-3xl pointer-events-none"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section Label -->
+    <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out mb-6">
+      <span class="text-xs font-['Inter',_sans-serif] tracking-[0.3em] uppercase text-zinc-500">03. Каталог проектов</span>
+    </div>
+
+    <!-- Heading -->
+    <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out mb-4">
+      <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]">
+        <span class="bg-clip-text text-transparent bg-gradient-to-br from-white via-zinc-300 to-zinc-600">Проекты</span>
+        <br>
+        <span class="text-white">домов</span>
+      </h2>
+    </div>
+
+    <!-- Subtitle -->
+    <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out mb-12 lg:mb-16">
+      <p class="text-zinc-400 text-base sm:text-lg max-w-xl leading-relaxed font-['Inter',_sans-serif]">
+        Готовые решения для загородного строительства с фиксированной стоимостью и гарантией качества
+      </p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out mb-10 lg:mb-14">
+      <div class="flex flex-wrap gap-2 sm:gap-3">
+        <button data-filter="all" class="catalog-filter-btn active relative px-5 py-2.5 text-sm font-medium rounded-full border transition-all duration-500 bg-white/[0.08] border-white/[0.15] text-white">
+          Все
+        </button>
+        <button data-filter="small" class="catalog-filter-btn relative px-5 py-2.5 text-sm font-medium rounded-full border transition-all duration-500 bg-white/[0.02] border-white/[0.06] text-zinc-400 hover:bg-white/[0.04] hover:border-white/[0.1] hover:text-zinc-200">
+          До 100 м²
+        </button>
+        <button data-filter="medium" class="catalog-filter-btn relative px-5 py-2.5 text-sm font-medium rounded-full border transition-all duration-500 bg-white/[0.02] border-white/[0.06] text-zinc-400 hover:bg-white/[0.04] hover:border-white/[0.1] hover:text-zinc-200">
+          100–150 м²
+        </button>
+        <button data-filter="large" class="catalog-filter-btn relative px-5 py-2.5 text-sm font-medium rounded-full border transition-all duration-500 bg-white/[0.02] border-white/[0.06] text-zinc-400 hover:bg-white/[0.04] hover:border-white/[0.1] hover:text-zinc-200">
+          Более 150 м²
+        </button>
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 mb-16 lg:mb-20">
+
+      <!-- Card 1: Скандинавия 120 -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out catalog-card" data-category="medium" style="transition-delay: 100ms">
+        <div class="group relative h-full bg-white/[0.02] backdrop-blur-2xl border border-white/[0.06] rounded-2xl sm:rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.03)] transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.1] hover:-translate-y-1 hover:shadow-[0_0_100px_rgba(255,255,255,0.06)] overflow-hidden">
+          <!-- Image Placeholder -->
+          <div class="relative aspect-video overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-zinc-800/80 via-zinc-900 to-zinc-950"></div>
+            <!-- Grid pattern overlay -->
+            <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <!-- House silhouette icon -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <i data-lucide="home" class="w-16 h-16 text-white/[0.06] transition-all duration-700 group-hover:text-white/[0.1] group-hover:scale-110"></i>
+            </div>
+            <!-- Dimensions badge -->
+            <div class="absolute bottom-3 left-3 flex items-center gap-1.5 px-3 py-1.5 bg-black/60 backdrop-blur-xl rounded-lg border border-white/[0.08]">
+              <i data-lucide="maximize" class="w-3 h-3 text-zinc-400"></i>
+              <span class="text-xs font-medium text-zinc-300 font-['Inter',_sans-serif]">120 м²</span>
+            </div>
+            <!-- Tag badge -->
+            <div class="absolute top-3 right-3 px-3 py-1.5 bg-white/[0.12] backdrop-blur-xl rounded-lg border border-white/[0.15]">
+              <span class="text-[11px] font-semibold text-white font-['Inter',_sans-serif] tracking-wide uppercase">Хит продаж</span>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-5 sm:p-6">
+            <!-- House Name -->
+            <h3 class="text-xl sm:text-[22px] font-bold text-white mb-4 tracking-tight transition-all duration-500 group-hover:text-white/90">Скандинавия 120</h3>
+
+            <!-- Specs Row -->
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-5">
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">3 спальни</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">2 санузла</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">18 м²</span>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="h-px w-full bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent mb-5"></div>
+
+            <!-- Price + CTA Row -->
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs text-zinc-500 font-['Inter',_sans-serif] block mb-0.5">Стоимость</span>
+                <span class="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">от 3 200 000 ₽</span>
+              </div>
+              <button class="flex items-center gap-2 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm font-medium text-zinc-300 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white group/btn">
+                <span>Подробнее</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-0.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Хельсинки 85 -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out catalog-card" data-category="small" style="transition-delay: 200ms">
+        <div class="group relative h-full bg-white/[0.02] backdrop-blur-2xl border border-white/[0.06] rounded-2xl sm:rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.03)] transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.1] hover:-translate-y-1 hover:shadow-[0_0_100px_rgba(255,255,255,0.06)] overflow-hidden">
+          <!-- Image Placeholder -->
+          <div class="relative aspect-video overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-zinc-800/70 via-zinc-900 to-zinc-950"></div>
+            <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <i data-lucide="home" class="w-16 h-16 text-white/[0.06] transition-all duration-700 group-hover:text-white/[0.1] group-hover:scale-110"></i>
+            </div>
+            <!-- Dimensions badge -->
+            <div class="absolute bottom-3 left-3 flex items-center gap-1.5 px-3 py-1.5 bg-black/60 backdrop-blur-xl rounded-lg border border-white/[0.08]">
+              <i data-lucide="maximize" class="w-3 h-3 text-zinc-400"></i>
+              <span class="text-xs font-medium text-zinc-300 font-['Inter',_sans-serif]">85 м²</span>
+            </div>
+            <!-- Tag badge -->
+            <div class="absolute top-3 right-3 px-3 py-1.5 bg-emerald-500/[0.15] backdrop-blur-xl rounded-lg border border-emerald-400/[0.2]">
+              <span class="text-[11px] font-semibold text-emerald-300 font-['Inter',_sans-serif] tracking-wide uppercase">Для небольшой семьи</span>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-5 sm:p-6">
+            <h3 class="text-xl sm:text-[22px] font-bold text-white mb-4 tracking-tight transition-all duration-500 group-hover:text-white/90">Хельсинки 85</h3>
+
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-5">
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">2 спальни</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">1 санузел</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">12 м²</span>
+              </div>
+            </div>
+
+            <div class="h-px w-full bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent mb-5"></div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs text-zinc-500 font-['Inter',_sans-serif] block mb-0.5">Стоимость</span>
+                <span class="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">от 2 800 000 ₽</span>
+              </div>
+              <button class="flex items-center gap-2 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm font-medium text-zinc-300 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white group/btn">
+                <span>Подробнее</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-0.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Турку 150 -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out catalog-card" data-category="medium" style="transition-delay: 300ms">
+        <div class="group relative h-full bg-white/[0.02] backdrop-blur-2xl border border-white/[0.06] rounded-2xl sm:rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.03)] transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.1] hover:-translate-y-1 hover:shadow-[0_0_100px_rgba(255,255,255,0.06)] overflow-hidden">
+          <!-- Image Placeholder -->
+          <div class="relative aspect-video overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-zinc-800/60 via-zinc-900 to-zinc-950"></div>
+            <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <i data-lucide="home" class="w-16 h-16 text-white/[0.06] transition-all duration-700 group-hover:text-white/[0.1] group-hover:scale-110"></i>
+            </div>
+            <!-- Dimensions badge -->
+            <div class="absolute bottom-3 left-3 flex items-center gap-1.5 px-3 py-1.5 bg-black/60 backdrop-blur-xl rounded-lg border border-white/[0.08]">
+              <i data-lucide="maximize" class="w-3 h-3 text-zinc-400"></i>
+              <span class="text-xs font-medium text-zinc-300 font-['Inter',_sans-serif]">150 м²</span>
+            </div>
+            <!-- Tag badge -->
+            <div class="absolute top-3 right-3 px-3 py-1.5 bg-amber-500/[0.15] backdrop-blur-xl rounded-lg border border-amber-400/[0.2]">
+              <span class="text-[11px] font-semibold text-amber-300 font-['Inter',_sans-serif] tracking-wide uppercase">Премиум</span>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-5 sm:p-6">
+            <h3 class="text-xl sm:text-[22px] font-bold text-white mb-4 tracking-tight transition-all duration-500 group-hover:text-white/90">Турку 150</h3>
+
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-5">
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">4 спальни</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">2 санузла</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="car" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">Гараж</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">24 м²</span>
+              </div>
+            </div>
+
+            <div class="h-px w-full bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent mb-5"></div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs text-zinc-500 font-['Inter',_sans-serif] block mb-0.5">Стоимость</span>
+                <span class="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">от 4 500 000 ₽</span>
+              </div>
+              <button class="flex items-center gap-2 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm font-medium text-zinc-300 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white group/btn">
+                <span>Подробнее</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-0.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Тампере 100 -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out catalog-card" data-category="medium" style="transition-delay: 400ms">
+        <div class="group relative h-full bg-white/[0.02] backdrop-blur-2xl border border-white/[0.06] rounded-2xl sm:rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.03)] transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.1] hover:-translate-y-1 hover:shadow-[0_0_100px_rgba(255,255,255,0.06)] overflow-hidden">
+          <!-- Image Placeholder -->
+          <div class="relative aspect-video overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-zinc-800/75 via-zinc-900 to-zinc-950"></div>
+            <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <i data-lucide="home" class="w-16 h-16 text-white/[0.06] transition-all duration-700 group-hover:text-white/[0.1] group-hover:scale-110"></i>
+            </div>
+            <!-- Dimensions badge -->
+            <div class="absolute bottom-3 left-3 flex items-center gap-1.5 px-3 py-1.5 bg-black/60 backdrop-blur-xl rounded-lg border border-white/[0.08]">
+              <i data-lucide="maximize" class="w-3 h-3 text-zinc-400"></i>
+              <span class="text-xs font-medium text-zinc-300 font-['Inter',_sans-serif]">100 м²</span>
+            </div>
+            <!-- No tag for this project -->
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-5 sm:p-6">
+            <h3 class="text-xl sm:text-[22px] font-bold text-white mb-4 tracking-tight transition-all duration-500 group-hover:text-white/90">Тампере 100</h3>
+
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-5">
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">3 спальни</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">1 санузел</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">15 м²</span>
+              </div>
+            </div>
+
+            <div class="h-px w-full bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent mb-5"></div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs text-zinc-500 font-['Inter',_sans-serif] block mb-0.5">Стоимость</span>
+                <span class="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">от 3 000 000 ₽</span>
+              </div>
+              <button class="flex items-center gap-2 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm font-medium text-zinc-300 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white group/btn">
+                <span>Подробнее</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-0.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Оулу 180 -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out catalog-card" data-category="large" style="transition-delay: 500ms">
+        <div class="group relative h-full bg-white/[0.02] backdrop-blur-2xl border border-white/[0.06] rounded-2xl sm:rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.03)] transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.1] hover:-translate-y-1 hover:shadow-[0_0_100px_rgba(255,255,255,0.06)] overflow-hidden">
+          <!-- Image Placeholder -->
+          <div class="relative aspect-video overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-zinc-800/65 via-zinc-900 to-zinc-950"></div>
+            <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <i data-lucide="home" class="w-16 h-16 text-white/[0.06] transition-all duration-700 group-hover:text-white/[0.1] group-hover:scale-110"></i>
+            </div>
+            <!-- Dimensions badge -->
+            <div class="absolute bottom-3 left-3 flex items-center gap-1.5 px-3 py-1.5 bg-black/60 backdrop-blur-xl rounded-lg border border-white/[0.08]">
+              <i data-lucide="maximize" class="w-3 h-3 text-zinc-400"></i>
+              <span class="text-xs font-medium text-zinc-300 font-['Inter',_sans-serif]">180 м²</span>
+            </div>
+            <!-- Tag badge -->
+            <div class="absolute top-3 right-3 px-3 py-1.5 bg-sky-500/[0.15] backdrop-blur-xl rounded-lg border border-sky-400/[0.2]">
+              <span class="text-[11px] font-semibold text-sky-300 font-['Inter',_sans-serif] tracking-wide uppercase">Для большой семьи</span>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-5 sm:p-6">
+            <h3 class="text-xl sm:text-[22px] font-bold text-white mb-4 tracking-tight transition-all duration-500 group-hover:text-white/90">Оулу 180</h3>
+
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-5">
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">5 спален</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">3 санузла</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="car" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">Гараж</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">30 м²</span>
+              </div>
+            </div>
+
+            <div class="h-px w-full bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent mb-5"></div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs text-zinc-500 font-['Inter',_sans-serif] block mb-0.5">Стоимость</span>
+                <span class="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">от 5 800 000 ₽</span>
+              </div>
+              <button class="flex items-center gap-2 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm font-medium text-zinc-300 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white group/btn">
+                <span>Подробнее</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-0.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Рованиеми 70 -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out catalog-card" data-category="small" style="transition-delay: 600ms">
+        <div class="group relative h-full bg-white/[0.02] backdrop-blur-2xl border border-white/[0.06] rounded-2xl sm:rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.03)] transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.1] hover:-translate-y-1 hover:shadow-[0_0_100px_rgba(255,255,255,0.06)] overflow-hidden">
+          <!-- Image Placeholder -->
+          <div class="relative aspect-video overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-zinc-800/70 via-zinc-900 to-zinc-950"></div>
+            <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <i data-lucide="home" class="w-16 h-16 text-white/[0.06] transition-all duration-700 group-hover:text-white/[0.1] group-hover:scale-110"></i>
+            </div>
+            <!-- Dimensions badge -->
+            <div class="absolute bottom-3 left-3 flex items-center gap-1.5 px-3 py-1.5 bg-black/60 backdrop-blur-xl rounded-lg border border-white/[0.08]">
+              <i data-lucide="maximize" class="w-3 h-3 text-zinc-400"></i>
+              <span class="text-xs font-medium text-zinc-300 font-['Inter',_sans-serif]">70 м²</span>
+            </div>
+            <!-- Tag badge -->
+            <div class="absolute top-3 right-3 px-3 py-1.5 bg-violet-500/[0.15] backdrop-blur-xl rounded-lg border border-violet-400/[0.2]">
+              <span class="text-[11px] font-semibold text-violet-300 font-['Inter',_sans-serif] tracking-wide uppercase">Дачный</span>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-5 sm:p-6">
+            <h3 class="text-xl sm:text-[22px] font-bold text-white mb-4 tracking-tight transition-all duration-500 group-hover:text-white/90">Рованиеми 70</h3>
+
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-5">
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">2 спальни</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">1 санузел</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+                <span class="text-sm text-zinc-400 font-['Inter',_sans-serif]">10 м²</span>
+              </div>
+            </div>
+
+            <div class="h-px w-full bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent mb-5"></div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs text-zinc-500 font-['Inter',_sans-serif] block mb-0.5">Стоимость</span>
+                <span class="text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400">от 2 400 000 ₽</span>
+              </div>
+              <button class="flex items-center gap-2 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-sm font-medium text-zinc-300 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white group/btn">
+                <span>Подробнее</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-0.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out mb-10 lg:mb-14">
+      <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out">
+      <div class="flex flex-col items-center text-center">
+        <p class="text-zinc-400 text-sm sm:text-base font-['Inter',_sans-serif] mb-6 max-w-md">
+          Более 40 готовых проектов домов от 50 до 300 м² в нашем каталоге
+        </p>
+        <button id="catalog-cta" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] rounded-full text-white font-semibold text-base transition-all duration-500 hover:bg-white/[0.06] hover:border-white/[0.15] hover:shadow-[0_0_60px_rgba(255,255,255,0.06)] hover:-translate-y-0.5 overflow-hidden">
+          <!-- Shimmer effect layer -->
+          <span class="catalog-shimmer absolute inset-0 rounded-full pointer-events-none"></span>
+          <span class="relative z-10">Смотреть весь каталог</span>
+          <i data-lucide="arrow-right" class="relative z-10 w-5 h-5 transition-transform duration-500 group-hover:translate-x-1"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- Catalog Section Scripts -->
+<script>
+  (function () {
+    // === IntersectionObserver for .reveal elements ===
+    var revealElements = document.querySelectorAll('#catalog .reveal');
+    if ('IntersectionObserver' in window) {
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('opacity-0', 'translate-y-8');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      revealElements.forEach(function (el) {
+        revealObserver.observe(el);
+      });
+    } else {
+      revealElements.forEach(function (el) {
+        el.classList.remove('opacity-0', 'translate-y-8');
+        el.classList.add('opacity-100', 'translate-y-0');
+      });
+    }
+
+    // === Filter Tabs Logic ===
+    var filterBtns = document.querySelectorAll('#catalog .catalog-filter-btn');
+    var cards = document.querySelectorAll('#catalog .catalog-card');
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var filter = this.getAttribute('data-filter');
+
+        // Update active button styles
+        filterBtns.forEach(function (b) {
+          b.classList.remove('active', 'bg-white/[0.08]', 'border-white/[0.15]', 'text-white');
+          b.classList.add('bg-white/[0.02]', 'border-white/[0.06]', 'text-zinc-400');
+        });
+        this.classList.add('active', 'bg-white/[0.08]', 'border-white/[0.15]', 'text-white');
+        this.classList.remove('bg-white/[0.02]', 'border-white/[0.06]', 'text-zinc-400');
+
+        // Filter cards
+        cards.forEach(function (card) {
+          var category = card.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            card.style.display = '';
+            // Re-trigger subtle animation
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(12px)';
+            setTimeout(function () {
+              card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 50);
+          } else {
+            card.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(12px)';
+            setTimeout(function () {
+              card.style.display = 'none';
+            }, 300);
+          }
+        });
+      });
+    });
+
+    // === Shimmer effect for CTA button (injected dynamically) ===
+    var shimmerStyle = document.createElement('style');
+    shimmerStyle.textContent = '@keyframes catalog-shimmer-move{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}.catalog-shimmer::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent);animation:catalog-shimmer-move 3s ease-in-out infinite;}';
+    document.head.appendChild(shimmerStyle);
+  })();
+</script>
+
+<!-- Lucide Icons initialization -->
+<script>if(typeof lucide!=='undefined')lucide.createIcons();</script>
