@@ -1,0 +1,224 @@
+<nav id="navbar" class="sticky top-0 z-50 w-full bg-black/50 backdrop-blur-2xl border-b border-white/[0.08] font-['Manrope',_sans-serif]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2.5 group transition-all duration-500 hover:opacity-80">
+        <div class="relative flex items-center justify-center w-9 h-9 rounded-xl bg-white/[0.03] border border-white/[0.08] transition-all duration-500 group-hover:border-white/[0.15] group-hover:bg-white/[0.05]">
+          <i data-lucide="home" class="w-4 h-4 text-white"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-white text-base font-bold tracking-tight leading-none">DMITRY DOM</span>
+          <span class="text-zinc-500 text-[10px] uppercase tracking-[0.2em] font-['Inter'] leading-none mt-0.5">строительство домов</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center gap-1">
+        <a href="#doma" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Дома
+        </a>
+        <a href="#portfolio" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Портфолио
+        </a>
+        <a href="#technology" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Технология
+        </a>
+        <a href="#about" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          О нас
+        </a>
+        <a href="#contacts" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Контакты
+        </a>
+        <a href="#reviews" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Отзывы
+        </a>
+      </div>
+
+      <!-- Desktop Right Section: Phone + CTA -->
+      <div class="hidden lg:flex items-center gap-4">
+        <a href="tel:84951183301" class="flex items-center gap-2 text-zinc-300 text-sm transition-all duration-500 hover:text-white group">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full border border-white/[0.08] bg-white/[0.03] transition-all duration-500 group-hover:border-white/[0.15] group-hover:bg-white/[0.05]">
+            <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+          </div>
+          <span class="font-medium">8 (495) 118-33-01</span>
+        </a>
+        <button id="cta-desktop" class="relative px-6 py-2.5 bg-white text-black text-sm font-semibold rounded-full transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98]">
+          Заказать обратный звонок
+        </button>
+      </div>
+
+      <!-- Mobile Right Section: Phone + Hamburger -->
+      <div class="flex lg:hidden items-center gap-3">
+        <a href="tel:84951183301" class="flex items-center justify-center w-10 h-10 rounded-full border border-white/[0.08] bg-white/[0.03] text-zinc-300 transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05] hover:text-white">
+          <i data-lucide="phone" class="w-4 h-4"></i>
+        </a>
+        <button id="mobile-menu-toggle" aria-label="Открыть меню" aria-expanded="false" class="relative flex items-center justify-center w-10 h-10 rounded-full border border-white/[0.08] bg-white/[0.03] text-zinc-300 transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05] hover:text-white">
+          <i data-lucide="menu" id="menu-icon-open" class="w-5 h-5 transition-all duration-300"></i>
+          <i data-lucide="x" id="menu-icon-close" class="w-5 h-5 absolute transition-all duration-300 opacity-0 scale-75"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="lg:hidden fixed inset-0 top-16 z-40 pointer-events-none opacity-0 transition-all duration-500">
+    <!-- Backdrop -->
+    <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-3xl"></div>
+
+    <!-- Menu Content -->
+    <div class="relative h-full flex flex-col px-6 pt-8 pb-10 overflow-y-auto">
+
+      <!-- Label -->
+      <span class="text-[10px] uppercase tracking-[0.2em] font-['Inter'] text-zinc-500 mb-4">Навигация</span>
+
+      <!-- Nav Links -->
+      <div class="flex flex-col gap-1">
+        <a href="#doma" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 50ms">
+          <i data-lucide="building-2" class="w-5 h-5 text-zinc-500"></i>
+          Дома
+        </a>
+        <a href="#portfolio" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 100ms">
+          <i data-lucide="images" class="w-5 h-5 text-zinc-500"></i>
+          Портфолио
+        </a>
+        <a href="#technology" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 150ms">
+          <i data-lucide="cpu" class="w-5 h-5 text-zinc-500"></i>
+          Технология
+        </a>
+        <a href="#about" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 200ms">
+          <i data-lucide="users" class="w-5 h-5 text-zinc-500"></i>
+          О нас
+        </a>
+        <a href="#contacts" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 250ms">
+          <i data-lucide="map-pin" class="w-5 h-5 text-zinc-500"></i>
+          Контакты
+        </a>
+        <a href="#reviews" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 300ms">
+          <i data-lucide="message-square" class="w-5 h-5 text-zinc-500"></i>
+          Отзывы
+        </a>
+      </div>
+
+      <!-- Divider -->
+      <div class="my-6 border-t border-white/[0.05]"></div>
+
+      <!-- Phone -->
+      <a href="tel:84951183301" class="mobile-nav-link flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-500 hover:bg-white/[0.03] translate-y-4 opacity-0" style="transition-delay: 370ms">
+        <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/[0.08] bg-white/[0.03]">
+          <i data-lucide="phone" class="w-4 h-4 text-zinc-400"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[10px] uppercase tracking-[0.2em] font-['Inter'] text-zinc-500">Телефон</span>
+          <span class="text-white text-base font-medium">8 (495) 118-33-01</span>
+        </div>
+      </a>
+
+      <!-- Spacer pushes CTA to bottom area -->
+      <div class="flex-1 min-h-6"></div>
+
+      <!-- CTA Button -->
+      <button class="mobile-nav-link w-full px-6 py-4 bg-white text-black text-base font-semibold rounded-full transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] active:scale-[0.98] translate-y-4 opacity-0" style="transition-delay: 440ms">
+        Заказать обратный звонок
+      </button>
+
+    </div>
+  </div>
+
+</nav>
+
+<script>
+  (function () {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+    const navLinks = menu.querySelectorAll('.mobile-nav-link');
+    let isOpen = false;
+
+    function openMenu() {
+      isOpen = true;
+      toggle.setAttribute('aria-expanded', 'true');
+      menu.classList.remove('pointer-events-none', 'opacity-0');
+      menu.classList.add('pointer-events-auto', 'opacity-100');
+      iconOpen.classList.add('opacity-0', 'scale-75', 'rotate-90');
+      iconOpen.classList.remove('opacity-100', 'scale-100', 'rotate-0');
+      iconClose.classList.remove('opacity-0', 'scale-75');
+      iconClose.classList.add('opacity-100', 'scale-100');
+      document.body.style.overflow = 'hidden';
+      navLinks.forEach(function (link) {
+        link.classList.remove('translate-y-4', 'opacity-0');
+        link.classList.add('translate-y-0', 'opacity-100');
+      });
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      toggle.setAttribute('aria-expanded', 'false');
+      navLinks.forEach(function (link) {
+        link.classList.add('translate-y-4', 'opacity-0');
+        link.classList.remove('translate-y-0', 'opacity-100');
+      });
+      setTimeout(function () {
+        menu.classList.add('pointer-events-none', 'opacity-0');
+        menu.classList.remove('pointer-events-auto', 'opacity-100');
+      }, 200);
+      iconOpen.classList.remove('opacity-0', 'scale-75', 'rotate-90');
+      iconOpen.classList.add('opacity-100', 'scale-100', 'rotate-0');
+      iconClose.classList.add('opacity-0', 'scale-75');
+      iconClose.classList.remove('opacity-100', 'scale-100');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', function () {
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    // Close menu when a nav link is clicked
+    navLinks.forEach(function (link) {
+      if (link.tagName === 'A') {
+        link.addEventListener('click', function () {
+          closeMenu();
+        });
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) {
+        closeMenu();
+      }
+    });
+
+    // Smooth scroll for all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        var targetId = this.getAttribute('href');
+        if (targetId && targetId !== '#') {
+          var target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // Navbar background enhancement on scroll
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 20) {
+        navbar.classList.remove('bg-black/50');
+        navbar.classList.add('bg-black/80');
+      } else {
+        navbar.classList.remove('bg-black/80');
+        navbar.classList.add('bg-black/50');
+      }
+    }, { passive: true });
+  })();
+</script>

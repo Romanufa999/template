@@ -1,0 +1,452 @@
+<!-- ============================================================
+     SECTION 04 — PORTFOLIO / BUILT HOMES
+     Design: iOS/Apple Premium "Titanium & Glass" dark theme
+     Stack : Tailwind 4 CDN + Lucide Icons CDN (HTML-only)
+     ============================================================ -->
+
+<section
+  id="portfolio"
+  class="relative overflow-hidden bg-neutral-950 py-24 sm:py-32 lg:py-40"
+>
+  <!-- ─── ambient glow blobs ─── -->
+  <div
+    class="pointer-events-none absolute -left-40 top-0 h-[600px] w-[600px] rounded-full bg-white/[0.02] blur-[120px]"
+  ></div>
+  <div
+    class="pointer-events-none absolute -right-40 bottom-0 h-[500px] w-[500px] rounded-full bg-white/[0.015] blur-[100px]"
+  ></div>
+
+  <div class="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+    <!-- ─── section header ─── -->
+    <div class="reveal mb-16 sm:mb-20 lg:mb-24">
+      <!-- label -->
+      <div class="mb-5 flex items-center gap-3">
+        <span
+          class="inline-block h-px w-8 bg-gradient-to-r from-white/60 to-transparent"
+        ></span>
+        <span
+          class="font-mono text-[11px] uppercase tracking-[0.25em] text-white/40"
+          >04. Портфолио</span
+        >
+      </div>
+
+      <!-- title -->
+      <h2
+        class="max-w-xl text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl"
+      >
+        Построенные
+        <span
+          class="bg-gradient-to-r from-white via-white/80 to-white/50 bg-clip-text text-transparent"
+          >дома</span
+        >
+      </h2>
+
+      <p
+        class="mt-5 max-w-lg text-base leading-relaxed text-white/40 sm:text-lg"
+      >
+        Каждый проект — это уникальное решение, реализованное с вниманием к
+        деталям и качеству
+      </p>
+    </div>
+
+    <!-- ─── masonry grid ─── -->
+    <div
+      class="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3"
+    >
+      <!-- ══════════════════════════════════════════════
+           CARD 1 — Коттедж «Комфорт 200» (tall card)
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)] md:row-span-2"
+      >
+        <!-- image -->
+        <div class="relative h-full min-h-[420px] w-full overflow-hidden sm:min-h-[520px] md:min-h-full">
+          <img
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Комфорт 200 — Дом с видом на озеро"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <!-- gradient overlay -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8">
+          <!-- status badge -->
+          <div class="mb-4 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <!-- title -->
+          <h3
+            class="text-xl font-semibold leading-tight text-white sm:text-2xl"
+          >
+            Коттедж «Комфорт 200»
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-4 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <!-- features -->
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="mountain-snow" class="h-3.5 w-3.5"></i>
+              Дом с видом на озеро
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="flame" class="h-3.5 w-3.5"></i>
+              Увеличенная терраса и камин
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 2 — Коттедж «Комфорт» 165 м²
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)]"
+      >
+        <!-- image -->
+        <div class="relative h-64 w-full overflow-hidden sm:h-72">
+          <img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Комфорт 165 м²"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+          <!-- status badge -->
+          <div class="mb-3 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3 class="text-lg font-semibold leading-tight text-white sm:text-xl">
+            Коттедж «Комфорт» 165 м²
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-3 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="bed-double" class="h-3.5 w-3.5"></i>
+              Спальня для 2 детей
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="bath" class="h-3.5 w-3.5"></i>
+              3 санузла
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 3 — Коттедж «Оптимум» 115 м²
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)]"
+      >
+        <!-- image -->
+        <div class="relative h-64 w-full overflow-hidden sm:h-72">
+          <img
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Оптимум 115 м² — Дом у леса"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+          <!-- status badge -->
+          <div class="mb-3 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3 class="text-lg font-semibold leading-tight text-white sm:text-xl">
+            Коттедж «Оптимум» 115 м²
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-3 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="trees" class="h-3.5 w-3.5"></i>
+              Дом у леса
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="layers" class="h-3.5 w-3.5"></i>
+              Полуэтаж в детской
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="fence" class="h-3.5 w-3.5"></i>
+              Терраса у леса
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 4 — Коттедж «Комфорт» 165 м² (tall card)
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)] md:row-span-2"
+      >
+        <!-- image -->
+        <div class="relative h-full min-h-[420px] w-full overflow-hidden sm:min-h-[520px] md:min-h-full">
+          <img
+            src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Комфорт 165 м² — Второй свет"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8">
+          <!-- status badge -->
+          <div class="mb-4 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3
+            class="text-xl font-semibold leading-tight text-white sm:text-2xl"
+          >
+            Коттедж «Комфорт» 165 м²
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-4 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="sun" class="h-3.5 w-3.5"></i>
+              Второй свет
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="palette" class="h-3.5 w-3.5"></i>
+              Индивидуальный цвет фасада
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 5 — Коттедж «Комфорт 200» (premium)
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)]"
+      >
+        <!-- image -->
+        <div class="relative h-64 w-full overflow-hidden sm:h-72">
+          <img
+            src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Комфорт 200 — Премиальная отделка"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+          <!-- status badge -->
+          <div class="mb-3 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3 class="text-lg font-semibold leading-tight text-white sm:text-xl">
+            Коттедж «Комфорт 200»
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-3 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="gem" class="h-3.5 w-3.5"></i>
+              Премиальная отделка
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="lightbulb" class="h-3.5 w-3.5"></i>
+              Подсветка лестницы
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="cpu" class="h-3.5 w-3.5"></i>
+              Умный дом
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 6 — Коттедж «Оптимум» 115 м²
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)]"
+      >
+        <!-- image -->
+        <div class="relative h-64 w-full overflow-hidden sm:h-72">
+          <img
+            src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Оптимум 115 м² — для пожилой семьи"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+          <!-- status badge -->
+          <div class="mb-3 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3 class="text-lg font-semibold leading-tight text-white sm:text-xl">
+            Коттедж «Оптимум» 115 м²
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-3 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="home" class="h-3.5 w-3.5"></i>
+              1-этажный дом
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="heart" class="h-3.5 w-3.5"></i>
+              Максимум комфорта
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CTA button ─── -->
+    <div class="reveal mt-14 flex justify-center sm:mt-20">
+      <a
+        href="#"
+        class="group/btn relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-white px-8 py-4 text-sm font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] active:scale-[0.98] sm:px-10 sm:py-4 sm:text-base"
+      >
+        <!-- shimmer sweep -->
+        <span
+          class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover/btn:translate-x-full"
+        ></span>
+        <span class="relative">Смотреть все проекты</span>
+        <i
+          data-lucide="arrow-right"
+          class="relative h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1"
+        ></i>
+      </a>
+    </div>
+  </div>
+</section>

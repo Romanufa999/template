@@ -1,0 +1,225 @@
+<!-- ============================================================
+     DMITRY DOM — Hero Section
+     Construction company: Finnish-technology frame houses
+     Design: iOS/Apple Premium "Titanium & Glass" dark theme
+     ============================================================ -->
+
+<!-- Keyframes for ticker scroll & reveal animations -->
+<style>
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(2rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<section class="relative min-h-screen bg-black font-['Manrope',_sans-serif] overflow-hidden flex flex-col">
+
+  <!-- ======================== BACKGROUND LAYERS ======================== -->
+
+  <!-- Dot pattern overlay -->
+  <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+
+  <!-- Noise texture overlay -->
+  <div class="fixed inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43NSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjEiLz48L3N2Zz4=')] bg-repeat"></div>
+
+  <!-- Spotlight cursor effect (activated by JS) -->
+  <div id="hero-spotlight" class="pointer-events-none fixed inset-0 z-30 opacity-0 transition-opacity duration-500" style="background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.04), transparent 40%);"></div>
+
+  <!-- Top ambient glow -->
+  <div class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[80vw] h-[60vh] bg-gradient-to-b from-zinc-800/20 via-zinc-900/10 to-transparent rounded-full blur-[120px] pointer-events-none"></div>
+
+  <!-- Bottom subtle glow -->
+  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60vw] h-[30vh] bg-gradient-to-t from-white/[0.02] to-transparent rounded-full blur-[80px] pointer-events-none"></div>
+
+
+  <!-- ======================== NAVIGATION BAR ======================== -->
+
+  <nav class="relative z-20 w-full px-6 md:px-12 lg:px-20 py-6">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] backdrop-blur-xl flex items-center justify-center">
+          <i data-lucide="home" class="w-5 h-5 text-white"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-white font-bold text-lg tracking-tight leading-none">DMITRY DOM</span>
+          <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase leading-none mt-1">construction</span>
+        </div>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden lg:flex items-center gap-1">
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Проекты</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Технология</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Выставка</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Отзывы</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Контакты</a>
+      </div>
+
+      <!-- Phone + Mobile menu -->
+      <div class="flex items-center gap-4">
+        <a href="tel:+74951234567" class="hidden md:flex items-center gap-2 text-sm text-zinc-300 hover:text-white transition-colors duration-300">
+          <i data-lucide="phone" class="w-4 h-4"></i>
+          <span class="font-['Inter']">+7 (495) 123-45-67</span>
+        </a>
+        <button class="lg:hidden w-10 h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] backdrop-blur-xl flex items-center justify-center text-white">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- ======================== HERO CONTENT ======================== -->
+
+  <div class="relative z-10 flex-1 flex flex-col items-center justify-center px-6 md:px-12 lg:px-20 pb-8">
+    <div class="max-w-7xl mx-auto w-full text-center">
+
+      <!-- Top Label -->
+      <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl mb-8 md:mb-12 translate-y-8 opacity-0 animate-[fadeUp_1s_0.2s_ease-out_forwards]">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Финская технология строительства</span>
+      </div>
+
+      <!-- Main Heading -->
+      <h1 class="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-8 translate-y-8 opacity-0 animate-[fadeUp_1s_0.4s_ease-out_forwards]">
+        <span class="block text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-300 to-zinc-700">
+          Строительство
+        </span>
+        <span class="block text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-300 to-zinc-700">
+          загородных
+        </span>
+        <span class="block text-transparent bg-clip-text bg-gradient-to-br from-zinc-300 via-zinc-500 to-zinc-800">
+          домов
+        </span>
+      </h1>
+
+      <!-- Subheading -->
+      <p class="text-xl md:text-2xl text-zinc-300 font-light leading-relaxed max-w-3xl mx-auto mb-12 md:mb-16 translate-y-8 opacity-0 animate-[fadeUp_1s_0.6s_ease-out_forwards]">
+        Каркасные дома по финской технологии строительства<br class="hidden md:block" />
+        под ключ в Москве и Московской области
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mb-16 md:mb-20 translate-y-8 opacity-0 animate-[fadeUp_1s_0.8s_ease-out_forwards]">
+
+        <!-- Primary CTA -->
+        <a href="#projects" class="group relative inline-flex items-center gap-3 bg-white text-black rounded-full px-8 py-4 font-semibold text-base transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)]">
+          <span>Смотреть проекты</span>
+          <i data-lucide="arrow-right" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"></i>
+        </a>
+
+        <!-- Secondary CTA -->
+        <a href="#callback" class="group inline-flex items-center gap-3 bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl text-white rounded-full px-8 py-4 font-semibold text-base transition-all duration-500 hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.02]">
+          <i data-lucide="phone-call" class="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors duration-300"></i>
+          <span>Заказать обратный звонок</span>
+        </a>
+
+      </div>
+
+      <!-- Stats Row — Glass Container -->
+      <div class="bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] px-6 py-6 md:px-12 md:py-8 max-w-4xl mx-auto translate-y-8 opacity-0 animate-[fadeUp_1s_1s_ease-out_forwards]">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+
+          <div class="text-center">
+            <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">15+</div>
+            <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Лет опыта</div>
+          </div>
+
+          <div class="text-center">
+            <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">800+</div>
+            <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Домов построено</div>
+          </div>
+
+          <div class="text-center">
+            <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">50+</div>
+            <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Проектов</div>
+          </div>
+
+          <div class="text-center">
+            <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">5</div>
+            <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Лет гарантии</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ======================== SCROLL INDICATOR ======================== -->
+
+  <div class="relative z-10 flex justify-center pb-6 translate-y-8 opacity-0 animate-[fadeUp_1s_1.2s_ease-out_forwards]">
+    <div class="flex flex-col items-center gap-2">
+      <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Листайте вниз</span>
+      <div class="w-6 h-10 rounded-full border border-white/[0.1] flex items-start justify-center p-1.5">
+        <div class="w-1 h-2.5 rounded-full bg-white/40 animate-bounce"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================== RUNNING TICKER ======================== -->
+
+  <div class="relative z-10 w-full border-t border-white/[0.05] bg-white/[0.01] backdrop-blur-sm overflow-hidden">
+    <div class="flex items-center h-14 md:h-16" style="animation: ticker-scroll 30s linear infinite; width: max-content;">
+
+      <!-- First copy -->
+      <div class="flex items-center shrink-0">
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="building" class="w-4 h-4 text-zinc-600"></i>
+          Собственная выставка
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="rotate-3d" class="w-4 h-4 text-zinc-600"></i>
+          3D-туры домов
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="snowflake" class="w-4 h-4 text-zinc-600"></i>
+          Финская технология строительства
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="landmark" class="w-4 h-4 text-zinc-600"></i>
+          Помощь в оформлении ипотеки
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+      </div>
+
+      <!-- Second copy (seamless loop) -->
+      <div class="flex items-center shrink-0">
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="building" class="w-4 h-4 text-zinc-600"></i>
+          Собственная выставка
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="rotate-3d" class="w-4 h-4 text-zinc-600"></i>
+          3D-туры домов
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="snowflake" class="w-4 h-4 text-zinc-600"></i>
+          Финская технология строительства
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="landmark" class="w-4 h-4 text-zinc-600"></i>
+          Помощь в оформлении ипотеки
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+      </div>
+
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,213 @@
+<!-- ============================================================
+     DMITRY DOM — Reviews / Testimonials Section
+     Construction company: Finnish-technology frame houses
+     Design: iOS/Apple Premium "Titanium & Glass" dark theme
+     ============================================================ -->
+
+<section id="reviews" class="relative bg-black font-['Manrope',_sans-serif] overflow-hidden py-24 md:py-32 lg:py-40">
+
+  <!-- ======================== BACKGROUND LAYERS ======================== -->
+
+  <!-- Dot pattern overlay -->
+  <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+
+  <!-- Top ambient glow -->
+  <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[70vw] h-[40vh] bg-gradient-to-b from-zinc-800/15 via-zinc-900/10 to-transparent rounded-full blur-[120px] pointer-events-none"></div>
+
+  <!-- Bottom subtle glow -->
+  <div class="absolute bottom-0 right-[20%] w-[40vw] h-[30vh] bg-gradient-to-t from-white/[0.02] to-transparent rounded-full blur-[100px] pointer-events-none"></div>
+
+
+  <!-- ======================== CONTENT CONTAINER ======================== -->
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+    <!-- ======================== SECTION HEADER ======================== -->
+
+    <div class="reveal mb-16 md:mb-20 lg:mb-24">
+
+      <!-- Section label -->
+      <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl mb-8">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">06. Отзывы</span>
+      </div>
+
+      <!-- Title + Rating row -->
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 lg:gap-16">
+
+        <!-- Section title -->
+        <div class="max-w-2xl">
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.05] mb-4">
+            <span class="text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-300 to-zinc-600">
+              Что говорят
+            </span>
+            <br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-br from-zinc-200 via-zinc-400 to-zinc-700">
+              наши клиенты
+            </span>
+          </h2>
+          <p class="text-zinc-500 text-base md:text-lg font-light leading-relaxed max-w-xl">
+            Гарантируем настоящие и правдивые отзывы от семей, которые уже живут в своих домах
+          </p>
+        </div>
+
+        <!-- Yandex Rating Badge -->
+        <div class="flex-shrink-0 bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[1.5rem] px-8 py-6 flex items-center gap-5 transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.08]">
+          <div class="flex flex-col items-center">
+            <span class="text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-500 leading-none">
+              4.9
+            </span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-1">
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            </div>
+            <span class="text-[10px] text-zinc-500 font-['Inter'] tracking-[0.15em] uppercase">Рейтинг Яндекса</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ======================== REVIEW CARDS ======================== -->
+
+    <!-- Horizontal scroll wrapper on mobile, grid on desktop -->
+    <div class="reveal -mx-6 px-6 md:mx-0 md:px-0 mb-16 md:mb-20">
+      <div class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 md:pb-0 md:overflow-x-visible md:grid md:grid-cols-2 scrollbar-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+
+        <!-- ===== Review Card 1 — Марина и Сергей ===== -->
+        <div class="group flex-shrink-0 w-[85vw] sm:w-[75vw] md:w-auto snap-center bg-white/[0.02] border border-white/[0.05] rounded-[2rem] p-8 md:p-10 transition-all duration-700 hover:bg-white/[0.04] hover:border-white/[0.08] hover:shadow-[0_8px_60px_-15px_rgba(255,255,255,0.06)]">
+
+          <!-- Decorative quote icon -->
+          <div class="mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center transition-all duration-500 group-hover:bg-white/[0.06] group-hover:border-white/[0.1]">
+              <i data-lucide="quote" class="w-5 h-5 text-zinc-600 transition-colors duration-500 group-hover:text-zinc-400"></i>
+            </div>
+          </div>
+
+          <!-- Star rating -->
+          <div class="flex items-center gap-1 mb-5">
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          </div>
+
+          <!-- Quote text -->
+          <p class="text-zinc-300 text-base leading-relaxed mb-8 font-light">
+            Качество и профессионализм на высшем уровне! Долго выбирали застройщика и остановили свой выбор на этой компании. Понравилось что в предложение уже все включено, ни за что доплачивать не пришлось. Конечно был некий страх т.к. мы никогда не жили в своём доме, но Дмитрий развеял все сомнения, доходчиво объяснив все этапы строительства и технологию. Качество, профессионализм на высшем уровне! Спасибо вам за такой ответственный подход к работе.
+          </p>
+
+          <!-- Author -->
+          <div class="flex items-center gap-4">
+            <!-- Avatar with gradient ring -->
+            <div class="relative flex-shrink-0">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-zinc-700 via-white to-zinc-500 p-[2px]">
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150"
+                  alt="Марина и Сергей"
+                  class="w-full h-full rounded-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-white font-semibold text-sm tracking-tight">Марина и Сергей</span>
+              <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.15em] uppercase mt-1">Каркасный дом 120 м²</span>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- ===== Review Card 2 — Эдуард ===== -->
+        <div class="group flex-shrink-0 w-[85vw] sm:w-[75vw] md:w-auto snap-center bg-white/[0.02] border border-white/[0.05] rounded-[2rem] p-8 md:p-10 transition-all duration-700 hover:bg-white/[0.04] hover:border-white/[0.08] hover:shadow-[0_8px_60px_-15px_rgba(255,255,255,0.06)]">
+
+          <!-- Decorative quote icon -->
+          <div class="mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center transition-all duration-500 group-hover:bg-white/[0.06] group-hover:border-white/[0.1]">
+              <i data-lucide="quote" class="w-5 h-5 text-zinc-600 transition-colors duration-500 group-hover:text-zinc-400"></i>
+            </div>
+          </div>
+
+          <!-- Star rating -->
+          <div class="flex items-center gap-1 mb-5">
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          </div>
+
+          <!-- Quote text -->
+          <p class="text-zinc-300 text-base leading-relaxed mb-8 font-light">
+            Хороший дом получился, рекомендую! Два основных и самых ценных момента в сотрудничестве с компанией DMITRY DOM: Во-первых, мы с самого начала и до самого конца работали по одному договору. Никаких дополнительных соглашений, скрытых платежей или неожиданных расходов. Всё было прозрачно и понятно с первого дня. Это очень важно когда речь идёт о строительстве дома.
+          </p>
+
+          <!-- Author -->
+          <div class="flex items-center gap-4">
+            <!-- Avatar with gradient ring -->
+            <div class="relative flex-shrink-0">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-zinc-700 via-white to-zinc-500 p-[2px]">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150"
+                  alt="Эдуард"
+                  class="w-full h-full rounded-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-white font-semibold text-sm tracking-tight">Эдуард</span>
+              <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.15em] uppercase mt-1">Каркасный дом 95 м²</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ======================== REVIEW LINKS ======================== -->
+
+    <div class="reveal">
+
+      <!-- Divider -->
+      <div class="w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-10"></div>
+
+      <!-- Ghost-style link buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+
+        <a href="#" class="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl text-sm text-zinc-400 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.1] hover:text-white hover:scale-[1.02]">
+          <span>Отзывы Малоэтажная страна</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 transition-all duration-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+
+        <a href="#" class="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl text-sm text-zinc-400 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.1] hover:text-white hover:scale-[1.02]">
+          <span>Отзывы Яндекс</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 transition-all duration-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+
+        <a href="#" class="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl text-sm text-zinc-400 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.1] hover:text-white hover:scale-[1.02]">
+          <span>Плейлист отзывов на YouTube</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 transition-all duration-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+
+        <a href="#" class="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl text-sm text-zinc-400 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.1] hover:text-white hover:scale-[1.02]">
+          <span>Все отзывы</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 transition-all duration-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>

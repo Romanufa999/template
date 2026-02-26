@@ -1,0 +1,2788 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DMITRY DOM — Строительство загородных домов</title>
+<meta name="description" content="Каркасные дома по финской технологии строительства под ключ в Москве и Московской области">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black text-slate-200 font-['Manrope',_sans-serif] selection:bg-white/20 selection:text-white antialiased overflow-x-hidden">
+
+<!-- Noise texture overlay -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-[0.05] mix-blend-overlay bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox=%220%200%20200%20200%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter%20id=%22noiseFilter%22%3E%3CfeTurbulence%20type=%22fractalNoise%22%20baseFrequency=%220.8%22%20numOctaves=%223%22%20stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect%20width=%22100%25%22%20height=%22100%25%22%20filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')]"></div>
+
+<!-- Spotlight cursor effect -->
+<div id="spotlight" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-700 opacity-0" style="background: radial-gradient(600px circle at 50% 50%, rgba(255,255,255,0.05), transparent 40%);"></div>
+
+<!-- ==================== HEADER ==================== -->
+<nav id="navbar" class="sticky top-0 z-50 w-full bg-black/50 backdrop-blur-2xl border-b border-white/[0.08] font-['Manrope',_sans-serif]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2.5 group transition-all duration-500 hover:opacity-80">
+        <div class="relative flex items-center justify-center w-9 h-9 rounded-xl bg-white/[0.03] border border-white/[0.08] transition-all duration-500 group-hover:border-white/[0.15] group-hover:bg-white/[0.05]">
+          <i data-lucide="home" class="w-4 h-4 text-white"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-white text-base font-bold tracking-tight leading-none">DMITRY DOM</span>
+          <span class="text-zinc-500 text-[10px] uppercase tracking-[0.2em] font-['Inter'] leading-none mt-0.5">строительство домов</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center gap-1">
+        <a href="#doma" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Дома
+        </a>
+        <a href="#portfolio" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Портфолио
+        </a>
+        <a href="#technology" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Технология
+        </a>
+        <a href="#about" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          О нас
+        </a>
+        <a href="#contacts" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Контакты
+        </a>
+        <a href="#reviews" class="relative px-4 py-2 text-sm text-zinc-400 rounded-full transition-all duration-500 hover:text-white hover:bg-white/[0.03]">
+          Отзывы
+        </a>
+      </div>
+
+      <!-- Desktop Right Section: Phone + CTA -->
+      <div class="hidden lg:flex items-center gap-4">
+        <a href="tel:84951183301" class="flex items-center gap-2 text-zinc-300 text-sm transition-all duration-500 hover:text-white group">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full border border-white/[0.08] bg-white/[0.03] transition-all duration-500 group-hover:border-white/[0.15] group-hover:bg-white/[0.05]">
+            <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+          </div>
+          <span class="font-medium">8 (495) 118-33-01</span>
+        </a>
+        <button id="cta-desktop" class="relative px-6 py-2.5 bg-white text-black text-sm font-semibold rounded-full transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98]">
+          Заказать обратный звонок
+        </button>
+      </div>
+
+      <!-- Mobile Right Section: Phone + Hamburger -->
+      <div class="flex lg:hidden items-center gap-3">
+        <a href="tel:84951183301" class="flex items-center justify-center w-10 h-10 rounded-full border border-white/[0.08] bg-white/[0.03] text-zinc-300 transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05] hover:text-white">
+          <i data-lucide="phone" class="w-4 h-4"></i>
+        </a>
+        <button id="mobile-menu-toggle" aria-label="Открыть меню" aria-expanded="false" class="relative flex items-center justify-center w-10 h-10 rounded-full border border-white/[0.08] bg-white/[0.03] text-zinc-300 transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05] hover:text-white">
+          <i data-lucide="menu" id="menu-icon-open" class="w-5 h-5 transition-all duration-300"></i>
+          <i data-lucide="x" id="menu-icon-close" class="w-5 h-5 absolute transition-all duration-300 opacity-0 scale-75"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="lg:hidden fixed inset-0 top-16 z-40 pointer-events-none opacity-0 transition-all duration-500">
+    <!-- Backdrop -->
+    <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-3xl"></div>
+
+    <!-- Menu Content -->
+    <div class="relative h-full flex flex-col px-6 pt-8 pb-10 overflow-y-auto">
+
+      <!-- Label -->
+      <span class="text-[10px] uppercase tracking-[0.2em] font-['Inter'] text-zinc-500 mb-4">Навигация</span>
+
+      <!-- Nav Links -->
+      <div class="flex flex-col gap-1">
+        <a href="#doma" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 50ms">
+          <i data-lucide="building-2" class="w-5 h-5 text-zinc-500"></i>
+          Дома
+        </a>
+        <a href="#portfolio" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 100ms">
+          <i data-lucide="images" class="w-5 h-5 text-zinc-500"></i>
+          Портфолио
+        </a>
+        <a href="#technology" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 150ms">
+          <i data-lucide="cpu" class="w-5 h-5 text-zinc-500"></i>
+          Технология
+        </a>
+        <a href="#about" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 200ms">
+          <i data-lucide="users" class="w-5 h-5 text-zinc-500"></i>
+          О нас
+        </a>
+        <a href="#contacts" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 250ms">
+          <i data-lucide="map-pin" class="w-5 h-5 text-zinc-500"></i>
+          Контакты
+        </a>
+        <a href="#reviews" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 rounded-2xl text-zinc-300 text-lg font-medium transition-all duration-500 hover:bg-white/[0.03] hover:text-white translate-y-4 opacity-0" style="transition-delay: 300ms">
+          <i data-lucide="message-square" class="w-5 h-5 text-zinc-500"></i>
+          Отзывы
+        </a>
+      </div>
+
+      <!-- Divider -->
+      <div class="my-6 border-t border-white/[0.05]"></div>
+
+      <!-- Phone -->
+      <a href="tel:84951183301" class="mobile-nav-link flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-500 hover:bg-white/[0.03] translate-y-4 opacity-0" style="transition-delay: 370ms">
+        <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/[0.08] bg-white/[0.03]">
+          <i data-lucide="phone" class="w-4 h-4 text-zinc-400"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[10px] uppercase tracking-[0.2em] font-['Inter'] text-zinc-500">Телефон</span>
+          <span class="text-white text-base font-medium">8 (495) 118-33-01</span>
+        </div>
+      </a>
+
+      <!-- Spacer pushes CTA to bottom area -->
+      <div class="flex-1 min-h-6"></div>
+
+      <!-- CTA Button -->
+      <button class="mobile-nav-link w-full px-6 py-4 bg-white text-black text-base font-semibold rounded-full transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] active:scale-[0.98] translate-y-4 opacity-0" style="transition-delay: 440ms">
+        Заказать обратный звонок
+      </button>
+
+    </div>
+  </div>
+
+</nav>
+
+<script>
+  (function () {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+    const navLinks = menu.querySelectorAll('.mobile-nav-link');
+    let isOpen = false;
+
+    function openMenu() {
+      isOpen = true;
+      toggle.setAttribute('aria-expanded', 'true');
+      menu.classList.remove('pointer-events-none', 'opacity-0');
+      menu.classList.add('pointer-events-auto', 'opacity-100');
+      iconOpen.classList.add('opacity-0', 'scale-75', 'rotate-90');
+      iconOpen.classList.remove('opacity-100', 'scale-100', 'rotate-0');
+      iconClose.classList.remove('opacity-0', 'scale-75');
+      iconClose.classList.add('opacity-100', 'scale-100');
+      document.body.style.overflow = 'hidden';
+      navLinks.forEach(function (link) {
+        link.classList.remove('translate-y-4', 'opacity-0');
+        link.classList.add('translate-y-0', 'opacity-100');
+      });
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      toggle.setAttribute('aria-expanded', 'false');
+      navLinks.forEach(function (link) {
+        link.classList.add('translate-y-4', 'opacity-0');
+        link.classList.remove('translate-y-0', 'opacity-100');
+      });
+      setTimeout(function () {
+        menu.classList.add('pointer-events-none', 'opacity-0');
+        menu.classList.remove('pointer-events-auto', 'opacity-100');
+      }, 200);
+      iconOpen.classList.remove('opacity-0', 'scale-75', 'rotate-90');
+      iconOpen.classList.add('opacity-100', 'scale-100', 'rotate-0');
+      iconClose.classList.add('opacity-0', 'scale-75');
+      iconClose.classList.remove('opacity-100', 'scale-100');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', function () {
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    // Close menu when a nav link is clicked
+    navLinks.forEach(function (link) {
+      if (link.tagName === 'A') {
+        link.addEventListener('click', function () {
+          closeMenu();
+        });
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) {
+        closeMenu();
+      }
+    });
+
+    // Smooth scroll for all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        var targetId = this.getAttribute('href');
+        if (targetId && targetId !== '#') {
+          var target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // Navbar background enhancement on scroll
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 20) {
+        navbar.classList.remove('bg-black/50');
+        navbar.classList.add('bg-black/80');
+      } else {
+        navbar.classList.remove('bg-black/80');
+        navbar.classList.add('bg-black/50');
+      }
+    }, { passive: true });
+  })();
+</script>
+
+
+<!-- ==================== HERO ==================== -->
+<!-- ============================================================
+     DMITRY DOM — Hero Section
+     Construction company: Finnish-technology frame houses
+     Design: iOS/Apple Premium "Titanium & Glass" dark theme
+     ============================================================ -->
+
+<!-- Keyframes for ticker scroll & reveal animations -->
+<style>
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(2rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<section class="relative min-h-screen bg-black font-['Manrope',_sans-serif] overflow-hidden flex flex-col">
+
+  <!-- ======================== BACKGROUND LAYERS ======================== -->
+
+  <!-- Dot pattern overlay -->
+  <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+
+  <!-- Noise texture overlay -->
+  <div class="fixed inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43NSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjEiLz48L3N2Zz4=')] bg-repeat"></div>
+
+  <!-- Spotlight cursor effect (activated by JS) -->
+  <div id="hero-spotlight" class="pointer-events-none fixed inset-0 z-30 opacity-0 transition-opacity duration-500" style="background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.04), transparent 40%);"></div>
+
+  <!-- Top ambient glow -->
+  <div class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[80vw] h-[60vh] bg-gradient-to-b from-zinc-800/20 via-zinc-900/10 to-transparent rounded-full blur-[120px] pointer-events-none"></div>
+
+  <!-- Bottom subtle glow -->
+  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60vw] h-[30vh] bg-gradient-to-t from-white/[0.02] to-transparent rounded-full blur-[80px] pointer-events-none"></div>
+
+
+  <!-- ======================== NAVIGATION BAR ======================== -->
+
+  <nav class="relative z-20 w-full px-6 md:px-12 lg:px-20 py-6">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] backdrop-blur-xl flex items-center justify-center">
+          <i data-lucide="home" class="w-5 h-5 text-white"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-white font-bold text-lg tracking-tight leading-none">DMITRY DOM</span>
+          <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase leading-none mt-1">construction</span>
+        </div>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden lg:flex items-center gap-1">
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Проекты</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Технология</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Выставка</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Отзывы</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300 rounded-full hover:bg-white/[0.03]">Контакты</a>
+      </div>
+
+      <!-- Phone + Mobile menu -->
+      <div class="flex items-center gap-4">
+        <a href="tel:+74951234567" class="hidden md:flex items-center gap-2 text-sm text-zinc-300 hover:text-white transition-colors duration-300">
+          <i data-lucide="phone" class="w-4 h-4"></i>
+          <span class="font-['Inter']">+7 (495) 123-45-67</span>
+        </a>
+        <button class="lg:hidden w-10 h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] backdrop-blur-xl flex items-center justify-center text-white">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- ======================== HERO CONTENT ======================== -->
+
+  <div class="relative z-10 flex-1 flex flex-col items-center justify-center px-6 md:px-12 lg:px-20 pb-8">
+    <div class="max-w-7xl mx-auto w-full text-center">
+
+      <!-- Top Label -->
+      <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl mb-8 md:mb-12 translate-y-8 opacity-0 animate-[fadeUp_1s_0.2s_ease-out_forwards]">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Финская технология строительства</span>
+      </div>
+
+      <!-- Main Heading -->
+      <h1 class="text-6xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter leading-[0.9] mb-8 translate-y-8 opacity-0 animate-[fadeUp_1s_0.4s_ease-out_forwards]">
+        <span class="block text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-300 to-zinc-700">
+          Строительство
+        </span>
+        <span class="block text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-300 to-zinc-700">
+          загородных
+        </span>
+        <span class="block text-transparent bg-clip-text bg-gradient-to-br from-zinc-300 via-zinc-500 to-zinc-800">
+          домов
+        </span>
+      </h1>
+
+      <!-- Subheading -->
+      <p class="text-xl md:text-2xl text-zinc-300 font-light leading-relaxed max-w-3xl mx-auto mb-12 md:mb-16 translate-y-8 opacity-0 animate-[fadeUp_1s_0.6s_ease-out_forwards]">
+        Каркасные дома по финской технологии строительства<br class="hidden md:block" />
+        под ключ в Москве и Московской области
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mb-16 md:mb-20 translate-y-8 opacity-0 animate-[fadeUp_1s_0.8s_ease-out_forwards]">
+
+        <!-- Primary CTA -->
+        <a href="#projects" class="group relative inline-flex items-center gap-3 bg-white text-black rounded-full px-8 py-4 font-semibold text-base transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)]">
+          <span>Смотреть проекты</span>
+          <i data-lucide="arrow-right" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"></i>
+        </a>
+
+        <!-- Secondary CTA -->
+        <a href="#callback" class="group inline-flex items-center gap-3 bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl text-white rounded-full px-8 py-4 font-semibold text-base transition-all duration-500 hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.02]">
+          <i data-lucide="phone-call" class="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors duration-300"></i>
+          <span>Заказать обратный звонок</span>
+        </a>
+
+      </div>
+
+      <!-- Stats Row — Glass Container -->
+      <div class="bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] px-6 py-6 md:px-12 md:py-8 max-w-4xl mx-auto translate-y-8 opacity-0 animate-[fadeUp_1s_1s_ease-out_forwards]">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+
+          <div class="text-center">
+            <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">15+</div>
+            <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Лет опыта</div>
+          </div>
+
+          <div class="text-center">
+            <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">800+</div>
+            <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Домов построено</div>
+          </div>
+
+          <div class="text-center">
+            <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">50+</div>
+            <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Проектов</div>
+          </div>
+
+          <div class="text-center">
+            <div class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">5</div>
+            <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Лет гарантии</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ======================== SCROLL INDICATOR ======================== -->
+
+  <div class="relative z-10 flex justify-center pb-6 translate-y-8 opacity-0 animate-[fadeUp_1s_1.2s_ease-out_forwards]">
+    <div class="flex flex-col items-center gap-2">
+      <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Листайте вниз</span>
+      <div class="w-6 h-10 rounded-full border border-white/[0.1] flex items-start justify-center p-1.5">
+        <div class="w-1 h-2.5 rounded-full bg-white/40 animate-bounce"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================== RUNNING TICKER ======================== -->
+
+  <div class="relative z-10 w-full border-t border-white/[0.05] bg-white/[0.01] backdrop-blur-sm overflow-hidden">
+    <div class="flex items-center h-14 md:h-16" style="animation: ticker-scroll 30s linear infinite; width: max-content;">
+
+      <!-- First copy -->
+      <div class="flex items-center shrink-0">
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="building" class="w-4 h-4 text-zinc-600"></i>
+          Собственная выставка
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="rotate-3d" class="w-4 h-4 text-zinc-600"></i>
+          3D-туры домов
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="snowflake" class="w-4 h-4 text-zinc-600"></i>
+          Финская технология строительства
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="landmark" class="w-4 h-4 text-zinc-600"></i>
+          Помощь в оформлении ипотеки
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+      </div>
+
+      <!-- Second copy (seamless loop) -->
+      <div class="flex items-center shrink-0">
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="building" class="w-4 h-4 text-zinc-600"></i>
+          Собственная выставка
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="rotate-3d" class="w-4 h-4 text-zinc-600"></i>
+          3D-туры домов
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="snowflake" class="w-4 h-4 text-zinc-600"></i>
+          Финская технология строительства
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+        <span class="flex items-center gap-3 px-8 md:px-12 text-sm md:text-base text-zinc-500 font-light whitespace-nowrap">
+          <i data-lucide="landmark" class="w-4 h-4 text-zinc-600"></i>
+          Помощь в оформлении ипотеки
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 shrink-0"></span>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+<main class="relative z-10">
+
+<!-- ==================== BENEFITS ==================== -->
+<section class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out bg-black py-24 md:py-32 px-6 md:px-12 lg:px-20 overflow-hidden relative" id="benefits">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-16 md:mb-20">
+      <p class="text-zinc-500 font-['Inter'] tracking-[0.2em] text-xs uppercase mb-4">01. Преимущества</p>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight font-['Manrope']">Почему выбирают нас</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      <div class="group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] p-10 transition-all duration-700 hover:-translate-y-2 hover:bg-white/[0.04] hover:border-white/[0.15] hover:shadow-[0_20px_40px_-20px_rgba(255,255,255,0.05)] overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-60 h-60 bg-white/[0.03] rounded-full blur-3xl pointer-events-none transition-opacity duration-700 opacity-0 group-hover:opacity-100"></div>
+        <div class="relative z-10">
+          <div class="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center mb-8 transition-all duration-700 group-hover:bg-white group-hover:text-black group-hover:border-white group-hover:scale-110">
+            <i data-lucide="file-text" class="w-5 h-5 text-white transition-colors duration-700 group-hover:text-black"></i>
+          </div>
+          <h3 class="text-2xl font-semibold text-white tracking-tight font-['Manrope'] mb-4">Фиксированная стоимость</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed font-['Inter']">В 1-ом понятном договоре без дополнительных смет.</p>
+        </div>
+      </div>
+      <div class="group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] p-10 transition-all duration-700 hover:-translate-y-2 hover:bg-white/[0.04] hover:border-white/[0.15] hover:shadow-[0_20px_40px_-20px_rgba(255,255,255,0.05)] overflow-hidden">
+        <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-white/[0.03] rounded-full blur-3xl pointer-events-none transition-opacity duration-700 opacity-0 group-hover:opacity-100"></div>
+        <div class="relative z-10">
+          <div class="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center mb-8 transition-all duration-700 group-hover:bg-white group-hover:text-black group-hover:border-white group-hover:scale-110">
+            <i data-lucide="home" class="w-5 h-5 text-white transition-colors duration-700 group-hover:text-black"></i>
+          </div>
+          <h3 class="text-2xl font-semibold text-white tracking-tight font-['Manrope'] mb-4">Собственная выставка</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed font-['Inter']">Позволяет предварительно познакомиться с Вашим будущим домом.</p>
+        </div>
+      </div>
+      <div class="group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] p-10 transition-all duration-700 hover:-translate-y-2 hover:bg-white/[0.04] hover:border-white/[0.15] hover:shadow-[0_20px_40px_-20px_rgba(255,255,255,0.05)] overflow-hidden">
+        <div class="absolute -top-20 -left-20 w-60 h-60 bg-white/[0.03] rounded-full blur-3xl pointer-events-none transition-opacity duration-700 opacity-0 group-hover:opacity-100"></div>
+        <div class="relative z-10">
+          <div class="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center mb-8 transition-all duration-700 group-hover:bg-white group-hover:text-black group-hover:border-white group-hover:scale-110">
+            <i data-lucide="wrench" class="w-5 h-5 text-white transition-colors duration-700 group-hover:text-black"></i>
+          </div>
+          <h3 class="text-2xl font-semibold text-white tracking-tight font-['Manrope'] mb-4">Работа под ключ</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed font-['Inter']">Водяной теплый пол, инженерные системы и все коммуникации включены.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CATALOG ==================== -->
+<!-- ========== 02. HOUSE PROJECTS CATALOG ========== -->
+<section class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out relative py-24 md:py-32 bg-[#0a0a0a] overflow-hidden">
+
+  <!-- Ambient background glow -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-white/[0.015] rounded-full blur-[150px]"></div>
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.07] to-transparent"></div>
+    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.07] to-transparent"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
+
+    <!-- Section Header -->
+    <div class="mb-16 md:mb-20">
+      <p class="text-zinc-500 font-['Inter'] tracking-[0.2em] text-xs uppercase mb-4">
+        02. Каталог проектов
+      </p>
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-tight">
+          Популярные проекты
+        </h2>
+        <p class="text-zinc-500 text-sm font-['Inter'] max-w-sm leading-relaxed">
+          Каждый проект разработан с учётом современных стандартов комфорта и энергоэффективности
+        </p>
+      </div>
+      <div class="mt-8 h-px w-full bg-gradient-to-r from-white/[0.08] via-white/[0.03] to-transparent"></div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Card 1: Комфорт 170 -->
+      <a href="#" class="group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] overflow-hidden transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.06)]">
+        <!-- Image Container -->
+        <div class="relative h-64 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"
+            alt="DOM Комфорт 170"
+            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out opacity-80 group-hover:opacity-100"
+          />
+          <!-- Overlay Gradient -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          <!-- Area Badge -->
+          <div class="absolute top-5 right-5 bg-white/[0.08] backdrop-blur-xl border border-white/[0.1] rounded-full px-4 py-1.5">
+            <span class="text-white text-xs font-['Inter'] tracking-wider font-medium">170 м²</span>
+          </div>
+          <!-- Title on Image -->
+          <div class="absolute bottom-5 left-6 right-6">
+            <span class="text-zinc-400 text-[10px] font-['Inter'] tracking-[0.15em] uppercase block mb-1">Проект</span>
+            <h3 class="text-white text-xl font-medium tracking-tight">DOM «Комфорт 170»</h3>
+          </div>
+        </div>
+
+        <!-- Card Body -->
+        <div class="p-6 pt-5">
+          <!-- Stats Row -->
+          <div class="grid grid-cols-4 gap-3 mb-6">
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">4</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Спальни</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">2</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Санузла</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="ruler" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-[11px] font-['Inter'] font-medium block leading-tight">13.6×9.4</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Размер</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">18</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Терраса</span>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="h-px w-full bg-white/[0.05] mb-5"></div>
+
+          <!-- Footer -->
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400 text-sm font-['Inter'] tracking-wide group-hover:text-white transition-colors duration-500">Подробнее</span>
+            <div class="flex items-center gap-2">
+              <div class="h-[1px] w-0 bg-white/50 group-hover:w-12 transition-all duration-700 ease-out"></div>
+              <svg class="w-4 h-4 text-zinc-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2: Комфорт 230 -->
+      <a href="#" class="group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] overflow-hidden transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.06)]">
+        <div class="relative h-64 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=800"
+            alt="DOM Комфорт 230"
+            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out opacity-80 group-hover:opacity-100"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          <div class="absolute top-5 right-5 bg-white/[0.08] backdrop-blur-xl border border-white/[0.1] rounded-full px-4 py-1.5">
+            <span class="text-white text-xs font-['Inter'] tracking-wider font-medium">230 м²</span>
+          </div>
+          <div class="absolute bottom-5 left-6 right-6">
+            <span class="text-zinc-400 text-[10px] font-['Inter'] tracking-[0.15em] uppercase block mb-1">Проект</span>
+            <h3 class="text-white text-xl font-medium tracking-tight">DOM «Комфорт 230»</h3>
+          </div>
+        </div>
+
+        <div class="p-6 pt-5">
+          <div class="grid grid-cols-4 gap-3 mb-6">
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">4</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Спальни</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">3</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Санузла</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="ruler" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-[11px] font-['Inter'] font-medium block leading-tight">15.2×11.0</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Размер</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">24</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Терраса</span>
+            </div>
+          </div>
+
+          <div class="h-px w-full bg-white/[0.05] mb-5"></div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400 text-sm font-['Inter'] tracking-wide group-hover:text-white transition-colors duration-500">Подробнее</span>
+            <div class="flex items-center gap-2">
+              <div class="h-[1px] w-0 bg-white/50 group-hover:w-12 transition-all duration-700 ease-out"></div>
+              <svg class="w-4 h-4 text-zinc-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3: Комфорт 356 -->
+      <a href="#" class="group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] overflow-hidden transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.06)]">
+        <div class="relative h-64 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=800"
+            alt="DOM Комфорт 356"
+            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out opacity-80 group-hover:opacity-100"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          <div class="absolute top-5 right-5 bg-white/[0.08] backdrop-blur-xl border border-white/[0.1] rounded-full px-4 py-1.5">
+            <span class="text-white text-xs font-['Inter'] tracking-wider font-medium">356 м²</span>
+          </div>
+          <!-- Premium Label -->
+          <div class="absolute top-5 left-6 bg-white/[0.1] backdrop-blur-xl border border-white/[0.15] rounded-full px-3 py-1">
+            <span class="text-white/80 text-[10px] font-['Inter'] tracking-[0.15em] uppercase font-medium">Premium</span>
+          </div>
+          <div class="absolute bottom-5 left-6 right-6">
+            <span class="text-zinc-400 text-[10px] font-['Inter'] tracking-[0.15em] uppercase block mb-1">Проект</span>
+            <h3 class="text-white text-xl font-medium tracking-tight">DOM «Комфорт 356»</h3>
+          </div>
+        </div>
+
+        <div class="p-6 pt-5">
+          <div class="grid grid-cols-4 gap-3 mb-6">
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">4</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Спальни</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">4</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Санузла</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="ruler" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-[11px] font-['Inter'] font-medium block leading-tight">20.6×12.9</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Размер</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">48.6</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Терраса</span>
+            </div>
+          </div>
+
+          <div class="h-px w-full bg-white/[0.05] mb-5"></div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400 text-sm font-['Inter'] tracking-wide group-hover:text-white transition-colors duration-500">Подробнее</span>
+            <div class="flex items-center gap-2">
+              <div class="h-[1px] w-0 bg-white/50 group-hover:w-12 transition-all duration-700 ease-out"></div>
+              <svg class="w-4 h-4 text-zinc-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 4: Оптимум 150 -->
+      <a href="#" class="group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] overflow-hidden transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.06)]">
+        <div class="relative h-64 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800"
+            alt="DOM Оптимум 150"
+            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out opacity-80 group-hover:opacity-100"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          <div class="absolute top-5 right-5 bg-white/[0.08] backdrop-blur-xl border border-white/[0.1] rounded-full px-4 py-1.5">
+            <span class="text-white text-xs font-['Inter'] tracking-wider font-medium">150 м²</span>
+          </div>
+          <div class="absolute bottom-5 left-6 right-6">
+            <span class="text-zinc-400 text-[10px] font-['Inter'] tracking-[0.15em] uppercase block mb-1">Проект</span>
+            <h3 class="text-white text-xl font-medium tracking-tight">DOM «Оптимум 150»</h3>
+          </div>
+        </div>
+
+        <div class="p-6 pt-5">
+          <div class="grid grid-cols-4 gap-3 mb-6">
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">3</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Спальни</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">2</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Санузла</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="ruler" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-[11px] font-['Inter'] font-medium block leading-tight">12.8×8.6</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Размер</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">14</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Терраса</span>
+            </div>
+          </div>
+
+          <div class="h-px w-full bg-white/[0.05] mb-5"></div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400 text-sm font-['Inter'] tracking-wide group-hover:text-white transition-colors duration-500">Подробнее</span>
+            <div class="flex items-center gap-2">
+              <div class="h-[1px] w-0 bg-white/50 group-hover:w-12 transition-all duration-700 ease-out"></div>
+              <svg class="w-4 h-4 text-zinc-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 5: Бизнес 180 -->
+      <a href="#" class="group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] overflow-hidden transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.06)]">
+        <div class="relative h-64 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=800"
+            alt="DOM Бизнес 180"
+            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out opacity-80 group-hover:opacity-100"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          <div class="absolute top-5 right-5 bg-white/[0.08] backdrop-blur-xl border border-white/[0.1] rounded-full px-4 py-1.5">
+            <span class="text-white text-xs font-['Inter'] tracking-wider font-medium">180 м²</span>
+          </div>
+          <div class="absolute bottom-5 left-6 right-6">
+            <span class="text-zinc-400 text-[10px] font-['Inter'] tracking-[0.15em] uppercase block mb-1">Проект</span>
+            <h3 class="text-white text-xl font-medium tracking-tight">DOM «Бизнес 180»</h3>
+          </div>
+        </div>
+
+        <div class="p-6 pt-5">
+          <div class="grid grid-cols-4 gap-3 mb-6">
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">3</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Спальни</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">3</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Санузла</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="ruler" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-[11px] font-['Inter'] font-medium block leading-tight">13.6×17.2</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Размер</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">36.1</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Терраса</span>
+            </div>
+          </div>
+
+          <div class="h-px w-full bg-white/[0.05] mb-5"></div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400 text-sm font-['Inter'] tracking-wide group-hover:text-white transition-colors duration-500">Подробнее</span>
+            <div class="flex items-center gap-2">
+              <div class="h-[1px] w-0 bg-white/50 group-hover:w-12 transition-all duration-700 ease-out"></div>
+              <svg class="w-4 h-4 text-zinc-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 6: Оптимум 165 -->
+      <a href="#" class="group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] overflow-hidden transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.06)]">
+        <div class="relative h-64 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&q=80&w=800"
+            alt="DOM Оптимум 165"
+            class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out opacity-80 group-hover:opacity-100"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          <div class="absolute top-5 right-5 bg-white/[0.08] backdrop-blur-xl border border-white/[0.1] rounded-full px-4 py-1.5">
+            <span class="text-white text-xs font-['Inter'] tracking-wider font-medium">165 м²</span>
+          </div>
+          <div class="absolute bottom-5 left-6 right-6">
+            <span class="text-zinc-400 text-[10px] font-['Inter'] tracking-[0.15em] uppercase block mb-1">Проект</span>
+            <h3 class="text-white text-xl font-medium tracking-tight">DOM «Оптимум 165»</h3>
+          </div>
+        </div>
+
+        <div class="p-6 pt-5">
+          <div class="grid grid-cols-4 gap-3 mb-6">
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bed-double" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">3</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Спальни</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="bath" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">2</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Санузла</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="ruler" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-[11px] font-['Inter'] font-medium block leading-tight">14.2×9.8</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Размер</span>
+            </div>
+            <div class="text-center">
+              <div class="flex items-center justify-center mb-2">
+                <i data-lucide="trees" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <span class="text-white text-sm font-['Inter'] font-medium block">16</span>
+              <span class="text-zinc-600 text-[10px] font-['Inter'] tracking-wider uppercase">Терраса</span>
+            </div>
+          </div>
+
+          <div class="h-px w-full bg-white/[0.05] mb-5"></div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400 text-sm font-['Inter'] tracking-wide group-hover:text-white transition-colors duration-500">Подробнее</span>
+            <div class="flex items-center gap-2">
+              <div class="h-[1px] w-0 bg-white/50 group-hover:w-12 transition-all duration-700 ease-out"></div>
+              <svg class="w-4 h-4 text-zinc-600 group-hover:text-white group-hover:translate-x-1 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+    <!-- End Projects Grid -->
+
+    <!-- CTA Button -->
+    <div class="mt-16 md:mt-20 flex flex-col items-center gap-6">
+      <div class="h-px w-24 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"></div>
+      <a href="#" class="group relative inline-flex items-center gap-3 bg-white text-black font-['Inter'] font-medium text-sm tracking-wide rounded-full px-10 py-4 transition-all duration-500 hover:bg-white/90 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:scale-[1.02] active:scale-[0.98]">
+        <span>Смотреть весь каталог</span>
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+        </svg>
+      </a>
+      <p class="text-zinc-600 text-xs font-['Inter'] tracking-wider">26 проектов в каталоге</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==================== SERVICES ==================== -->
+<!-- 03. Comprehensive Services Section -->
+<section id="services" class="relative py-32 bg-black overflow-hidden">
+  <!-- Ambient background effects -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-white/[0.008] rounded-full blur-[150px]"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-white/[0.005] rounded-full blur-[120px]"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out mb-20">
+      <p class="text-zinc-500 font-['Inter'] tracking-[0.2em] text-xs uppercase mb-6">03. Сервис</p>
+      <h2 class="text-4xl md:text-5xl font-medium text-white tracking-tight mb-4">Комплексное решение</h2>
+      <p class="text-xl text-zinc-300 font-light max-w-2xl leading-relaxed">
+        Компания одного окна: от фундамента до чистовой отделки
+      </p>
+    </div>
+
+    <!-- Service Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+
+      <!-- Card 1: Помощь в подборе участка -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out group">
+        <div class="relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] p-10 h-full transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:bg-white/[0.04] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.05)]">
+          <!-- Icon -->
+          <div class="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center mb-8 transition-all duration-500 ease-out group-hover:bg-white group-hover:border-white group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+            <i data-lucide="map-pin" class="w-5 h-5 text-zinc-400 transition-all duration-500 ease-out group-hover:text-black"></i>
+          </div>
+
+          <!-- Content -->
+          <h3 class="text-lg font-medium text-white mb-3 tracking-tight transition-colors duration-500">Помощь в подборе участка</h3>
+          <p class="text-sm text-zinc-500 leading-relaxed font-light transition-colors duration-500 group-hover:text-zinc-400">
+            Помогаем найти участок и предлагаем оптимальное расположение дома
+          </p>
+
+          <!-- Subtle decorative line -->
+          <div class="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
+        </div>
+      </div>
+
+      <!-- Card 2: Сопровождение ипотеки -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out [transition-delay:100ms] group">
+        <div class="relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] p-10 h-full transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:bg-white/[0.04] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.05)]">
+          <!-- Icon -->
+          <div class="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center mb-8 transition-all duration-500 ease-out group-hover:bg-white group-hover:border-white group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+            <i data-lucide="landmark" class="w-5 h-5 text-zinc-400 transition-all duration-500 ease-out group-hover:text-black"></i>
+          </div>
+
+          <!-- Content -->
+          <h3 class="text-lg font-medium text-white mb-3 tracking-tight transition-colors duration-500">Сопровождение ипотеки</h3>
+          <p class="text-sm text-zinc-500 leading-relaxed font-light transition-colors duration-500 group-hover:text-zinc-400">
+            Консультации и помощь в одобрении выгодных ипотечных программ
+          </p>
+
+          <!-- Subtle decorative line -->
+          <div class="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
+        </div>
+      </div>
+
+      <!-- Card 3: Инженерные системы -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out [transition-delay:200ms] group">
+        <div class="relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] p-10 h-full transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:bg-white/[0.04] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.05)]">
+          <!-- Icon -->
+          <div class="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center mb-8 transition-all duration-500 ease-out group-hover:bg-white group-hover:border-white group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+            <i data-lucide="settings" class="w-5 h-5 text-zinc-400 transition-all duration-500 ease-out group-hover:text-black"></i>
+          </div>
+
+          <!-- Content -->
+          <h3 class="text-lg font-medium text-white mb-3 tracking-tight transition-colors duration-500">Инженерные системы</h3>
+          <p class="text-sm text-zinc-500 leading-relaxed font-light transition-colors duration-500 group-hover:text-zinc-400">
+            Водяной тёплый пол, отопление, канализация и решение задач по энергоснабжению
+          </p>
+
+          <!-- Subtle decorative line -->
+          <div class="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
+        </div>
+      </div>
+
+      <!-- Card 4: Чистовая отделка -->
+      <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out [transition-delay:300ms] group">
+        <div class="relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] p-10 h-full transition-all duration-700 ease-out hover:-translate-y-2 hover:border-white/[0.12] hover:bg-white/[0.04] hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.05)]">
+          <!-- Icon -->
+          <div class="w-12 h-12 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center mb-8 transition-all duration-500 ease-out group-hover:bg-white group-hover:border-white group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+            <i data-lucide="paint-bucket" class="w-5 h-5 text-zinc-400 transition-all duration-500 ease-out group-hover:text-black"></i>
+          </div>
+
+          <!-- Content -->
+          <h3 class="text-lg font-medium text-white mb-3 tracking-tight transition-colors duration-500">Чистовая отделка</h3>
+          <p class="text-sm text-zinc-500 leading-relaxed font-light transition-colors duration-500 group-hover:text-zinc-400">
+            Все отделочные работы, интерьерные решения и полная подготовка дома к заезду
+          </p>
+
+          <!-- Subtle decorative line -->
+          <div class="absolute bottom-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Land Selection Featured Block -->
+    <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out [transition-delay:400ms] group">
+      <div class="relative rounded-[2rem] overflow-hidden border border-white/[0.05] transition-all duration-700 hover:border-white/[0.12] hover:shadow-[0_30px_80px_-20px_rgba(255,255,255,0.06)]">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=1200"
+            alt="Участки в Подмосковье"
+            class="w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+          >
+        </div>
+
+        <!-- Multi-layer gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
+        <div class="absolute inset-0 backdrop-blur-[2px]"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 p-10 md:p-16 lg:p-20">
+          <div class="max-w-2xl">
+            <!-- Label -->
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 rounded-full bg-white/10 border border-white/15 flex items-center justify-center backdrop-blur-xl transition-all duration-500 group-hover:bg-white group-hover:border-white group-hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                <i data-lucide="map-pin" class="w-4 h-4 text-zinc-300 transition-all duration-500 group-hover:text-black"></i>
+              </div>
+              <span class="text-zinc-400 font-['Inter'] tracking-[0.15em] text-xs uppercase">Земельные участки</span>
+            </div>
+
+            <!-- Title -->
+            <h3 class="text-3xl md:text-4xl font-medium text-white tracking-tight mb-4 leading-tight">
+              Подбор участков<br>в Подмосковье
+            </h3>
+
+            <!-- Description -->
+            <p class="text-base md:text-lg text-zinc-300 font-light leading-relaxed mb-10 max-w-xl">
+              Ищете участок в Московской области? Наш специалист внутри компании поможет Вам найти идеальный вариант. Есть своя база участков с подрядом на продажу.
+            </p>
+
+            <!-- CTA Button -->
+            <a href="tel:+7" class="group/btn inline-flex items-center gap-3 bg-white/[0.08] border border-white/[0.12] backdrop-blur-xl rounded-full px-8 py-4 text-white font-medium text-sm tracking-wide transition-all duration-500 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:scale-[1.02] active:scale-[0.98]">
+              <i data-lucide="phone" class="w-4 h-4 transition-all duration-500 group-hover/btn:animate-[wiggle_0.5s_ease-in-out]"></i>
+              <span>Звоните, чтобы узнать наличие участков</span>
+              <svg class="w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Decorative corner accents -->
+        <div class="absolute top-6 right-6 w-16 h-16 border-t border-r border-white/[0.06] rounded-tr-2xl pointer-events-none transition-all duration-700 group-hover:border-white/[0.15] group-hover:w-20 group-hover:h-20"></div>
+        <div class="absolute bottom-6 left-6 w-16 h-16 border-b border-l border-white/[0.06] rounded-bl-2xl pointer-events-none transition-all duration-700 group-hover:border-white/[0.15] group-hover:w-20 group-hover:h-20"></div>
+      </div>
+    </div>
+
+    <!-- Bottom visual connector -->
+    <div class="reveal opacity-0 translate-y-8 transition-all duration-1000 ease-out [transition-delay:500ms] flex justify-center mt-16">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-px bg-gradient-to-r from-transparent to-white/10"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-white/10"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-white/[0.06]"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-white/[0.03]"></div>
+        <div class="w-12 h-px bg-gradient-to-l from-transparent to-white/10"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PORTFOLIO ==================== -->
+<!-- ============================================================
+     SECTION 04 — PORTFOLIO / BUILT HOMES
+     Design: iOS/Apple Premium "Titanium & Glass" dark theme
+     Stack : Tailwind 4 CDN + Lucide Icons CDN (HTML-only)
+     ============================================================ -->
+
+<section
+  id="portfolio"
+  class="relative overflow-hidden bg-neutral-950 py-24 sm:py-32 lg:py-40"
+>
+  <!-- ─── ambient glow blobs ─── -->
+  <div
+    class="pointer-events-none absolute -left-40 top-0 h-[600px] w-[600px] rounded-full bg-white/[0.02] blur-[120px]"
+  ></div>
+  <div
+    class="pointer-events-none absolute -right-40 bottom-0 h-[500px] w-[500px] rounded-full bg-white/[0.015] blur-[100px]"
+  ></div>
+
+  <div class="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+    <!-- ─── section header ─── -->
+    <div class="reveal mb-16 sm:mb-20 lg:mb-24">
+      <!-- label -->
+      <div class="mb-5 flex items-center gap-3">
+        <span
+          class="inline-block h-px w-8 bg-gradient-to-r from-white/60 to-transparent"
+        ></span>
+        <span
+          class="font-mono text-[11px] uppercase tracking-[0.25em] text-white/40"
+          >04. Портфолио</span
+        >
+      </div>
+
+      <!-- title -->
+      <h2
+        class="max-w-xl text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl"
+      >
+        Построенные
+        <span
+          class="bg-gradient-to-r from-white via-white/80 to-white/50 bg-clip-text text-transparent"
+          >дома</span
+        >
+      </h2>
+
+      <p
+        class="mt-5 max-w-lg text-base leading-relaxed text-white/40 sm:text-lg"
+      >
+        Каждый проект — это уникальное решение, реализованное с вниманием к
+        деталям и качеству
+      </p>
+    </div>
+
+    <!-- ─── masonry grid ─── -->
+    <div
+      class="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3"
+    >
+      <!-- ══════════════════════════════════════════════
+           CARD 1 — Коттедж «Комфорт 200» (tall card)
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)] md:row-span-2"
+      >
+        <!-- image -->
+        <div class="relative h-full min-h-[420px] w-full overflow-hidden sm:min-h-[520px] md:min-h-full">
+          <img
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Комфорт 200 — Дом с видом на озеро"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <!-- gradient overlay -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8">
+          <!-- status badge -->
+          <div class="mb-4 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <!-- title -->
+          <h3
+            class="text-xl font-semibold leading-tight text-white sm:text-2xl"
+          >
+            Коттедж «Комфорт 200»
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-4 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <!-- features -->
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="mountain-snow" class="h-3.5 w-3.5"></i>
+              Дом с видом на озеро
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="flame" class="h-3.5 w-3.5"></i>
+              Увеличенная терраса и камин
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 2 — Коттедж «Комфорт» 165 м²
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)]"
+      >
+        <!-- image -->
+        <div class="relative h-64 w-full overflow-hidden sm:h-72">
+          <img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Комфорт 165 м²"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+          <!-- status badge -->
+          <div class="mb-3 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3 class="text-lg font-semibold leading-tight text-white sm:text-xl">
+            Коттедж «Комфорт» 165 м²
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-3 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="bed-double" class="h-3.5 w-3.5"></i>
+              Спальня для 2 детей
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="bath" class="h-3.5 w-3.5"></i>
+              3 санузла
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 3 — Коттедж «Оптимум» 115 м²
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)]"
+      >
+        <!-- image -->
+        <div class="relative h-64 w-full overflow-hidden sm:h-72">
+          <img
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Оптимум 115 м² — Дом у леса"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+          <!-- status badge -->
+          <div class="mb-3 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3 class="text-lg font-semibold leading-tight text-white sm:text-xl">
+            Коттедж «Оптимум» 115 м²
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-3 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="trees" class="h-3.5 w-3.5"></i>
+              Дом у леса
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="layers" class="h-3.5 w-3.5"></i>
+              Полуэтаж в детской
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="fence" class="h-3.5 w-3.5"></i>
+              Терраса у леса
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 4 — Коттедж «Комфорт» 165 м² (tall card)
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)] md:row-span-2"
+      >
+        <!-- image -->
+        <div class="relative h-full min-h-[420px] w-full overflow-hidden sm:min-h-[520px] md:min-h-full">
+          <img
+            src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Комфорт 165 м² — Второй свет"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8">
+          <!-- status badge -->
+          <div class="mb-4 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3
+            class="text-xl font-semibold leading-tight text-white sm:text-2xl"
+          >
+            Коттедж «Комфорт» 165 м²
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-4 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="sun" class="h-3.5 w-3.5"></i>
+              Второй свет
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="palette" class="h-3.5 w-3.5"></i>
+              Индивидуальный цвет фасада
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 5 — Коттедж «Комфорт 200» (premium)
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)]"
+      >
+        <!-- image -->
+        <div class="relative h-64 w-full overflow-hidden sm:h-72">
+          <img
+            src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Комфорт 200 — Премиальная отделка"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+          <!-- status badge -->
+          <div class="mb-3 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3 class="text-lg font-semibold leading-tight text-white sm:text-xl">
+            Коттедж «Комфорт 200»
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-3 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="gem" class="h-3.5 w-3.5"></i>
+              Премиальная отделка
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="lightbulb" class="h-3.5 w-3.5"></i>
+              Подсветка лестницы
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="cpu" class="h-3.5 w-3.5"></i>
+              Умный дом
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           CARD 6 — Коттедж «Оптимум» 115 м²
+           ══════════════════════════════════════════════ -->
+      <div
+        class="reveal group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-white/[0.12] hover:shadow-[0_20px_60px_-12px_rgba(255,255,255,0.06)]"
+      >
+        <!-- image -->
+        <div class="relative h-64 w-full overflow-hidden sm:h-72">
+          <img
+            src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&q=80&w=800"
+            alt="Коттедж Оптимум 115 м² — для пожилой семьи"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"
+          ></div>
+        </div>
+
+        <!-- content -->
+        <div class="absolute inset-x-0 bottom-0 z-10 p-6">
+          <!-- status badge -->
+          <div class="mb-3 flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"
+              ></span>
+            </span>
+            <span
+              class="text-[11px] font-medium uppercase tracking-[0.2em] text-emerald-300/90"
+              >Готов</span
+            >
+          </div>
+
+          <h3 class="text-lg font-semibold leading-tight text-white sm:text-xl">
+            Коттедж «Оптимум» 115 м²
+          </h3>
+
+          <!-- growing line -->
+          <div
+            class="my-3 h-px w-0 bg-gradient-to-r from-white/60 to-transparent transition-all duration-500 ease-out group-hover:w-12"
+          ></div>
+
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="home" class="h-3.5 w-3.5"></i>
+              1-этажный дом
+            </span>
+            <span class="text-white/20">|</span>
+            <span class="flex items-center gap-1.5 text-sm text-white/50">
+              <i data-lucide="heart" class="h-3.5 w-3.5"></i>
+              Максимум комфорта
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CTA button ─── -->
+    <div class="reveal mt-14 flex justify-center sm:mt-20">
+      <a
+        href="#"
+        class="group/btn relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-white px-8 py-4 text-sm font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] active:scale-[0.98] sm:px-10 sm:py-4 sm:text-base"
+      >
+        <!-- shimmer sweep -->
+        <span
+          class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover/btn:translate-x-full"
+        ></span>
+        <span class="relative">Смотреть все проекты</span>
+        <i
+          data-lucide="arrow-right"
+          class="relative h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1"
+        ></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== TECHNOLOGY ==================== -->
+<!-- ============================================================
+     DMITRY DOM — Technology Section
+     Construction company: Finnish & CLT technology
+     Design: iOS/Apple Premium "Titanium & Glass" dark theme
+     ============================================================ -->
+
+<section id="technology" class="relative bg-black font-['Manrope',_sans-serif] overflow-hidden py-24 md:py-32 lg:py-40">
+
+  <!-- ======================== BACKGROUND LAYERS ======================== -->
+
+  <!-- Dot pattern overlay -->
+  <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+
+  <!-- Ambient glow — top center -->
+  <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[70vw] h-[40vh] bg-gradient-to-b from-zinc-800/15 via-zinc-900/10 to-transparent rounded-full blur-[120px] pointer-events-none"></div>
+
+  <!-- Ambient glow — bottom left -->
+  <div class="absolute bottom-[-5%] left-[10%] w-[40vw] h-[30vh] bg-gradient-to-tr from-white/[0.015] to-transparent rounded-full blur-[100px] pointer-events-none"></div>
+
+
+  <!-- ======================== SECTION HEADER ======================== -->
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+    <!-- Section label -->
+    <div class="reveal mb-6">
+      <span class="text-zinc-500 font-['Inter'] tracking-[0.2em] text-xs uppercase">05. Технология</span>
+    </div>
+
+    <!-- Section title -->
+    <div class="reveal mb-16 md:mb-20">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-tight">
+        Инновационные технологии
+      </h2>
+      <p class="mt-4 text-lg text-zinc-500 font-light max-w-2xl leading-relaxed">
+        Используем передовые подходы к строительству, проверенные десятилетиями эксплуатации в суровых климатических условиях
+      </p>
+    </div>
+
+
+    <!-- ======================== TWO TECHNOLOGY CARDS ======================== -->
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+
+      <!-- ===== CARD 1 — Finnish Technology ===== -->
+      <div class="reveal group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2.5rem] overflow-hidden h-[540px] md:h-[560px] lg:h-[520px] xl:h-[540px] transition-all duration-700 hover:border-white/[0.1] hover:bg-white/[0.03]">
+
+        <!-- Inner glow -->
+        <div class="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
+
+        <!-- Background image with gradient overlay -->
+        <div class="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&q=80&w=800"
+            alt="Финская технология строительства"
+            class="w-full h-full object-cover opacity-30 group-hover:opacity-40 transition-opacity duration-700 group-hover:scale-105 transition-transform"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30"></div>
+        </div>
+
+        <!-- Top badges -->
+        <div class="relative z-10 p-6 md:p-8 flex flex-wrap gap-2">
+          <!-- Badge: Thermometer -->
+          <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-xl text-[11px] text-zinc-400 font-['Inter'] tracking-wider uppercase transition-all duration-500 group-hover:bg-white/[0.07] group-hover:border-white/[0.1]">
+            <i data-lucide="thermometer" class="w-3.5 h-3.5 text-zinc-500"></i>
+            Теплоизоляция
+          </span>
+          <!-- Badge: Shield -->
+          <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-xl text-[11px] text-zinc-400 font-['Inter'] tracking-wider uppercase transition-all duration-500 group-hover:bg-white/[0.07] group-hover:border-white/[0.1]">
+            <i data-lucide="shield" class="w-3.5 h-3.5 text-zinc-500"></i>
+            Надёжность
+          </span>
+          <!-- Badge: Zap -->
+          <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-xl text-[11px] text-zinc-400 font-['Inter'] tracking-wider uppercase transition-all duration-500 group-hover:bg-white/[0.07] group-hover:border-white/[0.1]">
+            <i data-lucide="zap" class="w-3.5 h-3.5 text-zinc-500"></i>
+            Электрокотёл
+          </span>
+        </div>
+
+        <!-- Content at bottom -->
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-6 md:p-8">
+
+          <!-- Big stat number -->
+          <div class="mb-4">
+            <span class="text-7xl md:text-8xl font-light text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-300 to-zinc-600 leading-none tracking-tighter">
+              98%
+            </span>
+            <span class="block mt-1 text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">
+              Энергоэффективность
+            </span>
+          </div>
+
+          <!-- Title -->
+          <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight mb-3">
+            Финская технология
+          </h3>
+
+          <!-- Description -->
+          <p class="text-sm md:text-[15px] text-zinc-400 font-light leading-relaxed mb-2 max-w-md">
+            Тёплая и надёжная финская технология строительства позволяет нашим Клиентам не беспокоиться о вопросах комфорта даже в самую холодную зиму.
+          </p>
+
+          <!-- Sub-detail -->
+          <p class="text-xs text-zinc-500 font-['Inter'] mb-6">
+            Достаточно отопления от электрокотла
+          </p>
+
+          <!-- CTA Button — ghost style -->
+          <a href="#" class="group/btn inline-flex items-center gap-2.5 px-5 py-3 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-xl text-sm text-zinc-300 font-medium transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white hover:scale-[1.02]">
+            <span>Подробнее о технологии</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===== CARD 2 — CLT Technology ===== -->
+      <div class="reveal group relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2.5rem] overflow-hidden h-[540px] md:h-[560px] lg:h-[520px] xl:h-[540px] transition-all duration-700 hover:border-white/[0.1] hover:bg-white/[0.03]">
+
+        <!-- Inner glow -->
+        <div class="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
+
+        <!-- Background image with gradient overlay -->
+        <div class="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=800"
+            alt="Технология CLT — деревянный монолит"
+            class="w-full h-full object-cover opacity-30 group-hover:opacity-40 transition-opacity duration-700 group-hover:scale-105 transition-transform"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30"></div>
+        </div>
+
+        <!-- Top badges -->
+        <div class="relative z-10 p-6 md:p-8 flex flex-wrap gap-2">
+          <!-- Badge: Tree Pine -->
+          <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-xl text-[11px] text-zinc-400 font-['Inter'] tracking-wider uppercase transition-all duration-500 group-hover:bg-white/[0.07] group-hover:border-white/[0.1]">
+            <i data-lucide="tree-pine" class="w-3.5 h-3.5 text-zinc-500"></i>
+            Экологичность
+          </span>
+          <!-- Badge: Clock -->
+          <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-xl text-[11px] text-zinc-400 font-['Inter'] tracking-wider uppercase transition-all duration-500 group-hover:bg-white/[0.07] group-hover:border-white/[0.1]">
+            <i data-lucide="clock" class="w-3.5 h-3.5 text-zinc-500"></i>
+            Скорость
+          </span>
+          <!-- Badge: Leaf -->
+          <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-xl text-[11px] text-zinc-400 font-['Inter'] tracking-wider uppercase transition-all duration-500 group-hover:bg-white/[0.07] group-hover:border-white/[0.1]">
+            <i data-lucide="leaf" class="w-3.5 h-3.5 text-zinc-500"></i>
+            Натуральный
+          </span>
+        </div>
+
+        <!-- Content at bottom -->
+        <div class="absolute bottom-0 left-0 right-0 z-10 p-6 md:p-8">
+
+          <!-- Big stat number -->
+          <div class="mb-4">
+            <span class="text-7xl md:text-8xl font-light text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-300 to-zinc-600 leading-none tracking-tighter">
+              3x
+            </span>
+            <span class="block mt-1 text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">
+              Быстрее возведения
+            </span>
+          </div>
+
+          <!-- Title -->
+          <h3 class="text-2xl md:text-3xl font-medium text-white tracking-tight mb-3">
+            Технология CLT
+          </h3>
+
+          <!-- Description -->
+          <p class="text-sm md:text-[15px] text-zinc-400 font-light leading-relaxed mb-6 max-w-md">
+            Технология CLT или, простыми словами, деревянный монолит сочетает в себе все преимущества современного подхода к строительству: надежность, скорость возведения, экологичность и готовность к внутренней отделке сразу.
+          </p>
+
+          <!-- CTA Button — ghost style -->
+          <a href="#" class="group/btn inline-flex items-center gap-2.5 px-5 py-3 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-xl text-sm text-zinc-300 font-medium transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white hover:scale-[1.02]">
+            <span>Подробнее о технологии</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ======================== BOTTOM COMPARISON STRIP ======================== -->
+
+    <div class="reveal mt-12 md:mt-16 bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] p-6 md:p-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+
+        <div class="text-center">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] mb-3">
+            <i data-lucide="thermometer" class="w-5 h-5 text-zinc-400"></i>
+          </div>
+          <div class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">-40&deg;C</div>
+          <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Эксплуатация</div>
+        </div>
+
+        <div class="text-center">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] mb-3">
+            <i data-lucide="shield" class="w-5 h-5 text-zinc-400"></i>
+          </div>
+          <div class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">100+</div>
+          <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Лет службы</div>
+        </div>
+
+        <div class="text-center">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] mb-3">
+            <i data-lucide="zap" class="w-5 h-5 text-zinc-400"></i>
+          </div>
+          <div class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">A+</div>
+          <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Энергокласс</div>
+        </div>
+
+        <div class="text-center">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] mb-3">
+            <i data-lucide="leaf" class="w-5 h-5 text-zinc-400"></i>
+          </div>
+          <div class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 mb-1">100%</div>
+          <div class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">Экологичность</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==================== REVIEWS ==================== -->
+<!-- ============================================================
+     DMITRY DOM — Reviews / Testimonials Section
+     Construction company: Finnish-technology frame houses
+     Design: iOS/Apple Premium "Titanium & Glass" dark theme
+     ============================================================ -->
+
+<section id="reviews" class="relative bg-black font-['Manrope',_sans-serif] overflow-hidden py-24 md:py-32 lg:py-40">
+
+  <!-- ======================== BACKGROUND LAYERS ======================== -->
+
+  <!-- Dot pattern overlay -->
+  <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+
+  <!-- Top ambient glow -->
+  <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[70vw] h-[40vh] bg-gradient-to-b from-zinc-800/15 via-zinc-900/10 to-transparent rounded-full blur-[120px] pointer-events-none"></div>
+
+  <!-- Bottom subtle glow -->
+  <div class="absolute bottom-0 right-[20%] w-[40vw] h-[30vh] bg-gradient-to-t from-white/[0.02] to-transparent rounded-full blur-[100px] pointer-events-none"></div>
+
+
+  <!-- ======================== CONTENT CONTAINER ======================== -->
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+    <!-- ======================== SECTION HEADER ======================== -->
+
+    <div class="reveal mb-16 md:mb-20 lg:mb-24">
+
+      <!-- Section label -->
+      <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl mb-8">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.2em] uppercase">06. Отзывы</span>
+      </div>
+
+      <!-- Title + Rating row -->
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 lg:gap-16">
+
+        <!-- Section title -->
+        <div class="max-w-2xl">
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.05] mb-4">
+            <span class="text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-300 to-zinc-600">
+              Что говорят
+            </span>
+            <br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-br from-zinc-200 via-zinc-400 to-zinc-700">
+              наши клиенты
+            </span>
+          </h2>
+          <p class="text-zinc-500 text-base md:text-lg font-light leading-relaxed max-w-xl">
+            Гарантируем настоящие и правдивые отзывы от семей, которые уже живут в своих домах
+          </p>
+        </div>
+
+        <!-- Yandex Rating Badge -->
+        <div class="flex-shrink-0 bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[1.5rem] px-8 py-6 flex items-center gap-5 transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.08]">
+          <div class="flex flex-col items-center">
+            <span class="text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-500 leading-none">
+              4.9
+            </span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-1">
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+              <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            </div>
+            <span class="text-[10px] text-zinc-500 font-['Inter'] tracking-[0.15em] uppercase">Рейтинг Яндекса</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ======================== REVIEW CARDS ======================== -->
+
+    <!-- Horizontal scroll wrapper on mobile, grid on desktop -->
+    <div class="reveal -mx-6 px-6 md:mx-0 md:px-0 mb-16 md:mb-20">
+      <div class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 md:pb-0 md:overflow-x-visible md:grid md:grid-cols-2 scrollbar-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+
+        <!-- ===== Review Card 1 — Марина и Сергей ===== -->
+        <div class="group flex-shrink-0 w-[85vw] sm:w-[75vw] md:w-auto snap-center bg-white/[0.02] border border-white/[0.05] rounded-[2rem] p-8 md:p-10 transition-all duration-700 hover:bg-white/[0.04] hover:border-white/[0.08] hover:shadow-[0_8px_60px_-15px_rgba(255,255,255,0.06)]">
+
+          <!-- Decorative quote icon -->
+          <div class="mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center transition-all duration-500 group-hover:bg-white/[0.06] group-hover:border-white/[0.1]">
+              <i data-lucide="quote" class="w-5 h-5 text-zinc-600 transition-colors duration-500 group-hover:text-zinc-400"></i>
+            </div>
+          </div>
+
+          <!-- Star rating -->
+          <div class="flex items-center gap-1 mb-5">
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          </div>
+
+          <!-- Quote text -->
+          <p class="text-zinc-300 text-base leading-relaxed mb-8 font-light">
+            Качество и профессионализм на высшем уровне! Долго выбирали застройщика и остановили свой выбор на этой компании. Понравилось что в предложение уже все включено, ни за что доплачивать не пришлось. Конечно был некий страх т.к. мы никогда не жили в своём доме, но Дмитрий развеял все сомнения, доходчиво объяснив все этапы строительства и технологию. Качество, профессионализм на высшем уровне! Спасибо вам за такой ответственный подход к работе.
+          </p>
+
+          <!-- Author -->
+          <div class="flex items-center gap-4">
+            <!-- Avatar with gradient ring -->
+            <div class="relative flex-shrink-0">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-zinc-700 via-white to-zinc-500 p-[2px]">
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150"
+                  alt="Марина и Сергей"
+                  class="w-full h-full rounded-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-white font-semibold text-sm tracking-tight">Марина и Сергей</span>
+              <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.15em] uppercase mt-1">Каркасный дом 120 м²</span>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- ===== Review Card 2 — Эдуард ===== -->
+        <div class="group flex-shrink-0 w-[85vw] sm:w-[75vw] md:w-auto snap-center bg-white/[0.02] border border-white/[0.05] rounded-[2rem] p-8 md:p-10 transition-all duration-700 hover:bg-white/[0.04] hover:border-white/[0.08] hover:shadow-[0_8px_60px_-15px_rgba(255,255,255,0.06)]">
+
+          <!-- Decorative quote icon -->
+          <div class="mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center transition-all duration-500 group-hover:bg-white/[0.06] group-hover:border-white/[0.1]">
+              <i data-lucide="quote" class="w-5 h-5 text-zinc-600 transition-colors duration-500 group-hover:text-zinc-400"></i>
+            </div>
+          </div>
+
+          <!-- Star rating -->
+          <div class="flex items-center gap-1 mb-5">
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+          </div>
+
+          <!-- Quote text -->
+          <p class="text-zinc-300 text-base leading-relaxed mb-8 font-light">
+            Хороший дом получился, рекомендую! Два основных и самых ценных момента в сотрудничестве с компанией DMITRY DOM: Во-первых, мы с самого начала и до самого конца работали по одному договору. Никаких дополнительных соглашений, скрытых платежей или неожиданных расходов. Всё было прозрачно и понятно с первого дня. Это очень важно когда речь идёт о строительстве дома.
+          </p>
+
+          <!-- Author -->
+          <div class="flex items-center gap-4">
+            <!-- Avatar with gradient ring -->
+            <div class="relative flex-shrink-0">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-zinc-700 via-white to-zinc-500 p-[2px]">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150"
+                  alt="Эдуард"
+                  class="w-full h-full rounded-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-white font-semibold text-sm tracking-tight">Эдуард</span>
+              <span class="text-[10px] text-zinc-600 font-['Inter'] tracking-[0.15em] uppercase mt-1">Каркасный дом 95 м²</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ======================== REVIEW LINKS ======================== -->
+
+    <div class="reveal">
+
+      <!-- Divider -->
+      <div class="w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-10"></div>
+
+      <!-- Ghost-style link buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+
+        <a href="#" class="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl text-sm text-zinc-400 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.1] hover:text-white hover:scale-[1.02]">
+          <span>Отзывы Малоэтажная страна</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 transition-all duration-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+
+        <a href="#" class="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl text-sm text-zinc-400 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.1] hover:text-white hover:scale-[1.02]">
+          <span>Отзывы Яндекс</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 transition-all duration-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+
+        <a href="#" class="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl text-sm text-zinc-400 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.1] hover:text-white hover:scale-[1.02]">
+          <span>Плейлист отзывов на YouTube</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 transition-all duration-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+
+        <a href="#" class="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl text-sm text-zinc-400 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.1] hover:text-white hover:scale-[1.02]">
+          <span>Все отзывы</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-zinc-600 transition-all duration-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==================== ABOUT ==================== -->
+<!-- ============================================================
+     DMITRY DOM — About Company + Excursions Section
+     Construction company: Finnish-technology frame houses
+     Design: iOS/Apple Premium "Titanium & Glass" dark theme
+     Section: 07. О компании
+     ============================================================ -->
+
+<section id="about" class="relative bg-black font-['Manrope',_sans-serif] overflow-hidden">
+
+  <!-- ======================== BACKGROUND LAYERS ======================== -->
+
+  <!-- Dot pattern overlay -->
+  <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+
+  <!-- Top ambient glow -->
+  <div class="absolute top-[10%] right-[-10%] w-[50vw] h-[50vh] bg-gradient-to-bl from-zinc-800/15 via-zinc-900/10 to-transparent rounded-full blur-[120px] pointer-events-none"></div>
+
+  <!-- Bottom ambient glow -->
+  <div class="absolute bottom-[20%] left-[-10%] w-[40vw] h-[40vh] bg-gradient-to-tr from-zinc-800/10 via-zinc-900/5 to-transparent rounded-full blur-[100px] pointer-events-none"></div>
+
+
+  <!-- ======================== ABOUT COMPANY ======================== -->
+
+  <div class="relative z-10 px-6 md:px-12 lg:px-20 pt-24 md:pt-32 pb-20 md:pb-28">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Section Label -->
+      <div class="reveal mb-16 md:mb-20">
+        <div class="inline-flex items-center gap-3 mb-6">
+          <span class="text-[10px] text-zinc-500 font-['Inter'] tracking-[0.2em] uppercase">07. О компании</span>
+          <span class="w-12 h-px bg-gradient-to-r from-zinc-500 to-transparent"></span>
+        </div>
+
+        <!-- Section Title -->
+        <h2 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9]">
+          <span class="text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-300 to-zinc-600">DMITRY</span>
+          <span class="text-transparent bg-clip-text bg-gradient-to-br from-zinc-300 via-zinc-500 to-zinc-800"> DOM</span>
+        </h2>
+      </div>
+
+      <!-- Split Layout: Left Text + Right Director Card -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+
+        <!-- LEFT COLUMN: Text Content -->
+        <div class="space-y-8">
+
+          <!-- Mission Statement -->
+          <div class="reveal">
+            <div class="bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-2xl p-6 md:p-8 transition-all duration-700 hover:border-white/[0.1] hover:bg-white/[0.03]">
+              <div class="flex items-start gap-4 mb-5">
+                <div class="shrink-0 w-10 h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center">
+                  <i data-lucide="heart" class="w-5 h-5 text-zinc-400"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] text-zinc-500 font-['Inter'] tracking-[0.2em] uppercase">Миссия компании</span>
+                </div>
+              </div>
+              <p class="text-xl md:text-2xl text-zinc-200 font-light leading-relaxed">
+                Тёплый и надёжный дом довольному заказчику <span class="text-white font-medium">от 100 дней.</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Key Points -->
+          <div class="reveal space-y-4">
+            <div class="flex items-start gap-4 group">
+              <div class="shrink-0 mt-1 w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center transition-all duration-500 group-hover:border-white/[0.12] group-hover:bg-white/[0.06]">
+                <i data-lucide="award" class="w-4 h-4 text-zinc-500 transition-colors duration-500 group-hover:text-zinc-300"></i>
+              </div>
+              <p class="text-base md:text-lg text-zinc-400 font-light leading-relaxed transition-colors duration-500 group-hover:text-zinc-300">
+                Наши дома — это реальная альтернатива квартире по площади и бюджету.
+              </p>
+            </div>
+
+            <div class="flex items-start gap-4 group">
+              <div class="shrink-0 mt-1 w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center transition-all duration-500 group-hover:border-white/[0.12] group-hover:bg-white/[0.06]">
+                <i data-lucide="award" class="w-4 h-4 text-zinc-500 transition-colors duration-500 group-hover:text-zinc-300"></i>
+              </div>
+              <p class="text-base md:text-lg text-zinc-400 font-light leading-relaxed transition-colors duration-500 group-hover:text-zinc-300">
+                Готовые проекты сокращают сроки сдачи дома и снижают его стоимость.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="reveal pt-2">
+            <a href="#" class="group inline-flex items-center gap-3 bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl text-white rounded-full px-7 py-3.5 font-medium text-sm transition-all duration-500 hover:bg-white/[0.07] hover:border-white/[0.15] hover:scale-[1.02]">
+              <span>Подробнее о нас</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-zinc-400 transition-all duration-300 group-hover:text-white group-hover:translate-x-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Director Glass Card -->
+        <div class="reveal">
+          <div class="relative bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] overflow-hidden transition-all duration-700 hover:border-white/[0.1] hover:bg-white/[0.03] group">
+
+            <!-- Director Photo -->
+            <div class="relative h-80 md:h-96 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400"
+                alt="Дмитрий Александрович Новиков — Генеральный директор DMITRY DOM"
+                class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <!-- Gradient overlay on photo bottom -->
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+
+              <!-- Name overlay on photo -->
+              <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <div class="flex items-center gap-2 mb-2">
+                  <i data-lucide="user" class="w-4 h-4 text-zinc-400"></i>
+                  <span class="text-[10px] text-zinc-400 font-['Inter'] tracking-[0.2em] uppercase">Генеральный директор</span>
+                </div>
+                <h3 class="text-xl md:text-2xl text-white font-semibold tracking-tight">Дмитрий Александрович Новиков</h3>
+              </div>
+            </div>
+
+            <!-- Quote Section -->
+            <div class="p-6 md:p-8 border-t border-white/[0.05]">
+              <div class="flex gap-4">
+                <div class="shrink-0 text-4xl text-zinc-600 font-serif leading-none select-none">&laquo;</div>
+                <div>
+                  <p class="text-lg text-zinc-300 font-light leading-relaxed italic">
+                    Строим с любовью. Дорожим репутацией.
+                  </p>
+                  <div class="mt-4 flex items-center gap-3">
+                    <div class="w-8 h-px bg-gradient-to-r from-zinc-500 to-transparent"></div>
+                    <span class="text-xs text-zinc-500 font-['Inter']">Д.А. Новиков</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ======================== STATS ROW ======================== -->
+
+      <div class="reveal mt-16 md:mt-24">
+        <div class="bg-white/[0.02] border border-white/[0.05] backdrop-blur-2xl rounded-[2rem] px-6 py-8 md:px-12 md:py-10">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+
+            <!-- Stat 1: от 100 дней -->
+            <div class="text-center group">
+              <div class="text-5xl md:text-6xl lg:text-7xl font-light text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-500 mb-2 transition-all duration-500 group-hover:from-white group-hover:to-zinc-400">
+                100
+              </div>
+              <div class="text-xs text-zinc-500 font-['Inter'] tracking-[0.15em] uppercase">
+                дней — срок строительства
+              </div>
+            </div>
+
+            <!-- Stat 2: 100+ проектов -->
+            <div class="text-center group">
+              <div class="text-5xl md:text-6xl lg:text-7xl font-light text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-500 mb-2 transition-all duration-500 group-hover:from-white group-hover:to-zinc-400">
+                100<span class="text-3xl md:text-4xl lg:text-5xl">+</span>
+              </div>
+              <div class="text-xs text-zinc-500 font-['Inter'] tracking-[0.15em] uppercase">
+                Готовых проектов
+              </div>
+            </div>
+
+            <!-- Stat 3: 15+ лет -->
+            <div class="text-center group">
+              <div class="text-5xl md:text-6xl lg:text-7xl font-light text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-500 mb-2 transition-all duration-500 group-hover:from-white group-hover:to-zinc-400">
+                15<span class="text-3xl md:text-4xl lg:text-5xl">+</span>
+              </div>
+              <div class="text-xs text-zinc-500 font-['Inter'] tracking-[0.15em] uppercase">
+                Лет на рынке
+              </div>
+            </div>
+
+            <!-- Stat 4: 5 лет гарантия -->
+            <div class="text-center group">
+              <div class="text-5xl md:text-6xl lg:text-7xl font-light text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-500 mb-2 transition-all duration-500 group-hover:from-white group-hover:to-zinc-400">
+                5
+              </div>
+              <div class="text-xs text-zinc-500 font-['Inter'] tracking-[0.15em] uppercase">
+                Лет гарантии
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ======================== EXCURSION BANNER ======================== -->
+
+  <div class="relative z-10 px-6 md:px-12 lg:px-20 pb-24 md:pb-32">
+    <div class="max-w-7xl mx-auto">
+      <div class="reveal">
+
+        <!-- Full-width excursion card with background image -->
+        <div class="relative rounded-[2rem] overflow-hidden min-h-[500px] md:min-h-[540px] flex items-end">
+
+          <!-- Background Image -->
+          <img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200"
+            alt="Экскурсии по строящимся и готовым объектам DMITRY DOM"
+            class="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+
+          <!-- Multi-layer gradient overlays -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent"></div>
+
+          <!-- Top label on image -->
+          <div class="absolute top-6 left-6 md:top-8 md:left-8">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-2xl">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-[10px] text-zinc-300 font-['Inter'] tracking-[0.2em] uppercase">Бесплатные экскурсии</span>
+            </div>
+          </div>
+
+          <!-- Content overlay -->
+          <div class="relative z-10 w-full p-6 md:p-10 lg:p-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-end">
+
+              <!-- Left: Text content -->
+              <div class="space-y-5">
+                <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1]">
+                  <span class="text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-200 to-zinc-400">Приезжайте посмотреть</span>
+                </h3>
+                <p class="text-base md:text-lg text-zinc-300 font-light leading-relaxed max-w-lg">
+                  Проводим бесплатные экскурсии по строящимся и готовым объектам. Рассказываем о материалах и технологии, помогаем выбрать оптимальную планировку.
+                </p>
+
+                <!-- Feature tags -->
+                <div class="flex flex-wrap gap-3 pt-1">
+                  <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-xl transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.08]">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-zinc-400"></i>
+                    <span class="text-xs text-zinc-300 font-medium">Выставка объектов</span>
+                  </div>
+                  <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-xl transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.08]">
+                    <i data-lucide="video" class="w-3.5 h-3.5 text-zinc-400"></i>
+                    <span class="text-xs text-zinc-300 font-medium">Видео-конференция</span>
+                  </div>
+                  <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-xl transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.08]">
+                    <i data-lucide="calendar" class="w-3.5 h-3.5 text-zinc-400"></i>
+                    <span class="text-xs text-zinc-300 font-medium">Удобное время</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: CTA + note -->
+              <div class="space-y-5 lg:text-right">
+
+                <!-- Glass info card -->
+                <div class="bg-white/[0.03] border border-white/[0.06] backdrop-blur-2xl rounded-2xl p-5 md:p-6 lg:ml-auto lg:max-w-sm transition-all duration-700 hover:border-white/[0.12] hover:bg-white/[0.05]">
+                  <div class="flex items-start gap-3 mb-4 lg:justify-end">
+                    <div class="lg:order-2 shrink-0 w-9 h-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center">
+                      <i data-lucide="calendar" class="w-4 h-4 text-zinc-400"></i>
+                    </div>
+                    <p class="text-sm text-zinc-400 font-light leading-relaxed lg:text-right">
+                      Согласуем время и дату посещения выставки или назначим встречу в любом удобном формате видео-конференции
+                    </p>
+                  </div>
+
+                  <!-- CTA Button -->
+                  <a href="#" class="group flex items-center justify-center gap-3 w-full bg-white text-black rounded-full px-7 py-3.5 font-semibold text-sm transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)]">
+                    <i data-lucide="map-pin" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110"></i>
+                    <span>Приехать посмотреть</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"></i>
+                  </a>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+    <div class="border-b border-white/[0.05]"></div>
+  </div>
+
+</section>
+
+
+<!-- ======================== REVEAL ANIMATION SCRIPT ======================== -->
+
+<script>
+  (function () {
+    var reveals = document.querySelectorAll('#about .reveal');
+
+    function checkReveal() {
+      for (var i = 0; i < reveals.length; i++) {
+        var el = reveals[i];
+        var windowHeight = window.innerHeight;
+        var top = el.getBoundingClientRect().top;
+        var revealPoint = 120;
+
+        if (top < windowHeight - revealPoint) {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }
+      }
+    }
+
+    // Initial styles for reveal elements
+    for (var i = 0; i < reveals.length; i++) {
+      reveals[i].style.opacity = '0';
+      reveals[i].style.transform = 'translateY(2rem)';
+      reveals[i].style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+      reveals[i].style.transitionDelay = (i * 0.1) + 's';
+    }
+
+    window.addEventListener('scroll', checkReveal, { passive: true });
+    checkReveal();
+  })();
+</script>
+
+
+</main>
+
+<!-- ==================== FAQ + CONTACTS + FOOTER ==================== -->
+<!-- FAQ Section -->
+<section id="faq" class="relative py-24 md:py-32 overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+
+    <!-- Section Label -->
+    <div class="reveal mb-16 md:mb-20">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-xs font-mono tracking-[0.3em] uppercase text-zinc-500">08. Вопросы и ответы</span>
+        <div class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+      </div>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+        Популярные<br>
+        <span class="bg-gradient-to-r from-white via-white/90 to-white/50 bg-clip-text text-transparent">вопросы</span>
+      </h2>
+    </div>
+
+    <!-- Accordion -->
+    <div class="reveal space-y-3" id="faq-accordion">
+
+      <!-- FAQ Item 1 -->
+      <div class="faq-item group border border-white/[0.05] rounded-2xl bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+        <button class="faq-toggle w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer" aria-expanded="false">
+          <span class="text-base sm:text-lg font-medium text-white/90 transition-colors duration-300 group-hover:text-white">Почему свайный фундамент?</span>
+          <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all duration-500 group-hover:bg-white/[0.06]">
+            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transition-transform duration-500 faq-chevron"></i>
+          </div>
+        </button>
+        <div class="faq-content overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]" style="max-height:0;opacity:0">
+          <div class="px-5 sm:px-6 pb-6">
+            <div class="h-px bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent mb-5"></div>
+            <p class="text-sm sm:text-base leading-relaxed text-zinc-400">Фундамент из железобетонных забивных свай самый оптимальный для каркасного дома. Его преимущества: круглогодичность; скорость 1-2 дня; подходит для участков с любым ландшафтом; значительная экономия средств.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Item 2 -->
+      <div class="faq-item group border border-white/[0.05] rounded-2xl bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+        <button class="faq-toggle w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer" aria-expanded="false">
+          <span class="text-base sm:text-lg font-medium text-white/90 transition-colors duration-300 group-hover:text-white">Как решаете вопрос с батутностью и шумоизоляцией?</span>
+          <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all duration-500 group-hover:bg-white/[0.06]">
+            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transition-transform duration-500 faq-chevron"></i>
+          </div>
+        </button>
+        <div class="faq-content overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]" style="max-height:0;opacity:0">
+          <div class="px-5 sm:px-6 pb-6">
+            <div class="h-px bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent mb-5"></div>
+            <p class="text-sm sm:text-base leading-relaxed text-zinc-400">Мы используем в перекрытии двутавровую балку от 250 до 360 мм, в которую закладывается шумоизоляция.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Item 3 -->
+      <div class="faq-item group border border-white/[0.05] rounded-2xl bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+        <button class="faq-toggle w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer" aria-expanded="false">
+          <span class="text-base sm:text-lg font-medium text-white/90 transition-colors duration-300 group-hover:text-white">Какую используете вентиляцию?</span>
+          <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all duration-500 group-hover:bg-white/[0.06]">
+            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transition-transform duration-500 faq-chevron"></i>
+          </div>
+        </button>
+        <div class="faq-content overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]" style="max-height:0;opacity:0">
+          <div class="px-5 sm:px-6 pb-6">
+            <div class="h-px bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent mb-5"></div>
+            <p class="text-sm sm:text-base leading-relaxed text-zinc-400">Современные приточно-вытяжные системы.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Guarantees -->
+    <div class="reveal mt-16 md:mt-20">
+      <div class="flex items-center gap-3 mb-8">
+        <i data-lucide="shield-check" class="w-4 h-4 text-zinc-500"></i>
+        <span class="text-xs font-mono tracking-[0.3em] uppercase text-zinc-500">Гарантии и сертификаты</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+        <div class="group flex items-center gap-4 p-4 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-amber-500/[0.08] border border-amber-500/[0.12] flex items-center justify-center">
+            <i data-lucide="award" class="w-5 h-5 text-amber-400/80"></i>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-white/80 group-hover:text-white transition-colors duration-300">Диплом «Open Village»</p>
+          </div>
+        </div>
+
+        <div class="group flex items-center gap-4 p-4 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-blue-500/[0.08] border border-blue-500/[0.12] flex items-center justify-center">
+            <i data-lucide="award" class="w-5 h-5 text-blue-400/80"></i>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-white/80 group-hover:text-white transition-colors duration-300">Сертификат АО «Почта Банк»</p>
+          </div>
+        </div>
+
+        <div class="group flex items-center gap-4 p-4 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-emerald-500/[0.08] border border-emerald-500/[0.12] flex items-center justify-center">
+            <i data-lucide="award" class="w-5 h-5 text-emerald-400/80"></i>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-white/80 group-hover:text-white transition-colors duration-300">Диплом «Загородный дом»</p>
+          </div>
+        </div>
+
+        <div class="group flex items-center gap-4 p-4 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+          <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-green-500/[0.08] border border-green-500/[0.12] flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5 text-green-400/80"></i>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-white/80 group-hover:text-white transition-colors duration-300">Свидетельство «Сбер»</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Contacts Section -->
+<section id="contacts" class="relative py-24 md:py-32 overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+    <!-- Section Label -->
+    <div class="reveal mb-16 md:mb-20">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-xs font-mono tracking-[0.3em] uppercase text-zinc-500">09. Контакты</span>
+        <div class="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+      </div>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+        Свяжитесь<br>
+        <span class="bg-gradient-to-r from-white via-white/90 to-white/50 bg-clip-text text-transparent">с нами</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+
+      <!-- Left Column: Contact Info -->
+      <div class="space-y-8">
+
+        <!-- Contact Cards -->
+        <div class="reveal space-y-3">
+
+          <!-- Office Address -->
+          <div class="group flex items-start gap-4 p-5 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mt-0.5">
+              <i data-lucide="building" class="w-5 h-5 text-zinc-400 group-hover:text-white/70 transition-colors duration-300"></i>
+            </div>
+            <div>
+              <p class="text-xs font-mono tracking-wider uppercase text-zinc-500 mb-1.5">Офис</p>
+              <p class="text-sm sm:text-base text-white/80 group-hover:text-white transition-colors duration-300 leading-relaxed">Пушкино, с. Левково, КП Жюльверн, дом №32</p>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <a href="tel:+74951183301" class="group flex items-start gap-4 p-5 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03] block">
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mt-0.5">
+              <i data-lucide="phone" class="w-5 h-5 text-zinc-400 group-hover:text-white/70 transition-colors duration-300"></i>
+            </div>
+            <div>
+              <p class="text-xs font-mono tracking-wider uppercase text-zinc-500 mb-1.5">Телефон</p>
+              <p class="text-sm sm:text-base text-white/80 group-hover:text-white transition-colors duration-300">+7 (495) 118-33-01</p>
+            </div>
+          </a>
+
+          <!-- Email -->
+          <a href="mailto:dmitry-dom.info@yandex.ru" class="group flex items-start gap-4 p-5 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03] block">
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mt-0.5">
+              <i data-lucide="mail" class="w-5 h-5 text-zinc-400 group-hover:text-white/70 transition-colors duration-300"></i>
+            </div>
+            <div>
+              <p class="text-xs font-mono tracking-wider uppercase text-zinc-500 mb-1.5">Email</p>
+              <p class="text-sm sm:text-base text-white/80 group-hover:text-white transition-colors duration-300">dmitry-dom.info@yandex.ru</p>
+            </div>
+          </a>
+
+          <!-- Working Hours -->
+          <div class="group flex items-start gap-4 p-5 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mt-0.5">
+              <i data-lucide="clock" class="w-5 h-5 text-zinc-400 group-hover:text-white/70 transition-colors duration-300"></i>
+            </div>
+            <div>
+              <p class="text-xs font-mono tracking-wider uppercase text-zinc-500 mb-1.5">Режим работы</p>
+              <p class="text-sm sm:text-base text-white/80 group-hover:text-white transition-colors duration-300">ПН-ПТ: 10:00 — 19:00</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CTA Form -->
+        <div class="reveal p-6 sm:p-8 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm">
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-2">Обратный звонок</h3>
+          <p class="text-sm text-zinc-400 mb-6">Оставьте номер и мы перезвоним в течение 15 минут</p>
+          <form class="flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault();">
+            <div class="flex-1 relative">
+              <div class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                <i data-lucide="phone" class="w-4 h-4 text-zinc-500"></i>
+              </div>
+              <input
+                type="tel"
+                placeholder="+7 (___) ___-__-__"
+                class="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-zinc-600 focus:outline-none focus:border-white/[0.15] focus:bg-white/[0.06] transition-all duration-300"
+              >
+            </div>
+            <button
+              type="submit"
+              class="px-7 py-3.5 rounded-xl bg-white text-zinc-900 text-sm font-semibold tracking-wide hover:bg-white/90 active:scale-[0.98] transition-all duration-300 cursor-pointer whitespace-nowrap"
+            >
+              Перезвоните мне
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Showrooms -->
+      <div class="reveal space-y-3">
+
+        <div class="flex items-center gap-3 mb-5">
+          <i data-lucide="map-pin" class="w-4 h-4 text-zinc-500"></i>
+          <span class="text-xs font-mono tracking-[0.3em] uppercase text-zinc-500">Шоурумы и выставки</span>
+        </div>
+
+        <!-- Showroom 1 -->
+        <div class="group p-5 sm:p-6 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-amber-500/[0.08] border border-amber-500/[0.12] flex items-center justify-center mt-0.5">
+              <i data-lucide="map-pin" class="w-5 h-5 text-amber-400/80"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-md bg-amber-500/[0.1] text-amber-400/70 border border-amber-500/[0.15]">Собственная</span>
+              </div>
+              <p class="text-sm sm:text-base font-medium text-white/90 group-hover:text-white transition-colors duration-300 mb-1.5">Собственная выставка</p>
+              <p class="text-sm text-zinc-400 leading-relaxed">МО, Пушкино, с. Левково, КП Жюльверн, дом № 32</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Showroom 2 -->
+        <div class="group p-5 sm:p-6 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-blue-500/[0.08] border border-blue-500/[0.12] flex items-center justify-center mt-0.5">
+              <i data-lucide="map-pin" class="w-5 h-5 text-blue-400/80"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-md bg-blue-500/[0.1] text-blue-400/70 border border-blue-500/[0.15]">Партнёрская</span>
+              </div>
+              <p class="text-sm sm:text-base font-medium text-white/90 group-hover:text-white transition-colors duration-300 mb-1.5">Выставка «Малоэтажная страна»</p>
+              <p class="text-sm text-zinc-400 leading-relaxed">Москва, г. Мытищи, ТРЦ Алтуфьево, дом № 13</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Showroom 3 -->
+        <div class="group p-5 sm:p-6 rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.08] hover:bg-white/[0.03]">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-emerald-500/[0.08] border border-emerald-500/[0.12] flex items-center justify-center mt-0.5">
+              <i data-lucide="map-pin" class="w-5 h-5 text-emerald-400/80"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-md bg-emerald-500/[0.1] text-emerald-400/70 border border-emerald-500/[0.15]">Партнёрская</span>
+              </div>
+              <p class="text-sm sm:text-base font-medium text-white/90 group-hover:text-white transition-colors duration-300 mb-1.5">Выставка «Open Village»</p>
+              <p class="text-sm text-zinc-400 leading-relaxed">МО, Исаково, КП «Павловы Озёра», ул. Лесная, дом № 31</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer class="relative border-t border-white/[0.05]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+    <!-- Footer Top -->
+    <div class="py-12 md:py-16">
+      <div class="reveal flex flex-col items-center text-center">
+
+        <!-- Logo -->
+        <a href="#" class="inline-flex items-center gap-2.5 mb-8 group">
+          <div class="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center group-hover:bg-white/[0.1] transition-all duration-300">
+            <span class="text-sm font-bold text-white/80">D</span>
+          </div>
+          <span class="text-base font-semibold tracking-wide text-white/70 group-hover:text-white/90 transition-colors duration-300">DMITRY DOM</span>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mb-10">
+          <a href="#" class="text-sm text-zinc-500 hover:text-zinc-300 transition-colors duration-300">Главная</a>
+          <a href="#" class="text-sm text-zinc-500 hover:text-zinc-300 transition-colors duration-300">Портфолио</a>
+          <a href="#" class="text-sm text-zinc-500 hover:text-zinc-300 transition-colors duration-300">Дома</a>
+          <a href="#" class="text-sm text-zinc-500 hover:text-zinc-300 transition-colors duration-300">О компании</a>
+          <a href="#" class="text-sm text-zinc-500 hover:text-zinc-300 transition-colors duration-300">Технология</a>
+          <a href="#" class="text-sm text-zinc-500 hover:text-zinc-300 transition-colors duration-300">Отзывы</a>
+          <a href="#" class="text-sm text-zinc-500 hover:text-zinc-300 transition-colors duration-300">Гарантии</a>
+        </nav>
+
+        <!-- Contact Row -->
+        <div class="flex flex-wrap items-center justify-center gap-6 mb-10">
+          <a href="tel:+74951183301" class="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300">
+            <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+            +7 (495) 118-33-01
+          </a>
+          <a href="mailto:dmitry-dom.info@yandex.ru" class="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300">
+            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+            dmitry-dom.info@yandex.ru
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="border-t border-white/[0.05] py-6 md:py-8">
+      <div class="reveal flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <p class="text-xs text-zinc-600">&copy; 2026 DMITRY DOM. Все права защищены.</p>
+        <div class="flex items-center gap-4">
+          <a href="#" class="text-xs text-zinc-600 hover:text-zinc-400 transition-colors duration-300">Пользовательское соглашение</a>
+          <span class="w-1 h-1 rounded-full bg-zinc-700"></span>
+          <a href="#" class="text-xs text-zinc-600 hover:text-zinc-400 transition-colors duration-300">Политика конфиденциальности</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- FAQ Accordion Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const accordion = document.getElementById('faq-accordion');
+  if (!accordion) return;
+
+  const toggles = accordion.querySelectorAll('.faq-toggle');
+
+  toggles.forEach(function (toggle) {
+    toggle.addEventListener('click', function () {
+      const item = this.closest('.faq-item');
+      const content = item.querySelector('.faq-content');
+      const chevron = item.querySelector('.faq-chevron');
+      const isOpen = this.getAttribute('aria-expanded') === 'true';
+
+      // Close all other items
+      accordion.querySelectorAll('.faq-item').forEach(function (otherItem) {
+        if (otherItem !== item) {
+          const otherContent = otherItem.querySelector('.faq-content');
+          const otherChevron = otherItem.querySelector('.faq-chevron');
+          const otherToggle = otherItem.querySelector('.faq-toggle');
+          otherContent.style.maxHeight = '0';
+          otherContent.style.opacity = '0';
+          otherChevron.style.transform = 'rotate(0deg)';
+          otherToggle.setAttribute('aria-expanded', 'false');
+          otherItem.classList.remove('border-white/10', 'bg-white/[0.04]');
+        }
+      });
+
+      if (isOpen) {
+        // Close current
+        content.style.maxHeight = '0';
+        content.style.opacity = '0';
+        chevron.style.transform = 'rotate(0deg)';
+        this.setAttribute('aria-expanded', 'false');
+        item.classList.remove('border-white/10', 'bg-white/[0.04]');
+      } else {
+        // Open current
+        content.style.maxHeight = content.scrollHeight + 'px';
+        content.style.opacity = '1';
+        chevron.style.transform = 'rotate(180deg)';
+        this.setAttribute('aria-expanded', 'true');
+        item.classList.add('border-white/10', 'bg-white/[0.04]');
+      }
+    });
+  });
+});
+</script>
+
+
+<!-- Global Scripts -->
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Scroll reveal animation
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('opacity-0', 'translate-y-8');
+        entry.target.classList.add('opacity-100', 'translate-y-0');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Spotlight cursor effect
+  const spotlight = document.getElementById('spotlight');
+  window.addEventListener('mousemove', (e) => {
+    spotlight.style.opacity = '1';
+    spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(255,255,255,0.06), transparent 40%)`;
+  });
+  window.addEventListener('mouseleave', () => { spotlight.style.opacity = '0'; });
+</script>
+
+</body>
+</html>
