@@ -94,10 +94,38 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
     fetch(url).catch(function(){});
   }
 
+  // Валидация российского номера телефона
+  function isValidRussianPhone(phone) {
+    var cleaned = phone.replace(/[\s\-\(\)]/g, '');
+    return /^(\+7|7|8)\d{10}$/.test(cleaned);
+  }
+
   // Перехват всех форм на странице
   document.addEventListener('submit', function(e) {
     var form = e.target;
     if (!form || form.tagName !== 'FORM') return;
+
+    // Валидация телефона перед отправкой
+    var phoneField = form.querySelector('input[name="phone"]') || form.querySelector('input[type="tel"]');
+    if (phoneField && !isValidRussianPhone(phoneField.value)) {
+      e.preventDefault();
+      phoneField.classList.add('error');
+      var errEl = form.querySelector('.phone-error');
+      if (!errEl) {
+        errEl = document.createElement('div');
+        errEl.className = 'phone-error';
+        errEl.style.cssText = 'color:#e74c3c;font-size:13px;margin-top:4px;';
+        phoneField.parentNode.insertBefore(errEl, phoneField.nextSibling);
+      }
+      errEl.textContent = 'Введите корректный российский номер телефона';
+      return false;
+    }
+    // Убираем ошибку если была
+    if (phoneField) {
+      phoneField.classList.remove('error');
+      var errEl = form.querySelector('.phone-error');
+      if (errEl) errEl.textContent = '';
+    }
 
     var data = {};
     data.form_id = form.getAttribute('data-form-id') || form.id || 'form_' + Date.now();
@@ -215,9 +243,36 @@ export async function POST(req: NextRequest) {
     }).catch(function(){});
   }
 
+  // Валидация российского номера телефона
+  function isValidRussianPhone(phone) {
+    var cleaned = phone.replace(/[\s\-\(\)]/g, '');
+    return /^(\+7|7|8)\d{10}$/.test(cleaned);
+  }
+
   document.addEventListener('submit', function(e) {
     var form = e.target;
     if (!form || form.tagName !== 'FORM') return;
+
+    // Валидация телефона перед отправкой
+    var phoneField = form.querySelector('input[name="phone"]') || form.querySelector('input[type="tel"]');
+    if (phoneField && !isValidRussianPhone(phoneField.value)) {
+      e.preventDefault();
+      phoneField.classList.add('error');
+      var errEl = form.querySelector('.phone-error');
+      if (!errEl) {
+        errEl = document.createElement('div');
+        errEl.className = 'phone-error';
+        errEl.style.cssText = 'color:#e74c3c;font-size:13px;margin-top:4px;';
+        phoneField.parentNode.insertBefore(errEl, phoneField.nextSibling);
+      }
+      errEl.textContent = 'Введите корректный российский номер телефона';
+      return false;
+    }
+    if (phoneField) {
+      phoneField.classList.remove('error');
+      var errEl = form.querySelector('.phone-error');
+      if (errEl) errEl.textContent = '';
+    }
 
     var data = {};
     data.form_id = form.getAttribute('data-form-id') || form.id || 'form_' + Date.now();
@@ -242,22 +297,39 @@ export async function POST(req: NextRequest) {
 
 ## Правила создания форм
 
-1. **Каждая форма обязательно имеет `data-form-id`** — уникальный идентификатор в snake_case:
+1. **Каждая форма ОБЯЗАТЕЛЬНО имеет `data-form-id`** — уникальный идентификатор в snake_case. Без этого атрибута форму создавать НЕЛЬЗЯ:
    - `callback_hero` — форма обратного звонка в hero-секции
    - `contact_footer` — контактная форма в футере
    - `order_pricing` — форма заказа на странице цен
    - `quiz_step_final` — финальный шаг квиза
+   - `modal_callback` — форма в модальном окне
+   - `quiz_main` — основная форма квиза
 
-2. **Поля формы должны иметь атрибут `name`** — именно по нему данные попадут в вебхук:
+2. **Поле телефона — обязательные требования**:
+   - Атрибут `type="tel"` и `name="phone"`
+   - Значение по умолчанию `value="+7"` — поле всегда предзаполнено с `+7`
+   - Placeholder: `placeholder="+7 (___) ___-__-__"`
+   - Валидация на российский номер (встроена в скрипт перехватчика)
    ```html
-   <input type="tel" name="phone" placeholder="+7 (___) ___-__-__">
+   <input type="tel" name="phone" value="+7" placeholder="+7 (___) ___-__-__" required>
+   ```
+
+3. **Валидация российского номера телефона** — скрипт перехватчика автоматически проверяет номер перед отправкой. Допустимые форматы:
+   - `+7XXXXXXXXXX` (11 цифр после +)
+   - `+7 (XXX) XXX-XX-XX` (с пробелами, скобками, дефисами)
+   - `8XXXXXXXXXX` (начиная с 8)
+   - Минимум 11 цифр в номере. Если валидация не прошла — форма не отправляется, пользователю показывается ошибка.
+
+4. **Остальные поля формы должны иметь атрибут `name`** — именно по нему данные попадут в вебхук:
+   ```html
+   <input type="tel" name="phone" value="+7" placeholder="+7 (___) ___-__-__" required>
    <input type="text" name="name" placeholder="Ваше имя">
    <input type="email" name="email" placeholder="Email">
    ```
 
-3. **Скрипт перехватчика вставляется один раз** перед `</body>` — он автоматически перехватывает ВСЕ формы на странице.
+5. **Скрипт перехватчика вставляется один раз** перед `</body>` — он автоматически перехватывает ВСЕ формы на странице.
 
-4. **Для кастомных форм** (без стандартного submit) — вызвать `window.sendFormWebhook()` вручную:
+6. **Для кастомных форм** (без стандартного submit) — вызвать `window.sendFormWebhook()` вручную:
    ```javascript
    window.sendFormWebhook({
      form_id: 'custom_modal',
@@ -281,7 +353,7 @@ export async function POST(req: NextRequest) {
 
 ```html
 <form data-form-id="callback_hero" onsubmit="event.preventDefault(); alert('Спасибо! Мы перезвоним.');">
-  <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required>
+  <input type="tel" name="phone" value="+7" placeholder="+7 (___) ___-__-__" required>
   <input type="text" name="name" placeholder="Ваше имя">
   <button type="submit">Перезвоните мне</button>
 </form>
