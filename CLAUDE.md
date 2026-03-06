@@ -34,3 +34,4 @@ template/
 | form-webhook | Перехват форм и отправка данных на вебхук (статика: GET с клиента, SSR: серверная функция) | [.claude/commands/form-webhook.md](.claude/commands/form-webhook.md) |
 | yandex-metrica | Отслеживание событий форм/квизов в Яндекс Метрике (параметры визита, посетителя, цели) | [.claude/commands/yandex-metrica.md](.claude/commands/yandex-metrica.md) |
 | cms | CMS — создание системы управления контентом сайта (схема в Supabase, админ-панель, загрузка файлов) | [.claude/commands/cms.md](.claude/commands/cms.md) |
+| skill-creator | Создание, редактирование и улучшение навыков (skills) для Claude Code | [.claude/commands/skill-creator.md](.claude/commands/skill-creator.md) |
