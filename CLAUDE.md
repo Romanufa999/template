@@ -9,33 +9,6 @@
 
 Если из задачи непонятно, какой режим — **уточни у пользователя**.
 
-## Проект
-
-LangChain + Next.js starter template — шаблон для AI чат-ботов.
-
-- **Стек**: Next.js 15, React 18, TypeScript, Tailwind CSS, LangChain.js, Supabase
-- **Node**: >= 18
-- **Пакетный менеджер**: yarn 3.5.1
-
-## Команды
-
-| Команда | Описание |
-|---------|----------|
-| `yarn dev` | Запуск dev-сервера |
-| `yarn build` | Сборка проекта |
-| `yarn start` | Запуск production-сервера |
-| `yarn lint` | Линтинг (ESLint) |
-| `yarn format` | Форматирование (Prettier) |
-
-## Структура
-
-```
-template/
-├── .claude/commands/   — навыки (skills) для Claude Code
-├── scripts/            — скрипты деплоя (s3_upload.py, upload_section.py)
-└── CLAUDE.md           — инструкции для Claude Code
-```
-
 ## Правила
 
 - Никогда не добавляй сгенерированные страницы, HTML-файлы, секции и прочие артефакты в этот репозиторий. Все генерируемые сайты собираются во временных директориях (например `/tmp/`) и деплоятся на S3.
