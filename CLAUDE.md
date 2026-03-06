@@ -26,35 +26,9 @@ LangChain + Next.js starter template — шаблон для AI чат-бото�
 
 ```
 template/
-├── .claude/commands/          — навыки (skills) для Claude Code
-│   ├── cms.md
-│   ├── form-webhook.md
-│   ├── imagegen.md
-│   ├── s3-deploy.md
-│   └── yandex-metrica.md
-├── app/                       — страницы и API-роуты (Next.js App Router)
-│   ├── page.tsx
-│   ├── layout.tsx
-│   ├── globals.css
-│   ├── agents/
-│   ├── ai_sdk/               — AI SDK интеграция (agent, tools)
-│   ├── api/chat/             — API эндпоинты (chat, agents, retrieval, structured_output)
-│   ├── api/retrieval/ingest/
-│   ├── langgraph/            — LangGraph агент
-│   ├── retrieval/
-│   ├── retrieval_agents/
-│   └── structured_output/
-├── components/                — React-компоненты
-│   ├── ChatWindow.tsx, ChatMessageBubble.tsx, Navbar.tsx, ...
-│   ├── guide/                — информационные компоненты
-│   └── ui/                   — UI-примитивы (shadcn)
-├── data/                      — данные
-├── scripts/                   — скрипты деплоя (s3_upload.py, upload_section.py)
-├── utils/                     — утилиты
-├── public/images/             — статика
-├── CLAUDE.md                  — инструкции для Claude Code
-├── package.json, tsconfig.json, tailwind.config.js, next.config.js
-└── .eslintrc.json, .prettierrc.json, .env.example
+├── .claude/commands/   — навыки (skills) для Claude Code
+├── scripts/            — скрипты деплоя (s3_upload.py, upload_section.py)
+└── CLAUDE.md           — инструкции для Claude Code
 ```
 
 ## Важно
