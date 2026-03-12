@@ -40,9 +40,29 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 
 Допускаются произвольные дополнительные параметры из полей формы — все передаются как query-параметры GET-запроса.
 
-## Два режима работы
+## Архитектура: глобальный слушатель
 
-### Режим 1: Статический сайт (HTML/JS) — клиентский вебхук
+**Формы НЕ отправляют вебхук напрямую.** Вместо этого используется глобальный слушатель:
+
+1. **Форма** при успешной валидации диспатчит событие (CustomEvent или стандартный submit)
+2. **Глобальный слушатель** (один на весь сайт) ловит это событие и отправляет вебхук
+3. Это исключает дублирование запросов и централизует логику отправки
+
+### Для React/Next.js проектов:
+- Формы вызывают `emitFormSuccess({ form_id, phone, ... })` — это диспатчит CustomEvent
+- Компонент `WebhookListener` монтируется один раз в `layout.tsx` и слушает эти события
+- Формы **НИКОГДА** не вызывают fetch/sendWebhook напрямую
+
+### Для статических HTML сайтов:
+- Глобальный скрипт перехватчик вешается на `document.addEventListener('submit', ...)` один раз
+- Формы используют стандартный submit — скрипт перехватывает, валидирует и отправляет вебхук
+- Формы **НИКОГДА** не вызывают sendFormWebhook напрямую из своих обработчиков
+
+---
+
+## Три режима работы
+
+### Режим 1: Статический сайт (HTML/JS) — глобальный перехватчик
 
 Для статических сайтов, которые деплоятся на S3, вся логика работает на клиенте через JavaScript.
 
@@ -297,6 +317,107 @@ export async function POST(req: NextRequest) {
 
 Разница: вместо прямого GET на вебхук, отправляет POST на `/api/form-webhook`, где серверная функция проксирует запрос.
 
+### Режим 3: Next.js (Static Export / React) — CustomEvent + WebhookListener
+
+Для React/Next.js проектов (в т.ч. `output: 'export'`) используется паттерн emit/listen через CustomEvent.
+
+#### 1. Утилита `src/utils/webhook.ts`:
+
+```typescript
+const WEBHOOK_URL = 'https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff';
+const EVENT_NAME = 'webhook:form-success';
+
+export interface FormSuccessData {
+  form_id: string;
+  phone: string;
+  answers?: string;
+  gift?: string;
+  step?: number;
+  [key: string]: string | number | undefined;
+}
+
+// Хелперы для сбора данных (getYandexUid, getUtmParams, getDeviceInfo, persistUtm) — см. полную реализацию
+
+/** Формы вызывают это — диспатчит CustomEvent */
+export function emitFormSuccess(detail: FormSuccessData) {
+  if (typeof window === 'undefined') return;
+  window.dispatchEvent(new CustomEvent(EVENT_NAME, { detail }));
+}
+
+/** Отправка вебхука (вызывается ТОЛЬКО глобальным слушателем) */
+function sendWebhook(data: FormSuccessData) {
+  try {
+    const query: Record<string, string> = {
+      event: data.answers ? 'quiz_success' : 'form_success',
+      form_id: data.form_id,
+      time: new Date().toISOString(),
+      page: window.location.pathname,
+      referrer: document.referrer || '',
+      ym_uid: getYandexUid(),
+      yclid: getYclid(),
+      ...getUtmParams(),
+      ...getDeviceInfo(),
+    };
+    if (data.phone) query.phone = data.phone;
+    if (data.answers) query.answers = data.answers;
+    if (data.gift) query.gift = data.gift;
+    if (data.step !== undefined) query.step = String(data.step);
+
+    const url = `${WEBHOOK_URL}?${new URLSearchParams(query).toString()}`;
+    fetch(url, { method: 'GET', keepalive: true }).catch(() => {});
+  } catch { /* noop */ }
+}
+
+/** Инициализация глобального слушателя. Возвращает функцию очистки. */
+export function initWebhookListener() {
+  if (typeof window === 'undefined') return () => {};
+  const handler = ((e: CustomEvent<FormSuccessData>) => {
+    sendWebhook(e.detail);
+  }) as EventListener;
+  window.addEventListener(EVENT_NAME, handler);
+  return () => window.removeEventListener(EVENT_NAME, handler);
+}
+```
+
+#### 2. Компонент `src/components/ui/WebhookListener.tsx`:
+
+```tsx
+"use client";
+import { useEffect } from "react";
+import { initWebhookListener } from "@/utils/webhook";
+
+export default function WebhookListener() {
+  useEffect(() => {
+    const cleanup = initWebhookListener();
+    return cleanup;
+  }, []);
+  return null;
+}
+```
+
+#### 3. Подключение в `layout.tsx`:
+
+```tsx
+import WebhookListener from "@/components/ui/WebhookListener";
+
+// В body, рядом с другими глобальными компонентами:
+<WebhookListener />
+```
+
+#### 4. Использование в формах:
+
+```tsx
+import { emitFormSuccess } from "@/utils/webhook";
+
+// При успешной валидации:
+if (isPhoneValid(phone)) {
+  setSubmitted(true);
+  ymGoal("callback_submit", phone, "callback_widget");
+  emitFormSuccess({ form_id: "callback_widget", phone });
+}
+// НЕ вызывать emitFormSuccess при ошибках, кликах, начале ввода!
+```
+
 ## Правила создания форм
 
 1. **Каждая форма ОБЯЗАТЕЛЬНО имеет `data-form-id`** — уникальный идентификатор в snake_case. Без этого атрибута форму создавать НЕЛЬЗЯ:
@@ -331,7 +452,7 @@ export async function POST(req: NextRequest) {
 
 5. **Скрипт перехватчика вставляется один раз** перед `</body>` — он автоматически перехватывает ВСЕ формы на странице.
 
-6. **Вебхук — только при успешной отправке.** Вызов `sendFormWebhook()` (или `trackEvent` с типом `form_success` / `quiz_success`) должен происходить ТОЛЬКО после успешной валидации формы. Не отправлять вебхук при: клике на форму, начале ввода, ошибке валидации, промежуточных шагах квиза. Для отслеживания промежуточных событий используй Яндекс Метрику.
+6. **Вебхук — только при успешной отправке через глобальный слушатель.** Формы НЕ отправляют вебхук напрямую. В статике — глобальный скрипт-перехватчик сам отправляет после валидации. В React — формы вызывают `emitFormSuccess()`, а `WebhookListener` в layout ловит и отправляет. Не отправлять вебхук при: клике на форму, начале ввода, ошибке валидации, промежуточных шагах квиза. Для промежуточных событий используй Яндекс Метрику.
 
 7. **Для кастомных форм** (без стандартного submit) — вызвать `window.sendFormWebhook()` вручную:
    ```javascript
@@ -344,14 +465,15 @@ export async function POST(req: NextRequest) {
 
 ## Выбор режима
 
-| Критерий | Статика (S3) | SSR (Docker) |
-|----------|-------------|--------------|
-| Тип сайта | HTML/CSS/JS на S3 | Next.js / Express в Docker |
-| Вебхук | Прямой GET с клиента | POST на серверный эндпоинт |
-| URL вебхука | Виден в клиентском коде | Скрыт на сервере |
-| Зависимости | Нет | Серверный роут |
+| Критерий | Статика (S3) | SSR (Docker) | React/Next.js (Static Export) |
+|----------|-------------|--------------|-------------------------------|
+| Тип сайта | HTML/CSS/JS на S3 | Next.js / Express в Docker | Next.js с `output: 'export'` |
+| Вебхук | Прямой GET с клиента | POST на серверный эндпоинт | GET через CustomEvent + WebhookListener |
+| URL вебхука | Виден в клиентском коде | Скрыт на сервере | Виден в клиентском коде |
+| Зависимости | Нет | Серверный роут | WebhookListener в layout |
+| Глобальный слушатель | `document.addEventListener('submit')` | `document.addEventListener('submit')` | `WebhookListener` компонент |
 
-**По умолчанию** — используй режим "Статика", если сайт собирается как HTML и деплоится на S3.
+**По умолчанию** — используй режим "Статика" для HTML-сайтов на S3, режим "React" для Next.js проектов.
 
 ## Пример формы
 
