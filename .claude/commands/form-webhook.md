@@ -360,3 +360,56 @@ export async function POST(req: NextRequest) {
 ```
 
 Перехватчик автоматически отправит на вебхук: form_id, phone, name, page, referrer, ym_uid, cookies, utm-метки и timestamp.
+
+## Форматирование текста для Telegram в n8n
+
+Когда данные из вебхука сохраняются в Google Sheets как JSON-строка (например, в колонке `dannie`), для красивого вывода в Telegram используй следующее выражение в поле **Text** Telegram-ноды.
+
+### Шаблон выражения для Telegram-ноды
+
+Вставить в поле **Text** (режим Expression):
+
+```javascript
+{{ (() => {
+  const d = JSON.parse($json.dannie);
+  const phone = $json.phone || d.phone || 'не указан';
+  const time = d.time
+    ? new Date(d.time).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })
+    : '';
+
+  let msg = '\u{1F4DE} Новая заявка!\n\n';
+  msg += '\u{260E}\u{FE0F} Телефон: ' + phone + '\n';
+  if (d.form_id) msg += '\u{1F4CB} Форма: ' + d.form_id + '\n';
+  if (d.page) msg += '\u{1F4C4} Страница: ' + d.page + '\n';
+  if (time) msg += '\u{1F550} Время: ' + time + '\n';
+  if (d.referrer) msg += '\u{1F517} Источник: ' + d.referrer + '\n';
+  if (d.yclid) msg += '\u{1F4CA} Яндекс.Директ (yclid): ' + d.yclid + '\n';
+  if (d.name) msg += '\u{1F464} Имя: ' + d.name + '\n';
+  if (d.email) msg += '\u{2709}\u{FE0F} Email: ' + d.email + '\n';
+  if (d.message) msg += '\u{1F4AC} Сообщение: ' + d.message + '\n';
+  msg += '\n\u{1F5A5} ' + (d.screen || '') + ' | ' + (d.lang || '');
+  return msg;
+})() }}
+```
+
+### Пример результата в Telegram
+
+```
+📞 Новая заявка!
+
+☎️ Телефон: 9872547044
+📋 Форма: callback_widget
+📄 Страница: /callback-widget
+🕐 Время: 12.03.2026, 15:43:41
+🔗 Источник: yandex.ru
+
+🖥 1920x1080 | ru-RU
+```
+
+### Правила
+
+- **Парсинг JSON**: Поле `dannie` хранит JSON-строку — всегда парсить через `JSON.parse()`
+- **Телефон**: Приоритет — `$json.phone`, затем `d.phone` из JSON
+- **Время**: Конвертировать ISO 8601 в читаемый формат с московским часовым поясом
+- **Пустые поля**: Показывать только заполненные поля (проверка `if (d.field)`)
+- **Расширение**: Для новых полей формы добавить строку `if (d.field_name) msg += '...' + d.field_name + '\n';`
