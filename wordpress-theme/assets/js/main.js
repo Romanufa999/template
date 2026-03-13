@@ -711,64 +711,44 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================================== */
 
   function initCabinetTabs() {
+    // Legacy tab-button approach
     const tabContainers = qsa('.cabinet-tabs, .tabs-container');
-
     tabContainers.forEach((container) => {
       const tabs = qsa('.tab-button, .cabinet-tab, [data-tab]', container);
       const panelParent = container.closest('.cabinet-section, .cabinet') || container.parentElement;
       const panels = qsa('.tab-panel, .cabinet-panel, .tab-content, [data-tab-panel]', panelParent);
-
       if (!tabs.length || !panels.length) return;
-
       tabs.forEach((tab) => {
         tab.addEventListener('click', () => {
           const targetTab = tab.dataset.tab || tab.dataset.target;
-
-          // Деактивируем все вкладки
-          tabs.forEach((t) => {
-            t.classList.remove('active');
-            t.setAttribute('aria-selected', 'false');
-          });
-          panels.forEach((p) => {
-            p.classList.remove('active');
-            p.setAttribute('hidden', '');
-          });
-
-          // Активируем текущую
+          tabs.forEach((t) => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+          panels.forEach((p) => { p.classList.remove('active'); p.setAttribute('hidden', ''); });
           tab.classList.add('active');
           tab.setAttribute('aria-selected', 'true');
-
-          const targetPanel = panels.find(
-            (p) =>
-              p.dataset.tabPanel === targetTab ||
-              p.dataset.tab === targetTab ||
-              p.id === targetTab
-          );
-          if (targetPanel) {
-            targetPanel.classList.add('active');
-            targetPanel.removeAttribute('hidden');
-          }
+          const targetPanel = panels.find((p) => p.dataset.tabPanel === targetTab || p.dataset.tab === targetTab || p.id === targetTab);
+          if (targetPanel) { targetPanel.classList.add('active'); targetPanel.removeAttribute('hidden'); }
         });
       });
-
-      // Навигация клавиатурой (стрелки лево/право между вкладками)
-      container.addEventListener('keydown', (e) => {
-        if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
-        const currentTab = document.activeElement;
-        const currentIndex = tabs.indexOf(currentTab);
-        if (currentIndex === -1) return;
-
-        let nextIndex;
-        if (e.key === 'ArrowRight') {
-          nextIndex = (currentIndex + 1) % tabs.length;
-        } else {
-          nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-        }
-
-        tabs[nextIndex].focus();
-        tabs[nextIndex].click();
-      });
     });
+
+    // New construction-stage tabs (cabinet mock UI)
+    const mockTabs = qs('.cabinet-mock__tabs');
+    if (mockTabs) {
+      const stageTabs = qsa('.cabinet-stage-tab', mockTabs);
+      const mockParent = mockTabs.closest('.cabinet-mock');
+      const stagePanels = mockParent ? qsa('.cabinet-stage-panel', mockParent) : [];
+
+      stageTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const idx = tab.dataset.stage;
+          stageTabs.forEach((t) => t.classList.remove('active'));
+          stagePanels.forEach((p) => { p.classList.remove('active'); p.setAttribute('hidden', ''); });
+          tab.classList.add('active');
+          const panel = stagePanels.find((p) => p.dataset.stagePanel === idx);
+          if (panel) { panel.classList.add('active'); panel.removeAttribute('hidden'); }
+        });
+      });
+    }
   }
 
   /* ==========================================================================
@@ -855,18 +835,21 @@ document.addEventListener('DOMContentLoaded', () => {
         counter.textContent = `${currentMember + 1} / ${total}`;
       }
 
-      // Обновляем индикаторы
+      // Обновляем индикаторы (dots + thumbnails)
       qsa('.team-dot, .carousel-dot', section).forEach((dot, i) => {
         dot.classList.toggle('active', i === currentMember);
+      });
+      qsa('.team-thumb', section).forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === currentMember);
       });
     }
 
     if (prevBtn) prevBtn.addEventListener('click', () => showMember(currentMember - 1));
     if (nextBtn) nextBtn.addEventListener('click', () => showMember(currentMember + 1));
 
-    // Клик по индикаторам
+    // Клик по индикаторам и миниатюрам
     section.addEventListener('click', (e) => {
-      const dot = e.target.closest('.team-dot, .carousel-dot');
+      const dot = e.target.closest('.team-dot, .carousel-dot, .team-thumb');
       if (dot) {
         const idx = parseInt(dot.dataset.index, 10);
         if (!isNaN(idx)) showMember(idx);

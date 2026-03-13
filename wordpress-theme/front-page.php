@@ -417,8 +417,7 @@ $phone_raw = function_exists('stroymsk_phone_raw') ? stroymsk_phone_raw() : '+74
                 array( 'title' => 'Каркасный дом проект Джоуль', 'desc' => 'Каркасный дом на стадии готового каркаса и утепления.', 'thumb' => 'https://pic.rtbcdn.ru/video/2026-02-02/3e/1a/3e1ab63a1f7c5abe737e86190ce921ee.jpg', 'url' => 'https://rutube.ru/video/c1533ee7b0d18888ced2805ea4f728cd/', 'duration' => '04:54', 'episode' => 'Обзор' ),
                 array( 'title' => 'Тёплые полы в доме из газобетона', 'desc' => 'Монтаж водяных тёплых полов. Нюансы укладки.', 'thumb' => 'https://pic.rtbcdn.ru/video/2026-02-02/08/b6/08b62feaccb565e766b0385e02a3493a.jpg', 'url' => 'https://rutube.ru/video/e0c8989554e33646698ae044bf56fc1c/', 'duration' => '04:38', 'episode' => 'Технология' ),
                 array( 'title' => 'Барнхаус Бибери — тёплый контур', 'desc' => 'Обзор барнхауса на стадии тёплого контура.', 'thumb' => 'https://pic.rtbcdn.ru/video/2026-02-02/1c/c9/1cc946f655daf4979199e74f5ff86c26.jpg', 'url' => 'https://rutube.ru/video/c3093cdcc9c195e576c88d3b48e0cfbb/', 'duration' => '04:12', 'episode' => 'Обзор' ),
-                array( 'title' => 'Кирпичный дом — отзыв заказчика', 'desc' => 'Отзыв клиента о строительстве кирпичного дома.', 'thumb' => 'https://pic.rtbcdn.ru/video/2026-02-02/fb/e8/fbe86f87cd35cc338a449f1a1dba30fa.jpg', 'url' => 'https://rutube.ru/video/3976064f068d0d7e1c59b3860132a3f7/', 'duration' => '02:35', 'episode' => 'Отзыв' ),
-                array( 'title' => 'Дом из газобетона — от фундамента', 'desc' => 'Строительство дома из газобетона с нуля.', 'thumb' => 'https://pic.rtbcdn.ru/video/2026-02-02/3e/1a/3e1ab63a1f7c5abe737e86190ce921ee.jpg', 'url' => 'https://rutube.ru/video/c1533ee7b0d18888ced2805ea4f728cd/', 'duration' => '05:17', 'episode' => 'Процесс' ),
+                array( 'title' => 'Кирпичный дом — отзыв заказчика', 'desc' => 'Заказчик делится впечатлениями о строительстве кирпичного дома.', 'thumb' => 'https://pic.rtbcdn.ru/video/2026-02-02/fb/e8/fbe86f87cd35cc338a449f1a1dba30fa.jpg', 'url' => 'https://rutube.ru/video/f7d944e93397078a7ab715dc9121b01a/', 'duration' => '02:35', 'episode' => 'Отзыв' ),
             );
             foreach ( $videos as $i => $v ) : ?>
                 <div class="video-card scroll-reveal" style="transition-delay:<?php echo $i * 100; ?>ms;" data-video-url="<?php echo esc_url( $v['url'] ); ?>">
@@ -474,50 +473,125 @@ $phone_raw = function_exists('stroymsk_phone_raw') ? stroymsk_phone_raw() : '+74
 <section class="cabinet-section scroll-reveal" id="cabinet" data-nav-label="Кабинет">
     <div class="noise-overlay"></div>
     <div class="container" style="position:relative;z-index:10;">
-        <div class="s-label">Цифровая стройка</div>
-        <h2 class="s-title">Личный кабинет — <span>контроль 24/7</span></h2>
-        <p class="s-subtitle" style="margin-bottom:2rem;">Фотоотчёты, акты, чек-листы и графики — всё в одном месте. Не нужно ездить на стройку.</p>
+        <div class="s-label">Цифровой контроль</div>
+        <h2 class="s-title" style="text-decoration:underline;text-decoration-color:var(--color-zinc-600);text-underline-offset:8px;text-decoration-thickness:2px;">Личный кабинет стройки</h2>
+        <h3 style="font-size:clamp(1.2rem,3vw,2rem);font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin-bottom:1rem;">
+            <span style="color:var(--color-white);">Полный контроль.</span>
+            <span class="gradient-text">Без визитов.</span>
+        </h3>
 
-        <div class="cabinet-layout">
-            <div class="cabinet-tabs" role="tablist">
-                <button class="tab-button active" data-tab="photos" role="tab" aria-selected="true">
-                    <span class="tab-button__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-                    </span>
-                    Фотоотчёты
-                </button>
-                <button class="tab-button" data-tab="checklists" role="tab" aria-selected="false">
-                    <span class="tab-button__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                    </span>
-                    Чек-листы
-                </button>
-                <button class="tab-button" data-tab="documents" role="tab" aria-selected="false">
-                    <span class="tab-button__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                    </span>
-                    Документы
-                </button>
-                <button class="tab-button" data-tab="schedule" role="tab" aria-selected="false">
-                    <span class="tab-button__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    </span>
-                    Графики
-                </button>
+        <?php
+        $cab_stages = array(
+            array(
+                'label' => 'Фундамент',
+                'photos' => array(
+                    array( 'src' => $s3 . '/2qt1b6uu83.webp', 'alt' => 'Котлован с опалубкой и арматурной сеткой для фундамента' ),
+                    array( 'src' => $s3 . '/spr0bo8usc.webp', 'alt' => 'Армирование и заливка бетона в фундамент' ),
+                ),
+                'checklist' => array( 'Геометрия котлована — без отклонений', 'Арматура d12 шаг 200 — по проекту', 'Защитный слой бетона 50мм — ОК' ),
+                'documents' => array( 'Акт скрытых работ №1', 'Паспорт бетона М350' ),
+            ),
+            array(
+                'label' => 'Стены',
+                'photos' => array(
+                    array( 'src' => $s3 . '/a99geglhug.webp', 'alt' => 'Кладка стен из крупноформатных керамических блоков' ),
+                    array( 'src' => $s3 . '/fs1yxp3gwe.webp', 'alt' => 'Проверка вертикальности кладки стен уровнем' ),
+                ),
+                'checklist' => array( 'Толщина шва раствора 10–12мм — ОК', 'Вертикаль стен ±3мм — без отклонений', 'Армопояс по периметру — по проекту' ),
+                'documents' => array( 'Акт скрытых работ №2', 'Сертификат керамоблока' ),
+            ),
+            array(
+                'label' => 'Перекрытия',
+                'photos' => array(
+                    array( 'src' => $s3 . '/jyzpuvdle0.webp', 'alt' => 'Опалубка и арматурная сетка для монолитного перекрытия' ),
+                    array( 'src' => $s3 . '/ddddl9a2c4.webp', 'alt' => 'Заливка бетона для монолитного перекрытия бетононасосом' ),
+                ),
+                'checklist' => array( 'Опалубка выставлена по уровню — ОК', 'Арматура d14 шаг 150 — по проекту', 'Заливка бетоном М300 — выполнена' ),
+                'documents' => array( 'Акт на перекрытия', 'Паспорт бетона М300' ),
+            ),
+            array(
+                'label' => 'Кровля',
+                'photos' => array(
+                    array( 'src' => $s3 . '/n7tu80v8un.webp', 'alt' => 'Установка стропильной системы кровли загородного дома' ),
+                    array( 'src' => $s3 . '/smtcjjki66.webp', 'alt' => 'Монтаж кровельного покрытия и гидроизоляционной мембраны' ),
+                ),
+                'checklist' => array( 'Стропильная система — проверена', 'Гидроизоляция — уложена без разрывов', 'Утепление 200мм — по проекту' ),
+                'documents' => array( 'Акт кровельных работ', 'Гарантия на покрытие' ),
+            ),
+        );
+        $cab_features = array(
+            'Фотоотчёты каждого этапа',
+            'Скрытые работы зафиксированы',
+            'Чек-листы и акты технадзора',
+            'График и сроки реального времени',
+            'Live-камеры на объекте',
+        );
+        ?>
+
+        <div class="cabinet-layout" style="margin-top:3.5rem;">
+            <!-- Left: features + demo CTA -->
+            <div class="cabinet-features">
+                <div class="cabinet-note">Мы сами загружаем всё в ваш кабинет. Вам не нужно просить или приезжать.</div>
+                <ul class="cabinet-checklist">
+                    <?php foreach ( $cab_features as $f ) : ?>
+                        <li>
+                            <span class="cabinet-check-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            </span>
+                            <?php echo esc_html( $f ); ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <button class="btn btn--outline cabinet-demo-btn" style="margin-top:1.75rem;">Смотреть демо →</button>
             </div>
-            <div>
-                <div class="tab-panel cabinet-preview active" data-tab-panel="photos">
-                    <img src="<?php echo esc_url( $s3 ); ?>/cabinet-photos.webp" alt="Личный кабинет — фотоотчёты стройки" loading="lazy">
+
+            <!-- Right: glass mock UI with stage tabs -->
+            <div class="cabinet-mock">
+                <div class="cabinet-mock__glow"></div>
+                <!-- Mock header -->
+                <div class="cabinet-mock__head">
+                    <span style="font-family:var(--font-label);font-size:0.72rem;font-weight:600;color:var(--color-white);">Вилла Лазурь</span>
+                    <span style="font-family:var(--font-label);font-size:0.6rem;color:var(--color-zinc-500);display:flex;align-items:center;gap:0.5rem;">
+                        <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;animation:blink-dot 2s infinite;"></span>
+                        4 камеры активны
+                    </span>
                 </div>
-                <div class="tab-panel cabinet-preview" data-tab-panel="checklists" hidden>
-                    <img src="<?php echo esc_url( $s3 ); ?>/cabinet-checklists.webp" alt="Личный кабинет — чек-листы" loading="lazy">
+                <!-- Stage tabs -->
+                <div class="cabinet-mock__tabs">
+                    <?php foreach ( $cab_stages as $si => $stage ) : ?>
+                        <button class="cabinet-stage-tab<?php echo $si === 0 ? ' active' : ''; ?>" data-stage="<?php echo $si; ?>"><?php echo esc_html( $stage['label'] ); ?></button>
+                    <?php endforeach; ?>
                 </div>
-                <div class="tab-panel cabinet-preview" data-tab-panel="documents" hidden>
-                    <img src="<?php echo esc_url( $s3 ); ?>/cabinet-documents.webp" alt="Личный кабинет — документы" loading="lazy">
-                </div>
-                <div class="tab-panel cabinet-preview" data-tab-panel="schedule" hidden>
-                    <img src="<?php echo esc_url( $s3 ); ?>/cabinet-schedule.webp" alt="Личный кабинет — график" loading="lazy">
-                </div>
+                <!-- Stage content panels -->
+                <?php foreach ( $cab_stages as $si => $stage ) : ?>
+                    <div class="cabinet-stage-panel<?php echo $si === 0 ? ' active' : ''; ?>" data-stage-panel="<?php echo $si; ?>"<?php echo $si !== 0 ? ' hidden' : ''; ?>>
+                        <div class="cabinet-stage__photos">
+                            <?php foreach ( $stage['photos'] as $photo ) : ?>
+                                <div class="cabinet-stage__photo">
+                                    <img src="<?php echo esc_url( $photo['src'] ); ?>" alt="<?php echo esc_attr( $photo['alt'] ); ?>" loading="lazy">
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="cabinet-stage__checklist">
+                            <?php foreach ( $stage['checklist'] as $ci => $item ) : ?>
+                                <div class="cabinet-stage__check-item" style="animation-delay:<?php echo 300 + $ci * 250; ?>ms;">
+                                    <span class="cabinet-stage__check-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                    </span>
+                                    <?php echo esc_html( $item ); ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="cabinet-stage__docs">
+                            <?php foreach ( $stage['documents'] as $doc ) : ?>
+                                <div class="cabinet-stage__doc">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    <?php echo esc_html( $doc ); ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -530,50 +604,99 @@ $phone_raw = function_exists('stroymsk_phone_raw') ? stroymsk_phone_raw() : '+74
         <div class="s-label">Команда</div>
         <h2 class="s-title">Люди, которым <span>вы доверяете</span></h2>
 
+        <?php
+        $director = array(
+            'name'  => 'Игорь Сергеевич Игнатьев',
+            'role'  => 'Директор',
+            'image' => '/images/team/ignatiev.jpg',
+            'quote' => 'Людям нужны не стены — им нужно место, где они чувствуют себя дома. Мы строим не квадратные метры, а качество жизни. Каждый проект — это личная ответственность каждого из нас.',
+        );
+        $director_photos = array(
+            'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278829433752.jpeg',
+            'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278829831992.jpeg',
+        );
+        $team = array(
+            array( 'name' => 'Мария Сергеевна Сас', 'role' => 'Менеджер продаж', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278836252721.jpeg', 'bio' => 'Помогает клиентам на каждом этапе — от первого звонка до подписания договора.' ),
+            array( 'name' => 'Мухин Иван Владимирович', 'role' => 'Инженер-проектировщик', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278836643805.jpeg', 'bio' => 'Разрабатывает конструктивные решения. Более 200 проектов за 12 лет.' ),
+            array( 'name' => 'Алла Викторовна Илюшина', 'role' => 'Архитектор', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278830161303.jpeg', 'bio' => 'Создаёт концептуальные проекты, 3D-визуализации и рабочие чертежи.' ),
+            array( 'name' => 'Анатолий Петрович Новоселов', 'role' => 'Производитель работ', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278829433752.jpeg', 'bio' => 'Контролирует строительство на объекте. Опыт 15+ лет в сфере ИЖС.' ),
+            array( 'name' => 'Русецкий Игорь Юрьевич', 'role' => 'Инженер-проектировщик', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278836252721.jpeg', 'bio' => 'Специализируется на фундаментах и несущих конструкциях.' ),
+            array( 'name' => 'Матвиенко Филипп Анатольевич', 'role' => 'Дизайнер', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278836643805.jpeg', 'bio' => 'Создаёт интерьеры, которые сочетают эстетику и функциональность.' ),
+            array( 'name' => 'Ефимов Олег Борисович', 'role' => 'Производитель работ', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278830161303.jpeg', 'bio' => 'Руководит бригадами на строительных площадках.' ),
+        );
+        ?>
+
         <div class="team-layout" style="margin-top:2.5rem;">
-            <div class="team-photo-wrapper">
-                <img src="https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278836252721.jpeg" alt="" class="team-photo" loading="lazy">
-            </div>
-            <div class="team-info">
-                <?php
-                $team = array(
-                    array( 'name' => 'Мария Сергеевна Сас', 'role' => 'Менеджер продаж', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278836252721.jpeg', 'bio' => 'Помогает клиентам на каждом этапе — от первого звонка до подписания договора.' ),
-                    array( 'name' => 'Мухин Иван Владимирович', 'role' => 'Инженер-проектировщик', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278836643805.jpeg', 'bio' => 'Разрабатывает конструктивные решения. Более 200 проектов за 12 лет.' ),
-                    array( 'name' => 'Алла Викторовна Илюшина', 'role' => 'Архитектор', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278830161303.jpeg', 'bio' => 'Создаёт концептуальные проекты, 3D-визуализации и рабочие чертежи.' ),
-                    array( 'name' => 'Анатолий Петрович Новоселов', 'role' => 'Производитель работ', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278829433752.jpeg', 'bio' => 'Контролирует строительство на объекте. Опыт 15+ лет в сфере ИЖС.' ),
-                    array( 'name' => 'Русецкий Игорь Юрьевич', 'role' => 'Инженер-проектировщик', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278836252721.jpeg', 'bio' => 'Специализируется на фундаментах и несущих конструкциях.' ),
-                    array( 'name' => 'Матвиенко Филипп Анатольевич', 'role' => 'Дизайнер', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278836643805.jpeg', 'bio' => 'Создаёт интерьеры, которые сочетают эстетику и функциональность.' ),
-                    array( 'name' => 'Ефимов Олег Борисович', 'role' => 'Производитель работ', 'photo' => 'https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278830161303.jpeg', 'bio' => 'Руководит бригадами на строительных площадках.' ),
-                );
-                ?>
-                <div style="display:none;">
-                    <?php foreach ( $team as $i => $member ) : ?>
-                        <div class="team-member"
-                             data-photo="<?php echo esc_url( $member['photo'] ); ?>"
-                             data-name="<?php echo esc_attr( $member['name'] ); ?>"
-                             data-role="<?php echo esc_attr( $member['role'] ); ?>"
-                             data-bio="<?php echo esc_attr( $member['bio'] ); ?>">
-                        </div>
-                    <?php endforeach; ?>
+            <!-- Director quote card (left) -->
+            <div class="team-director-card">
+                <div class="team-director-card__photo">
+                    <img src="<?php echo esc_url( $director['image'] ); ?>" alt="<?php echo esc_attr( $director['name'] ); ?>" loading="lazy">
+                    <div class="team-director-card__gradient"></div>
                 </div>
-                <div class="team-name"><?php echo esc_html( $team[0]['name'] ); ?></div>
-                <div class="team-role"><?php echo esc_html( $team[0]['role'] ); ?></div>
-                <div class="team-bio"><?php echo esc_html( $team[0]['bio'] ); ?></div>
-                <div class="team-nav">
-                    <button class="team-prev" aria-label="Предыдущий">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                    </button>
-                    <span class="team-counter">1 / <?php echo count( $team ); ?></span>
-                    <button class="team-next" aria-label="Следующий">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </button>
-                    <div class="team-dots">
-                        <?php for ( $d = 0; $d < count( $team ); $d++ ) : ?>
-                            <button class="team-dot<?php echo $d === 0 ? ' active' : ''; ?>" data-index="<?php echo $d; ?>" aria-label="Участник <?php echo $d + 1; ?>"></button>
-                        <?php endfor; ?>
+                <div class="team-director-card__content">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-zinc-700);margin-bottom:0.75rem;"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+                    <blockquote class="team-director-card__quote">&laquo;<?php echo esc_html( $director['quote'] ); ?>&raquo;</blockquote>
+                    <div class="team-director-card__meta">
+                        <div class="team-director-card__avatar">
+                            <img src="<?php echo esc_url( $director['image'] ); ?>" alt="<?php echo esc_attr( $director['name'] ); ?>" width="36" height="36">
+                        </div>
+                        <div>
+                            <p class="team-director-card__name"><?php echo esc_html( $director['name'] ); ?></p>
+                            <p class="team-director-card__role"><?php echo esc_html( $director['role'] ); ?></p>
+                        </div>
+                    </div>
+                    <div class="team-director-card__onsite">
+                        <?php foreach ( $director_photos as $dp ) : ?>
+                            <div class="team-director-card__onsite-img">
+                                <img src="<?php echo esc_url( $dp ); ?>" alt="<?php echo esc_attr( $director['name'] ); ?> на объекте" loading="lazy">
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
+
+            <!-- Team member carousel (right) -->
+            <div class="team-member-card">
+                <div class="team-photo-wrapper">
+                    <img src="<?php echo esc_url( $team[0]['photo'] ); ?>" alt="<?php echo esc_attr( $team[0]['name'] ); ?>" class="team-photo" loading="lazy">
+                    <div class="team-director-card__gradient"></div>
+                    <div class="team-nav-overlay">
+                        <button class="team-prev" aria-label="Предыдущий">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                        </button>
+                        <button class="team-next" aria-label="Следующий">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="team-info">
+                    <div style="display:none;">
+                        <?php foreach ( $team as $i => $member ) : ?>
+                            <div class="team-member"
+                                 data-photo="<?php echo esc_url( $member['photo'] ); ?>"
+                                 data-name="<?php echo esc_attr( $member['name'] ); ?>"
+                                 data-role="<?php echo esc_attr( $member['role'] ); ?>"
+                                 data-bio="<?php echo esc_attr( $member['bio'] ); ?>">
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="team-counter" style="font-family:var(--font-label);font-size:0.625rem;color:var(--color-zinc-500);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.5rem;">1/<?php echo count( $team ); ?></div>
+                    <div class="team-name"><?php echo esc_html( $team[0]['name'] ); ?></div>
+                    <div class="team-role"><?php echo esc_html( $team[0]['role'] ); ?></div>
+                    <div class="team-thumbnails">
+                        <?php foreach ( $team as $i => $member ) : ?>
+                            <button class="team-thumb<?php echo $i === 0 ? ' active' : ''; ?>" data-index="<?php echo $i; ?>" aria-label="<?php echo esc_attr( $member['name'] ); ?>">
+                                <img src="<?php echo esc_url( $member['photo'] ); ?>" alt="<?php echo esc_attr( $member['name'] ); ?>" width="36" height="36" loading="lazy">
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Все бригады работают с нами более 5 лет</span>
         </div>
     </div>
 </section>

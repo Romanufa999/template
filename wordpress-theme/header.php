@@ -46,7 +46,7 @@
                     ?>
                     <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="site-logo__img">
                 <?php else : ?>
-                    <span class="site-logo__text">Строй<span class="site-logo__accent">МСК</span></span>
+                    <img src="https://s3.ru1.storage.beget.cloud/76ae0220f799-proficient-naida/upload/177278828511285.jpeg" alt="<?php bloginfo( 'name' ); ?>" class="site-logo__img" style="height:2.25rem;width:auto;">
                 <?php endif; ?>
             </a>
 
