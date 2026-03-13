@@ -2,6 +2,8 @@
 
 Универсальный перехватчик форм. При успешной отправке любой формы данные отправляются на вебхук.
 
+**ВАЖНО: Вебхук отправляется ТОЛЬКО при успешном заполнении формы** — после того как валидация пройдена (телефон корректный, обязательные поля заполнены). Промежуточные события (клик на форму, начало ввода, ошибки валидации, промежуточные шаги квиза) НЕ должны вызывать отправку вебхука. Эти события можно отслеживать через Яндекс Метрику (см. скилл yandex-metrica), но не через вебхук.
+
 Используй этот скилл когда нужно:
 1. Добавить форму на сайт (контактная форма, заявка, обратный звонок и т.д.)
 2. Настроить отправку данных формы на вебхук
@@ -10,9 +12,7 @@
 
 ## Endpoint
 
-```
 GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
-```
 
 ## Параметры вебхука
 
@@ -38,325 +38,108 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 
 Допускаются произвольные дополнительные параметры из полей формы — все передаются как query-параметры GET-запроса.
 
-## Два режима работы
+## Архитектура: глобальный слушатель
 
-### Режим 1: Статический сайт (HTML/JS) — клиентский вебхук
+**Формы НЕ отправляют вебхук напрямую.** Вместо этого используется глобальный слушатель — одна точка, которая перехватывает все успешные отправки и централизованно отправляет вебхук.
 
-Для статических сайтов, которые деплоятся на S3, вся логика работает на клиенте через JavaScript.
+Принцип работы:
+1. **Форма** при успешной валидации диспатчит событие (CustomEvent или стандартный submit)
+2. **Глобальный слушатель** (один на весь сайт) ловит это событие и отправляет вебхук
+3. Это исключает дублирование запросов и централизует логику отправки
 
-Добавь этот скрипт **перед закрывающим тегом `</body>`** на каждую страницу с формами:
+Для React/Next.js проектов:
+- Создаётся утилита `webhook.ts` с функцией `emitFormSuccess()` — она диспатчит CustomEvent на window
+- Создаётся компонент `WebhookListener`, который монтируется один раз в `layout.tsx` и слушает эти события
+- При получении события WebhookListener собирает контекст (UTM, ym_uid, device info, page) и отправляет GET-запрос на вебхук
+- Формы НИКОГДА не вызывают fetch/sendWebhook напрямую — только `emitFormSuccess()`
 
-```html
-<script>
-(function() {
-  function getCookie(name) {
-    var m = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()\[\]\\\/+^])/g,'\\$1') + '=([^;]*)'));
-    return m ? decodeURIComponent(m[1]) : '';
-  }
+Для статических HTML сайтов:
+- Глобальный скрипт-перехватчик добавляется один раз перед `</body>`
+- Скрипт вешает `document.addEventListener('submit', ...)` на весь документ
+- При submit скрипт валидирует телефон, собирает поля формы и UTM/cookies/referrer, и отправляет GET на вебхук
+- Формы НИКОГДА не вызывают sendFormWebhook из своих обработчиков — скрипт-перехватчик делает это сам
 
-  function getUTM() {
-    var params = new URLSearchParams(window.location.search);
-    var utm = {};
-    ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k) {
-      var v = params.get(k);
-      if (v) utm[k] = v;
-    });
-    return utm;
-  }
+---
 
-  function sendFormWebhook(formData) {
-    var params = new URLSearchParams();
-    params.set('form_id', formData.form_id || 'unknown');
-    params.set('page', window.location.href);
-    params.set('referrer', document.referrer || '');
-    params.set('ym_uid', getCookie('_ym_uid'));
-    params.set('ym_client_id', getCookie('_ym_d'));
-    params.set('cookies', document.cookie);
-    params.set('timestamp', new Date().toISOString());
+## Три режима работы
 
-    // GA Client ID
-    var ga = getCookie('_ga');
-    if (ga) {
-      var parts = ga.split('.');
-      if (parts.length >= 4) params.set('ga_client_id', parts[2] + '.' + parts[3]);
-    }
+### Режим 1: Статический сайт (HTML/JS) — глобальный перехватчик
 
-    // UTM
-    var utm = getUTM();
-    for (var k in utm) params.set(k, utm[k]);
+Для статических сайтов на S3. Вся логика работает на клиенте через JavaScript.
 
-    // Поля формы
-    for (var key in formData) {
-      if (key !== 'form_id') params.set(key, formData[key]);
-    }
-
-    var url = 'https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff?' + params.toString();
-    fetch(url).catch(function(){});
-  }
-
-  // Валидация российского номера телефона
-  function isValidRussianPhone(phone) {
-    var cleaned = phone.replace(/[\s\-\(\)]/g, '');
-    return /^(\+7|7|8)\d{10}$/.test(cleaned);
-  }
-
-  // Перехват всех форм на странице
-  document.addEventListener('submit', function(e) {
-    var form = e.target;
-    if (!form || form.tagName !== 'FORM') return;
-
-    // Валидация телефона перед отправкой
-    var phoneField = form.querySelector('input[name="phone"]') || form.querySelector('input[type="tel"]');
-    if (phoneField && !isValidRussianPhone(phoneField.value)) {
-      e.preventDefault();
-      phoneField.classList.add('error');
-      var errEl = form.querySelector('.phone-error');
-      if (!errEl) {
-        errEl = document.createElement('div');
-        errEl.className = 'phone-error';
-        errEl.style.cssText = 'color:#e74c3c;font-size:13px;margin-top:4px;';
-        phoneField.parentNode.insertBefore(errEl, phoneField.nextSibling);
-      }
-      errEl.textContent = 'Введите корректный российский номер телефона';
-      return false;
-    }
-    // Убираем ошибку если была
-    if (phoneField) {
-      phoneField.classList.remove('error');
-      var errEl = form.querySelector('.phone-error');
-      if (errEl) errEl.textContent = '';
-    }
-
-    var data = {};
-    data.form_id = form.getAttribute('data-form-id') || form.id || 'form_' + Date.now();
-
-    var elements = form.elements;
-    for (var i = 0; i < elements.length; i++) {
-      var el = elements[i];
-      if (el.name && el.value && el.type !== 'submit' && el.type !== 'button') {
-        data[el.name] = el.value;
-      }
-    }
-
-    sendFormWebhook(data);
-  });
-
-  // Экспорт для вызова вручную (например из кастомных обработчиков)
-  window.sendFormWebhook = sendFormWebhook;
-})();
-</script>
-```
-
-**Важно для каждой формы:**
-- Добавить атрибут `data-form-id` с уникальным ID: `<form data-form-id="callback_hero">`
-- Или использовать `id` формы: `<form id="contact_form">`
+Добавь скрипт-перехватчик **один раз перед закрывающим `</body>`**. Скрипт должен:
+- Перехватывать все submit-события на документе через `document.addEventListener('submit', ...)`
+- Извлекать `form_id` из атрибута `data-form-id` формы (или из `id`)
+- Собирать все поля формы по атрибуту `name`
+- Валидировать телефон (российский формат, 11 цифр)
+- При невалидном телефоне — отменять submit и показывать ошибку
+- При валидном — собирать контекст (page, referrer, ym_uid, cookies, UTM-метки, timestamp) и отправлять GET на вебхук
+- Экспортировать `window.sendFormWebhook` для вызова вручную из кастомных обработчиков
 
 ### Режим 2: SSR через Docker Compose — серверная функция
 
-Для SSR-проектов (Next.js, Express и т.д.) создай серверный эндпоинт, который проксирует вебхук.
+Для SSR-проектов (Next.js, Express). Создаётся серверный эндпоинт (например `/api/form-webhook`), который проксирует запрос на вебхук. Клиентский скрипт отправляет POST на этот эндпоинт вместо прямого GET.
 
-#### Next.js (App Router) — `app/api/form-webhook/route.ts`:
+Серверный эндпоинт должен:
+- Принимать POST с JSON-телом
+- Передавать все поля как query-параметры GET-запроса на вебхук
+- Добавлять timestamp если отсутствует
 
-```typescript
-import { NextRequest, NextResponse } from 'next/server';
+Клиентский скрипт — аналогичен статическому, но `sendFormWebhook` отправляет POST на `/api/form-webhook` вместо прямого GET на вебхук. Разница: URL вебхука скрыт на сервере.
 
-const WEBHOOK_URL = 'https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff';
+### Режим 3: Next.js (Static Export / React) — CustomEvent + WebhookListener
 
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
+Для React/Next.js проектов (включая `output: 'export'`). Используется паттерн emit/listen через CustomEvent.
 
-    const params = new URLSearchParams();
+Необходимо создать:
 
-    // Все поля из body передаём как query-параметры
-    for (const [key, value] of Object.entries(body)) {
-      if (value != null) params.set(key, String(value));
-    }
+1. **Утилита `src/utils/webhook.ts`** — содержит:
+   - Функцию `emitFormSuccess(detail)` — принимает `{ form_id, phone, answers?, gift?, step? }` и диспатчит CustomEvent на window
+   - Приватную функцию `sendWebhook(data)` — собирает контекст (page, referrer, ym_uid, yclid, UTM, device info) и отправляет GET на вебхук. Определяет тип события: `quiz_success` если есть answers, иначе `form_success`
+   - Функцию `initWebhookListener()` — подписывается на CustomEvent и вызывает sendWebhook. Возвращает функцию очистки для useEffect
+   - Хелперы: `getYandexUid()` (из куки `_ym_uid`), `getYclid()` (из URL или sessionStorage), `getUtmParams()`, `getDeviceInfo()`, `persistUtm()`
 
-    // Добавляем timestamp если нет
-    if (!params.has('timestamp')) {
-      params.set('timestamp', new Date().toISOString());
-    }
+2. **Компонент `WebhookListener`** — клиентский React-компонент, монтируется один раз в `layout.tsx`. В useEffect вызывает `initWebhookListener()` и возвращает cleanup. Рендерит null.
 
-    const url = `${WEBHOOK_URL}?${params.toString()}`;
-    const response = await fetch(url);
+3. **Подключение в layout.tsx** — WebhookListener добавляется в body рядом с другими глобальными компонентами (CallbackWidget, UtmPersist и т.д.)
 
-    return NextResponse.json({ success: true, status: response.status });
-  } catch (error) {
-    console.error('Form webhook error:', error);
-    return NextResponse.json({ success: false, error: 'Internal error' }, { status: 500 });
-  }
-}
-```
-
-#### Клиентский скрипт для SSR-режима:
-
-```html
-<script>
-(function() {
-  function getCookie(name) {
-    var m = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()\[\]\\\/+^])/g,'\\$1') + '=([^;]*)'));
-    return m ? decodeURIComponent(m[1]) : '';
-  }
-
-  function getUTM() {
-    var params = new URLSearchParams(window.location.search);
-    var utm = {};
-    ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k) {
-      var v = params.get(k);
-      if (v) utm[k] = v;
-    });
-    return utm;
-  }
-
-  function sendFormWebhook(formData) {
-    var payload = {
-      form_id: formData.form_id || 'unknown',
-      page: window.location.href,
-      referrer: document.referrer || '',
-      ym_uid: getCookie('_ym_uid'),
-      ym_client_id: getCookie('_ym_d'),
-      cookies: document.cookie,
-      timestamp: new Date().toISOString()
-    };
-
-    // GA Client ID
-    var ga = getCookie('_ga');
-    if (ga) {
-      var parts = ga.split('.');
-      if (parts.length >= 4) payload.ga_client_id = parts[2] + '.' + parts[3];
-    }
-
-    // UTM
-    var utm = getUTM();
-    for (var k in utm) payload[k] = utm[k];
-
-    // Поля формы
-    for (var key in formData) {
-      if (key !== 'form_id') payload[key] = formData[key];
-    }
-
-    fetch('/api/form-webhook', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(function(){});
-  }
-
-  // Валидация российского номера телефона
-  function isValidRussianPhone(phone) {
-    var cleaned = phone.replace(/[\s\-\(\)]/g, '');
-    return /^(\+7|7|8)\d{10}$/.test(cleaned);
-  }
-
-  document.addEventListener('submit', function(e) {
-    var form = e.target;
-    if (!form || form.tagName !== 'FORM') return;
-
-    // Валидация телефона перед отправкой
-    var phoneField = form.querySelector('input[name="phone"]') || form.querySelector('input[type="tel"]');
-    if (phoneField && !isValidRussianPhone(phoneField.value)) {
-      e.preventDefault();
-      phoneField.classList.add('error');
-      var errEl = form.querySelector('.phone-error');
-      if (!errEl) {
-        errEl = document.createElement('div');
-        errEl.className = 'phone-error';
-        errEl.style.cssText = 'color:#e74c3c;font-size:13px;margin-top:4px;';
-        phoneField.parentNode.insertBefore(errEl, phoneField.nextSibling);
-      }
-      errEl.textContent = 'Введите корректный российский номер телефона';
-      return false;
-    }
-    if (phoneField) {
-      phoneField.classList.remove('error');
-      var errEl = form.querySelector('.phone-error');
-      if (errEl) errEl.textContent = '';
-    }
-
-    var data = {};
-    data.form_id = form.getAttribute('data-form-id') || form.id || 'form_' + Date.now();
-
-    var elements = form.elements;
-    for (var i = 0; i < elements.length; i++) {
-      var el = elements[i];
-      if (el.name && el.value && el.type !== 'submit' && el.type !== 'button') {
-        data[el.name] = el.value;
-      }
-    }
-
-    sendFormWebhook(data);
-  });
-
-  window.sendFormWebhook = sendFormWebhook;
-})();
-</script>
-```
-
-Разница: вместо прямого GET на вебхук, отправляет POST на `/api/form-webhook`, где серверная функция проксирует запрос.
+4. **Использование в формах** — при успешной валидации формы:
+   - Вызвать `ymGoal(...)` для метрики
+   - Вызвать `emitFormSuccess({ form_id: "...", phone })` для вебхука
+   - НЕ вызывать emitFormSuccess при ошибках, кликах, начале ввода
 
 ## Правила создания форм
 
-1. **Каждая форма ОБЯЗАТЕЛЬНО имеет `data-form-id`** — уникальный идентификатор в snake_case. Без этого атрибута форму создавать НЕЛЬЗЯ:
-   - `callback_hero` — форма обратного звонка в hero-секции
-   - `contact_footer` — контактная форма в футере
-   - `order_pricing` — форма заказа на странице цен
-   - `quiz_step_final` — финальный шаг квиза
-   - `modal_callback` — форма в модальном окне
-   - `quiz_main` — основная форма квиза
+1. **Каждая форма ОБЯЗАТЕЛЬНО имеет уникальный идентификатор** — в snake_case. Для HTML — атрибут `data-form-id` или `id`. Для React — передаётся как `form_id` в emitFormSuccess. Примеры: `callback_hero`, `contact_footer`, `order_pricing`, `quiz_main`, `modal_callback`.
 
 2. **Поле телефона — обязательные требования**:
    - Атрибут `type="tel"` и `name="phone"`
-   - Значение по умолчанию `value="+7"` — поле всегда предзаполнено с `+7`
-   - Placeholder: `placeholder="+7 (___) ___-__-__"`
-   - Валидация на российский номер (встроена в скрипт перехватчика)
-   ```html
-   <input type="tel" name="phone" value="+7" placeholder="+7 (___) ___-__-__" required>
-   ```
+   - Значение по умолчанию `+7` — поле всегда предзаполнено
+   - Placeholder: `+7 (___) ___-__-__`
+   - Валидация на российский номер
 
-3. **Валидация российского номера телефона** — скрипт перехватчика автоматически проверяет номер перед отправкой. Допустимые форматы:
+3. **Валидация российского номера телефона** — проверяется перед отправкой. Допустимые форматы:
    - `+7XXXXXXXXXX` (11 цифр после +)
    - `+7 (XXX) XXX-XX-XX` (с пробелами, скобками, дефисами)
    - `8XXXXXXXXXX` (начиная с 8)
-   - Минимум 11 цифр в номере. Если валидация не прошла — форма не отправляется, пользователю показывается ошибка.
+   - Минимум 11 цифр. Если валидация не прошла — форма не отправляется, вебхук не уходит.
 
-4. **Остальные поля формы должны иметь атрибут `name`** — именно по нему данные попадут в вебхук:
-   ```html
-   <input type="tel" name="phone" value="+7" placeholder="+7 (___) ___-__-__" required>
-   <input type="text" name="name" placeholder="Ваше имя">
-   <input type="email" name="email" placeholder="Email">
-   ```
+4. **Остальные поля формы должны иметь атрибут `name`** — именно по нему данные попадут в вебхук (для HTML). Для React — все данные передаются через объект в emitFormSuccess.
 
-5. **Скрипт перехватчика вставляется один раз** перед `</body>` — он автоматически перехватывает ВСЕ формы на странице.
+5. **Глобальный слушатель вставляется/монтируется один раз** — для HTML: скрипт перед `</body>`. Для React: компонент WebhookListener в layout.tsx.
 
-6. **Для кастомных форм** (без стандартного submit) — вызвать `window.sendFormWebhook()` вручную:
-   ```javascript
-   window.sendFormWebhook({
-     form_id: 'custom_modal',
-     phone: '+79871234567',
-     name: 'Иван'
-   });
-   ```
+6. **Вебхук — только при успешной отправке через глобальный слушатель.** Формы НЕ отправляют вебхук напрямую. В статике — глобальный скрипт-перехватчик сам отправляет после валидации. В React — формы вызывают `emitFormSuccess()`, а `WebhookListener` в layout ловит и отправляет. Не отправлять вебхук при: клике на форму, начале ввода, ошибке валидации, промежуточных шагах квиза. Для промежуточных событий используй Яндекс Метрику.
+
+7. **Для кастомных форм** (без стандартного submit) — в HTML: вызвать `window.sendFormWebhook({ form_id, phone, ... })` вручную. В React: вызвать `emitFormSuccess({ form_id, phone, ... })`.
 
 ## Выбор режима
 
-| Критерий | Статика (S3) | SSR (Docker) |
-|----------|-------------|--------------|
-| Тип сайта | HTML/CSS/JS на S3 | Next.js / Express в Docker |
-| Вебхук | Прямой GET с клиента | POST на серверный эндпоинт |
-| URL вебхука | Виден в клиентском коде | Скрыт на сервере |
-| Зависимости | Нет | Серверный роут |
+| Критерий | Статика (S3) | SSR (Docker) | React/Next.js (Static Export) |
+|----------|-------------|--------------|-------------------------------|
+| Тип сайта | HTML/CSS/JS на S3 | Next.js / Express в Docker | Next.js с `output: 'export'` |
+| Вебхук | Прямой GET с клиента | POST на серверный эндпоинт | GET через CustomEvent + WebhookListener |
+| URL вебхука | Виден в клиентском коде | Скрыт на сервере | Виден в клиентском коде |
+| Зависимости | Нет | Серверный роут | WebhookListener в layout |
+| Глобальный слушатель | `document.addEventListener('submit')` | `document.addEventListener('submit')` | `WebhookListener` компонент |
 
-**По умолчанию** — используй режим "Статика", если сайт собирается как HTML и деплоится на S3.
-
-## Пример формы
-
-```html
-<form data-form-id="callback_hero" onsubmit="event.preventDefault(); alert('Спасибо! Мы перезвоним.');">
-  <input type="tel" name="phone" value="+7" placeholder="+7 (___) ___-__-__" required>
-  <input type="text" name="name" placeholder="Ваше имя">
-  <button type="submit">Перезвоните мне</button>
-</form>
-```
-
-Перехватчик автоматически отправит на вебхук: form_id, phone, name, page, referrer, ym_uid, cookies, utm-метки и timestamp.
+**По умолчанию** — используй режим "Статика" для HTML-сайтов на S3, режим "React" для Next.js проектов.
