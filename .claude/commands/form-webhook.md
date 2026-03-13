@@ -377,18 +377,32 @@ export async function POST(req: NextRequest) {
     ? new Date(d.time).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })
     : '';
 
+  const icons = {
+    phone: '\u{260E}\u{FE0F}', name: '\u{1F464}', email: '\u{2709}\u{FE0F}',
+    message: '\u{1F4AC}', form_id: '\u{1F4CB}', page: '\u{1F4C4}',
+    time: '\u{1F550}', referrer: '\u{1F517}', yclid: '\u{1F4CA}',
+    screen: '\u{1F5A5}', lang: '\u{1F310}',
+  };
+  const skip = ['event', 'ua', 'platform', 'viewport', 'ym_uid', 'phone'];
+  const labels = {
+    form_id: 'Форма', page: 'Страница', referrer: 'Источник',
+    yclid: 'Яндекс.Директ', name: 'Имя', email: 'Email',
+    message: 'Сообщение', screen: 'Экран', lang: 'Язык',
+  };
+
   let msg = '\u{1F4DE} Новая заявка!\n\n';
-  msg += '\u{260E}\u{FE0F} Телефон: ' + phone + '\n';
-  if (d.form_id) msg += '\u{1F4CB} Форма: ' + d.form_id + '\n';
-  if (d.page) msg += '\u{1F4C4} Страница: ' + d.page + '\n';
-  if (time) msg += '\u{1F550} Время: ' + time + '\n';
-  if (d.referrer) msg += '\u{1F517} Источник: ' + d.referrer + '\n';
-  if (d.yclid) msg += '\u{1F4CA} Яндекс.Директ (yclid): ' + d.yclid + '\n';
-  if (d.name) msg += '\u{1F464} Имя: ' + d.name + '\n';
-  if (d.email) msg += '\u{2709}\u{FE0F} Email: ' + d.email + '\n';
-  if (d.message) msg += '\u{1F4AC} Сообщение: ' + d.message + '\n';
-  msg += '\n\u{1F5A5} ' + (d.screen || '') + ' | ' + (d.lang || '');
-  return msg;
+  msg += (icons.phone || '') + ' Телефон: ' + phone + '\n';
+  if (time) msg += (icons.time || '') + ' Время: ' + time + '\n';
+  msg += '\n';
+
+  for (const [k, v] of Object.entries(d)) {
+    if (!v || skip.includes(k)) continue;
+    const icon = icons[k] ? icons[k] + ' ' : '';
+    const label = labels[k] || k;
+    msg += icon + label + ': ' + v + '\n';
+  }
+
+  return msg.trim();
 })() }}
 ```
 
@@ -398,12 +412,18 @@ export async function POST(req: NextRequest) {
 📞 Новая заявка!
 
 ☎️ Телефон: 9872547044
+🕐 Время: 12.03.2026, 15:43:41
+
 📋 Форма: callback_widget
 📄 Страница: /callback-widget
-🕐 Время: 12.03.2026, 15:43:41
 🔗 Источник: yandex.ru
+🖥 Экран: 1920x1080
+🌐 Язык: ru-RU
+```
 
-🖥 1920x1080 | ru-RU
+Если приходит неизвестное поле (например `company`), оно выводится без иконки:
+```
+company: ООО Ромашка
 ```
 
 ### Правила
@@ -411,5 +431,6 @@ export async function POST(req: NextRequest) {
 - **Парсинг JSON**: Поле `dannie` хранит JSON-строку — всегда парсить через `JSON.parse()`
 - **Телефон**: Приоритет — `$json.phone`, затем `d.phone` из JSON
 - **Время**: Конвертировать ISO 8601 в читаемый формат с московским часовым поясом
-- **Пустые поля**: Показывать только заполненные поля (проверка `if (d.field)`)
-- **Расширение**: Для новых полей формы добавить строку `if (d.field_name) msg += '...' + d.field_name + '\n';`
+- **Иконки**: Ставятся только для известных полей (phone, name, email, page и т.д.). Неизвестные поля выводятся без иконки, с ключом как названием
+- **Пропуск служебных полей**: `event`, `ua`, `platform`, `viewport`, `ym_uid` — не выводятся (техническая информация)
+- **Все остальные поля**: Автоматически выводятся через цикл — не нужно добавлять код для каждого нового поля
