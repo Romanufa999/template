@@ -18,25 +18,25 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 
 | Параметр | Обязательное | Описание |
 |----------|-------------|----------|
-| form_id | да | Уникальный ID формы (латиница, snake_case, например `contact_form`, `callback_hero`) |
-| phone | нет | Телефон (если есть в форме) |
-| name | нет | Имя (если есть в форме) |
-| email | нет | Email (если есть в форме) |
-| message | нет | Сообщение (если есть в форме) |
-| page | да | URL страницы, на которой заполнена форма |
+| form_id | да | Уникальный ID формы (латиница, snake_case, например `contact_form`, `quiz_main`) |
+| phone | да | Телефон (российский формат, 10 цифр без +7) |
+| page | да | Полный URL страницы с доменом (`window.location.href`) |
+| time | да | Время отправки (ISO 8601) |
+| referrer | да | `document.referrer` — откуда пришёл пользователь |
 | ym_uid | да | Yandex Metrika User ID (из куки `_ym_uid`) |
-| ym_client_id | нет | Yandex Metrika Client ID (если доступен) |
-| ga_client_id | нет | Google Analytics Client ID (из куки `_ga`) |
-| cookies | нет | Все куки страницы (document.cookie) |
-| referrer | да | document.referrer — откуда пришёл пользователь |
+| ym_client_id | да | Yandex Metrika Client ID (из куки `_ym_uid`) |
+| ga_client_id | да | Google Analytics Client ID (из куки `_ga`, последние два сегмента) |
+| yclid | да | Yandex Direct Click ID (из URL `?yclid=` или sessionStorage) |
+| cookies | да | Все куки страницы (`document.cookie`) |
 | utm_source | нет | UTM-метка source |
 | utm_medium | нет | UTM-метка medium |
 | utm_campaign | нет | UTM-метка campaign |
 | utm_term | нет | UTM-метка term |
 | utm_content | нет | UTM-метка content |
-| timestamp | да | Время отправки (ISO 8601) |
+| answers | нет | Ответы квиза (если форма — квиз) |
+| gift | нет | Выбранный подарок (если есть в квизе) |
 
-Допускаются произвольные дополнительные параметры из полей формы — все передаются как query-параметры GET-запроса.
+**НЕ отправлять:** device info (screen, viewport, ua, platform). Fetch-запрос должен использовать `referrerPolicy: "no-referrer"` чтобы браузер не подставлял технический домен хостинга.
 
 ## Архитектура: глобальный слушатель
 
@@ -50,13 +50,13 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 Для React/Next.js проектов:
 - Создаётся утилита `webhook.ts` с функцией `emitFormSuccess()` — она диспатчит CustomEvent на window
 - Создаётся компонент `WebhookListener`, который монтируется один раз в `layout.tsx` и слушает эти события
-- При получении события WebhookListener собирает контекст (UTM, ym_uid, device info, page) и отправляет GET-запрос на вебхук
+- При получении события WebhookListener собирает контекст (UTM, ym_uid, yclid, referrer, page) и отправляет GET-запрос на вебхук
 - Формы НИКОГДА не вызывают fetch/sendWebhook напрямую — только `emitFormSuccess()`
 
 Для статических HTML сайтов:
 - Глобальный скрипт-перехватчик добавляется один раз перед `</body>`
 - Скрипт вешает `document.addEventListener('submit', ...)` на весь документ
-- При submit скрипт валидирует телефон, собирает поля формы и UTM/cookies/referrer, и отправляет GET на вебхук
+- При submit скрипт валидирует телефон, собирает поля формы и контекст, и отправляет GET на вебхук
 - Формы НИКОГДА не вызывают sendFormWebhook из своих обработчиков — скрипт-перехватчик делает это сам
 
 ---
@@ -73,7 +73,7 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 - Собирать все поля формы по атрибуту `name`
 - Валидировать телефон (российский формат, 11 цифр)
 - При невалидном телефоне — отменять submit и показывать ошибку
-- При валидном — собирать контекст (page, referrer, ym_uid, cookies, UTM-метки, timestamp) и отправлять GET на вебхук
+- При валидном — собирать контекст (page как `window.location.href`, referrer, ym_uid, yclid, UTM-метки, time) и отправлять GET на вебхук с `referrerPolicy: "no-referrer"`
 - Экспортировать `window.sendFormWebhook` для вызова вручную из кастомных обработчиков
 
 ### Режим 2: SSR через Docker Compose — серверная функция
@@ -83,7 +83,7 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 Серверный эндпоинт должен:
 - Принимать POST с JSON-телом
 - Передавать все поля как query-параметры GET-запроса на вебхук
-- Добавлять timestamp если отсутствует
+- Добавлять time если отсутствует
 
 Клиентский скрипт — аналогичен статическому, но `sendFormWebhook` отправляет POST на `/api/form-webhook` вместо прямого GET на вебхук. Разница: URL вебхука скрыт на сервере.
 
@@ -94,10 +94,10 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 Необходимо создать:
 
 1. **Утилита `src/utils/webhook.ts`** — содержит:
-   - Функцию `emitFormSuccess(detail)` — принимает `{ form_id, phone, answers?, gift?, step? }` и диспатчит CustomEvent на window
-   - Приватную функцию `sendWebhook(data)` — собирает контекст (page, referrer, ym_uid, yclid, UTM, device info) и отправляет GET на вебхук. Определяет тип события: `quiz_success` если есть answers, иначе `form_success`
+   - Функцию `emitFormSuccess(detail)` — принимает `{ form_id, phone, answers?, gift? }` и диспатчит CustomEvent на window
+   - Приватную функцию `sendWebhook(data)` — собирает контекст (page как `window.location.href`, referrer, ym_uid, ym_client_id, ga_client_id, yclid, cookies, UTM) и отправляет GET на вебхук с `referrerPolicy: "no-referrer"`
    - Функцию `initWebhookListener()` — подписывается на CustomEvent и вызывает sendWebhook. Возвращает функцию очистки для useEffect
-   - Хелперы: `getYandexUid()` (из куки `_ym_uid`), `getYclid()` (из URL или sessionStorage), `getUtmParams()`, `getDeviceInfo()`, `persistUtm()`
+   - Хелперы: `getYandexUid()` (из куки `_ym_uid`), `getYmClientId()` (из куки `_ym_uid`), `getGaClientId()` (из куки `_ga`), `getYclid()` (из URL или sessionStorage), `getUtmParams()`, `persistUtm()`
 
 2. **Компонент `WebhookListener`** — клиентский React-компонент, монтируется один раз в `layout.tsx`. В useEffect вызывает `initWebhookListener()` и возвращает cleanup. Рендерит null.
 
@@ -107,6 +107,8 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
    - Вызвать `ymGoal(...)` для метрики
    - Вызвать `emitFormSuccess({ form_id: "...", phone })` для вебхука
    - НЕ вызывать emitFormSuccess при ошибках, кликах, начале ввода
+
+5. **Форма ОБЯЗАНА показать состояние успеха** после отправки — сообщение "Заявка отправлена" или аналогичное. Использовать `useState` для `submitted` и рендерить успешный блок. Кнопка отправки должна быть визуально `disabled` пока телефон не валиден.
 
 ## Правила создания форм
 
@@ -131,6 +133,8 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 6. **Вебхук — только при успешной отправке через глобальный слушатель.** Формы НЕ отправляют вебхук напрямую. В статике — глобальный скрипт-перехватчик сам отправляет после валидации. В React — формы вызывают `emitFormSuccess()`, а `WebhookListener` в layout ловит и отправляет. Не отправлять вебхук при: клике на форму, начале ввода, ошибке валидации, промежуточных шагах квиза. Для промежуточных событий используй Яндекс Метрику.
 
 7. **Для кастомных форм** (без стандартного submit) — в HTML: вызвать `window.sendFormWebhook({ form_id, phone, ... })` вручную. В React: вызвать `emitFormSuccess({ form_id, phone, ... })`.
+
+8. **Форма ОБЯЗАНА показать визуальный результат** после успешной отправки. Для React: `const [submitted, setSubmitted] = useState(false)` → `setSubmitted(true)` при отправке → рендер блока "Заявка отправлена". Кнопка submit ОБЯЗАНА быть `disabled` при невалидном телефоне с визуальным различием (например `bg-white/[0.06] text-zinc-600 cursor-not-allowed`).
 
 ## Выбор режима
 
