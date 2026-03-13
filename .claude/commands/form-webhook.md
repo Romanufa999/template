@@ -371,7 +371,13 @@ export async function POST(req: NextRequest) {
 
 ```javascript
 {{ (() => {
-  const d = JSON.parse($json.dannie);
+  let d;
+  try {
+    d = typeof $json.dannie === 'string' ? JSON.parse($json.dannie) : ($json.dannie || {});
+  } catch (e) {
+    return '\u{1F4DE} Новая заявка!\n\n\u{260E}\u{FE0F} Телефон: ' + ($json.phone || 'не указан') + '\n\nДанные: ' + $json.dannie;
+  }
+
   const phone = $json.phone || d.phone || 'не указан';
   const time = d.time
     ? new Date(d.time).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })
@@ -390,16 +396,23 @@ export async function POST(req: NextRequest) {
     message: 'Сообщение', screen: 'Экран', lang: 'Язык',
   };
 
+  const fmt = (v) => {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'object') return JSON.stringify(v);
+    return String(v);
+  };
+
   let msg = '\u{1F4DE} Новая заявка!\n\n';
   msg += (icons.phone || '') + ' Телефон: ' + phone + '\n';
   if (time) msg += (icons.time || '') + ' Время: ' + time + '\n';
   msg += '\n';
 
   for (const [k, v] of Object.entries(d)) {
-    if (!v || skip.includes(k)) continue;
+    const s = fmt(v);
+    if (!s || skip.includes(k)) continue;
     const icon = icons[k] ? icons[k] + ' ' : '';
     const label = labels[k] || k;
-    msg += icon + label + ': ' + v + '\n';
+    msg += icon + label + ': ' + s + '\n';
   }
 
   return msg.trim();
@@ -426,9 +439,21 @@ export async function POST(req: NextRequest) {
 company: ООО Ромашка
 ```
 
+Если приходит вложенный объект, он сериализуется:
+```
+address: {"city":"Москва","street":"Ленина 1"}
+```
+
+### Защита от ошибок
+
+- **`dannie` — не JSON или пустое**: Сообщение всё равно отправится с телефоном и сырыми данными
+- **`dannie` — уже объект (не строка)**: Обрабатывается корректно через проверку `typeof`
+- **Вложенные объекты/массивы**: Сериализуются в JSON-строку через `fmt()`
+- **Новые неизвестные поля**: Автоматически выводятся через цикл с ключом как названием
+
 ### Правила
 
-- **Парсинг JSON**: Поле `dannie` хранит JSON-строку — всегда парсить через `JSON.parse()`
+- **Парсинг JSON**: Поле `dannie` может быть строкой или объектом — обработка через `try/catch` + `typeof`
 - **Телефон**: Приоритет — `$json.phone`, затем `d.phone` из JSON
 - **Время**: Конвертировать ISO 8601 в читаемый формат с московским часовым поясом
 - **Иконки**: Ставятся только для известных полей (phone, name, email, page и т.д.). Неизвестные поля выводятся без иконки, с ключом как названием
