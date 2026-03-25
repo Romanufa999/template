@@ -36,39 +36,3 @@ template/
 | yandex-metrica | Отслеживание событий форм/квизов в Яндекс Метрике (параметры визита, посетителя, цели) | [.claude/commands/yandex-metrica.md](.claude/commands/yandex-metrica.md) |
 | cms | CMS — создание системы управления контентом сайта (схема в Supabase, админ-панель, загрузка файлов) | [.claude/commands/cms.md](.claude/commands/cms.md) |
 | skill-creator | Создание, редактирование и улучшение навыков (skills) для Claude Code | [.claude/commands/skill-creator.md](.claude/commands/skill-creator.md) |
-
-## Конфигурация агентов и производительности
-
-Параметры настроены в `.claude/settings.json` (коммитится) и `.claude/settings.local.json` (gitignored, содержит секреты).
-
-### Переменные окружения (env vars) для сессии
-
-Устанавливай при запуске сессии в claude.ai/code → Settings:
-
-```
-CLAUDE_CODE_EFFORT_LEVEL=high
-CLAUDE_CODE_MAX_OUTPUT_TOKENS=128000
-CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=true
-MAX_THINKING_TOKENS=65000
-MAX_MCP_OUTPUT_TOKENS=50000
-BASH_DEFAULT_TIMEOUT_MS=300000
-BASH_MAX_TIMEOUT_MS=600000
-MCP_TOOL_TIMEOUT=120000
-CLAUDE_AUTO_BACKGROUND_TASKS=true
-CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=90
-```
-
-### Что делает каждый параметр
-
-| Параметр | Значение | Описание |
-|----------|----------|----------|
-| `CLAUDE_CODE_EFFORT_LEVEL` | `high` | Глубина рассуждений — максимально детальный анализ |
-| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | `128000` | Макс. длина ответа (128K токенов) |
-| `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | `true` | Включает команды агентов (субагенты) |
-| `MAX_THINKING_TOKENS` | `65000` | Бюджет extended thinking (рассуждения перед ответом) |
-| `MAX_MCP_OUTPUT_TOKENS` | `50000` | Макс. объём ответа от MCP-инструментов (Supabase, GitHub) |
-| `BASH_DEFAULT_TIMEOUT_MS` | `300000` | Таймаут bash-команд по умолчанию (5 мин) |
-| `BASH_MAX_TIMEOUT_MS` | `600000` | Максимальный таймаут bash (10 мин) |
-| `MCP_TOOL_TIMEOUT` | `120000` | Таймаут MCP-инструментов (2 мин) |
-| `CLAUDE_AUTO_BACKGROUND_TASKS` | `true` | Фоновые задачи агентов |
-| `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | `90` | Компактация контекста при 90% заполнения (позже = больше контекста) |
