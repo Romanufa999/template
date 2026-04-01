@@ -22,17 +22,29 @@ template/
 
 - Никогда не добавляй сгенерированные страницы, HTML-файлы, секции и прочие артефакты в этот репозиторий. Все генерируемые сайты собираются во временных директориях (например `/tmp/`) и деплоятся на S3.
 - **Тип сборки обязателен.** У каждого сайта/проекта должно быть явно указано: это **статичная сборка (static export)** или **серверный рендеринг (SSR)**. Если не указано — **уточни у пользователя** и зафиксируй в CLAUDE.md проекта.
+- **SVG ВСЕГДА в отдельные компоненты.** В каждом проекте создаётся папка `components/svg/` для SVG-компонентов. Любой SVG (иконка, анимация, декор, фон) — это отдельный файл-компонент в `components/svg/`, который затем импортируется. Inline SVG в секциях и других компонентах запрещён. Это правило ОБЯЗАТЕЛЬНО фиксировать в CLAUDE.md каждого нового проекта.
+- **Психология интерфейсов и микровзаимодействия обязательны.** Каждый лэндинг ДОЛЖЕН применять принципы из навыка `ui-psychology`: модель Hook (триггер→действие→награда→инвестиция), «сочные» микровзаимодействия (spring hover, press depth, particle burst), удержание внимания между секциями (staggered entrance, pattern interruption, визуальные связи), игровые механики (прогресс, коллекционирование, разблокировка) и конверсионная психология форм (foot-in-the-door, glow-награды, pulse при входе в viewport). При создании/редактировании лэндинга — **читать навык ui-psychology** и следовать чеклисту.
 - **Layout обязателен.** Каждый сайт ДОЛЖЕН иметь корневой layout (`layout.tsx` для Next.js, или общий HTML-шаблон для статики). В layout размещаются глобальные компоненты: аналитика (Яндекс Метрика), `WebhookListener`, `UtmPersist`, виджет обратного звонка и т.д. Без layout глобальный перехват форм и аналитика не будут работать.
 
-## Навыки (Skills)
+## Навыки (Skills) — Supabase
 
-Список доступных навыков. При необходимости используй их автоматически, без команды от пользователя.
+Навыки хранятся в **Supabase** (project: `sugbffcgdjwekktzavra`, таблица `skills` + `sub_skills`).
 
-| Навык | Описание | Файл |
-|-------|----------|------|
-| imagegen | Генерация изображений для сайта через webhook n8n | [.claude/commands/imagegen.md](.claude/commands/imagegen.md) |
-| s3-deploy | Загрузка сайтов (HTML/CSS/JS) на S3 Beget + регистрация в Supabase | [.claude/commands/s3-deploy.md](.claude/commands/s3-deploy.md) |
-| form-webhook | Перехват форм и отправка данных на вебхук (статика: GET с клиента, SSR: серверная функция) | [.claude/commands/form-webhook.md](.claude/commands/form-webhook.md) |
-| yandex-metrica | Отслеживание событий форм/квизов в Яндекс Метрике (параметры визита, посетителя, цели) | [.claude/commands/yandex-metrica.md](.claude/commands/yandex-metrica.md) |
-| cms | CMS — создание системы управления контентом сайта (схема в Supabase, админ-панель, загрузка файлов) | [.claude/commands/cms.md](.claude/commands/cms.md) |
-| skill-creator | Создание, редактирование и улучшение навыков (skills) для Claude Code | [.claude/commands/skill-creator.md](.claude/commands/skill-creator.md) |
+**ОБЯЗАТЕЛЬНО при каждом запросе:**
+1. Прочитать список скиллов: `SELECT name, description FROM skills WHERE status = 'active'`
+2. Если описание скилла подходит под задачу — **прочитать полную инструкцию**: `SELECT instruction, scripts, ref_docs FROM skills WHERE name = '...'`
+3. Проверить суб-скиллы: `SELECT name, description, instruction FROM sub_skills WHERE skill_id = '...' AND status = 'active' ORDER BY sort_order`
+4. Следовать инструкции скилла при выполнении задачи
+
+Локальные копии навыков в `.claude/commands/` могут быть устаревшими — **Supabase является источником истины**.
+
+### Когда читать скиллы автоматически (без запроса пользователя):
+- Создание/редактирование лэндинга → `interaction-design`, `ui-psychology`, `form-webhook`, `yandex-metrica`
+- Деплой на S3 → `s3-deploy`
+- Генерация изображений → `imagegen`
+- Создание CMS → `cms`
+- Создание нового скилла → `skill-creator`
+- Настройка Tailwind/shadcn → `tailwind-v4-shadcn`
+- SEO/schema → `schema-markup`
+- Работа с MySQL → `mysql-db`
+- ТЗ на сайт → `website-techspec`
