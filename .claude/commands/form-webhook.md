@@ -27,7 +27,8 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 | ym_client_id | да | Yandex Metrika Client ID (из куки `_ym_uid`) |
 | ga_client_id | да | Google Analytics Client ID (из куки `_ga`, последние два сегмента) |
 | yclid | да | Yandex Direct Click ID (из URL `?yclid=` или sessionStorage) |
-| cookies | да | Все куки страницы (`document.cookie`) |
+| _ym_uid | да | Yandex Metrika cookie `_ym_uid` (только аналитическая cookie, НЕ весь `document.cookie`) |
+| _ga | да | Google Analytics cookie `_ga` (только аналитическая cookie) |
 | utm_source | нет | UTM-метка source |
 | utm_medium | нет | UTM-метка medium |
 | utm_campaign | нет | UTM-метка campaign |
@@ -95,7 +96,7 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
 
 1. **Утилита `src/utils/webhook.ts`** — содержит:
    - Функцию `emitFormSuccess(detail)` — принимает `{ form_id, phone, answers?, gift? }` и диспатчит CustomEvent на window
-   - Приватную функцию `sendWebhook(data)` — собирает контекст (page как `window.location.href`, referrer, ym_uid, ym_client_id, ga_client_id, yclid, cookies, UTM) и отправляет GET на вебхук с `referrerPolicy: "no-referrer"`
+   - Приватную функцию `sendWebhook(data)` — собирает контекст (page как `window.location.href`, referrer, ym_uid, ym_client_id, ga_client_id, yclid, _ym_uid, _ga, UTM) и отправляет GET на вебхук с `referrerPolicy: "no-referrer"`. **НЕ отправлять `document.cookie` целиком** — только конкретные аналитические куки (`_ym_uid`, `_ga`)
    - Функцию `initWebhookListener()` — подписывается на CustomEvent и вызывает sendWebhook. Возвращает функцию очистки для useEffect
    - Хелперы: `getYandexUid()` (из куки `_ym_uid`), `getYmClientId()` (из куки `_ym_uid`), `getGaClientId()` (из куки `_ga`), `getYclid()` (из URL или sessionStorage), `getUtmParams()`, `persistUtm()`
 
@@ -118,13 +119,15 @@ GET https://gadugestok.beget.app/webhook/7f5337f3-d08d-4070-b539-7dabad4866ff
    - Атрибут `type="tel"` и `name="phone"`
    - Значение по умолчанию `+7` — поле всегда предзаполнено
    - Placeholder: `+7 (___) ___-__-__`
-   - Валидация на российский номер
+   - `aria-label="Номер телефона"` — для доступности (screen readers)
+   - `autocomplete="tel"` — для автозаполнения браузером
+   - Валидация на российский номер (ровно 11 цифр, начинается с 7 или 8)
 
 3. **Валидация российского номера телефона** — проверяется перед отправкой. Допустимые форматы:
    - `+7XXXXXXXXXX` (11 цифр после +)
    - `+7 (XXX) XXX-XX-XX` (с пробелами, скобками, дефисами)
    - `8XXXXXXXXXX` (начиная с 8)
-   - Минимум 11 цифр. Если валидация не прошла — форма не отправляется, вебхук не уходит.
+   - Ровно 11 цифр. Если валидация не прошла — форма не отправляется, вебхук не уходит.
 
 4. **Остальные поля формы должны иметь атрибут `name`** — именно по нему данные попадут в вебхук (для HTML). Для React — все данные передаются через объект в emitFormSuccess.
 
