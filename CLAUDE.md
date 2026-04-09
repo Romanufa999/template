@@ -29,7 +29,7 @@ template/
 
   **Схема работы:**
   1. В `prebuild` генерится уникальный `BUILD_ID` (таймштамп + git sha) и пишется в `public/version.json` + `.env.production.local` как `NEXT_PUBLIC_BUILD_ID`. Next.js инлайнит эту переменную прямо в JS-бандл на сборке.
-  2. Клиентский компонент `VersionChecker`, примонтированный в root layout, раз в 2 минуты (и при `visibilitychange` / `focus`) дёргает `/version.json` с `cache: 'no-store'` и сравнивает `buildId` из ответа с `process.env.NEXT_PUBLIC_BUILD_ID`. При рассинхроне → `window.location.reload()`.
+  2. Клиентский компонент `VersionChecker`, примонтированный в root layout, дёргает `/version.json` с `cache: 'no-store'` **сразу при загрузке страницы** (главный кейс: посетитель зашёл на закешированный HTML) и **при возврате на вкладку** / фокусе окна (`visibilitychange`, `focus` — кейс: вкладка была открыта во время деплоя). Сравнивает `buildId` из ответа с `process.env.NEXT_PUBLIC_BUILD_ID`. При рассинхроне → `window.location.reload()`. Без polling — оба реальных кейса покрыты двумя этими триггерами.
   3. Защита от reload-loop — `sessionStorage`, не чаще раза в 60 секунд.
   4. В `<head>` layout.tsx добавить `<meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />` как подстраховку для HTML.
   5. `public/version.json` и `.env*.local` → в `.gitignore`.
@@ -81,53 +81,51 @@ template/
 
   ```tsx
   "use client";
-  import { useEffect, useRef } from "react";
+  import { useEffect } from "react";
 
   const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID;
-  const POLL_INTERVAL_MS = 2 * 60 * 1000;
-  const INITIAL_DELAY_MS = 5 * 1000;
   const RELOAD_GUARD_KEY = "version-reload-ts";
   const RELOAD_COOLDOWN_MS = 60 * 1000;
 
   export default function VersionChecker() {
-    const checkingRef = useRef(false);
     useEffect(() => {
       if (!BUILD_ID) return;
       let cancelled = false;
-      let timer: ReturnType<typeof setTimeout> | null = null;
 
       async function check() {
-        if (checkingRef.current || cancelled) return;
-        checkingRef.current = true;
+        if (cancelled) return;
         try {
           const res = await fetch(`/version.json?t=${Date.now()}`, {
-            cache: "no-store", headers: { "Cache-Control": "no-cache" },
+            cache: "no-store",
+            headers: { "Cache-Control": "no-cache" },
           });
           if (!res.ok || cancelled) return;
           const data = (await res.json()) as { buildId?: string };
           if (cancelled || !data.buildId || data.buildId === BUILD_ID) return;
+
           let last = 0;
           try { last = Number(sessionStorage.getItem(RELOAD_GUARD_KEY) || "0"); } catch {}
           if (Date.now() - last < RELOAD_COOLDOWN_MS) return;
           try { sessionStorage.setItem(RELOAD_GUARD_KEY, String(Date.now())); } catch {}
+
           window.location.reload();
-        } catch {} finally { checkingRef.current = false; }
+        } catch {
+          // network errors are fine — next visibility change will retry
+        }
       }
 
-      function schedule() {
-        if (cancelled) return;
-        timer = setTimeout(async () => { await check(); schedule(); }, POLL_INTERVAL_MS);
-      }
+      // 1) Check immediately on first page load.
+      check();
+
+      // 2) Re-check when the tab becomes visible / window regains focus.
       function onVisible() {
         if (document.visibilityState === "visible") check();
       }
-
-      timer = setTimeout(() => { check().finally(schedule); }, INITIAL_DELAY_MS);
       document.addEventListener("visibilitychange", onVisible);
       window.addEventListener("focus", onVisible);
+
       return () => {
         cancelled = true;
-        if (timer) clearTimeout(timer);
         document.removeEventListener("visibilitychange", onVisible);
         window.removeEventListener("focus", onVisible);
       };
