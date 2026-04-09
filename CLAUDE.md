@@ -25,15 +25,118 @@ template/
 - **SVG ВСЕГДА в отдельные компоненты.** В каждом проекте создаётся папка `components/svg/` для SVG-компонентов. Любой SVG (иконка, анимация, декор, фон) — это отдельный файл-компонент в `components/svg/`, который затем импортируется. Inline SVG в секциях и других компонентах запрещён. Это правило ОБЯЗАТЕЛЬНО фиксировать в CLAUDE.md каждого нового проекта.
 - **Психология интерфейсов и микровзаимодействия обязательны.** Каждый лэндинг ДОЛЖЕН применять принципы из навыка `ui-psychology`: модель Hook (триггер→действие→награда→инвестиция), «сочные» микровзаимодействия (spring hover, press depth, particle burst), удержание внимания между секциями (staggered entrance, pattern interruption, визуальные связи), игровые механики (прогресс, коллекционирование, разблокировка) и конверсионная психология форм (foot-in-the-door, glow-награды, pulse при входе в viewport). При создании/редактировании лэндинга — **читать навык ui-psychology** и следовать чеклисту.
 - **Layout обязателен.** Каждый сайт ДОЛЖЕН иметь корневой layout (`layout.tsx` для Next.js, или общий HTML-шаблон для статики). В layout размещаются глобальные компоненты: аналитика (Яндекс Метрика), `WebhookListener`, `UtmPersist`, виджет обратного звонка и т.д. Без layout глобальный перехват форм и аналитика не будут работать.
-- **Cache-busting обязателен.** После нового деплоя у посетителей, у которых вкладка была открыта или HTML/JS закеширован, возникают ошибки из-за несовпадения версий. Каждый сайт ДОЛЖЕН реализовать автоматический механизм сброса старого кеша:
-  1. **`BUILD_ID`** генерится в prebuild (скрипт `scripts/generate-build-info.mjs`): таймштамп + git sha.
-  2. Пишется в два места: `public/version.json` (будет отдаваться как `/version.json`) и `.env.production.local` → `NEXT_PUBLIC_BUILD_ID` (инлайнится Next.js в JS-бандл).
-  3. **Клиентский компонент `VersionChecker`** в `src/components/ui/VersionChecker.tsx` подключается в root layout. Раз в 2 минуты (и при `visibilitychange` / `focus`) дергает `/version.json` с `cache: 'no-store'`, сравнивает `buildId` из ответа с `process.env.NEXT_PUBLIC_BUILD_ID`. Если отличается → `window.location.reload()`. Защита от циклов — через `sessionStorage`, не чаще раза в 60 секунд.
-  4. В `<head>` layout.tsx — мета-теги: `<meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />` (подстраховка для HTML).
-  5. `public/version.json` и `.env*.local` — в `.gitignore`.
-  6. На уровне хостинга/nginx (если есть доступ): `/_next/static/**` → `Cache-Control: public, max-age=31536000, immutable`; `/version.json` → `no-store`; `*.html` → `no-cache, no-store, must-revalidate`.
-  
-  Эталонная реализация: `romanufa999/stroymsk1` (`scripts/generate-build-info.mjs`, `src/components/ui/VersionChecker.tsx`, прописано в `CLAUDE.md`). Копировать этот паттерн во все новые Next.js проекты.
+- **Cache-busting обязателен.** После нового деплоя у посетителей с открытыми вкладками или закешированным HTML/JS возникают ошибки из-за несовпадения версий бандлов. Каждый Next.js сайт ДОЛЖЕН реализовать автоматический механизм сброса старого кеша по паттерну ниже. Этот раздел самодостаточен — копируй файлы прямо из него, ничего искать не надо.
+
+  **Схема работы:**
+  1. В `prebuild` генерится уникальный `BUILD_ID` (таймштамп + git sha) и пишется в `public/version.json` + `.env.production.local` как `NEXT_PUBLIC_BUILD_ID`. Next.js инлайнит эту переменную прямо в JS-бандл на сборке.
+  2. Клиентский компонент `VersionChecker`, примонтированный в root layout, раз в 2 минуты (и при `visibilitychange` / `focus`) дёргает `/version.json` с `cache: 'no-store'` и сравнивает `buildId` из ответа с `process.env.NEXT_PUBLIC_BUILD_ID`. При рассинхроне → `window.location.reload()`.
+  3. Защита от reload-loop — `sessionStorage`, не чаще раза в 60 секунд.
+  4. В `<head>` layout.tsx добавить `<meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />` как подстраховку для HTML.
+  5. `public/version.json` и `.env*.local` → в `.gitignore`.
+  6. На хостинге/nginx (если есть доступ к конфигу): `/_next/static/**` → `Cache-Control: public, max-age=31536000, immutable`; `/version.json` → `no-store`; `*.html` → `no-cache, no-store, must-revalidate`.
+
+  **Файл 1: `scripts/generate-build-info.mjs`** — подключить в `package.json` → `"prebuild": "... && node scripts/generate-build-info.mjs"`:
+
+  ```js
+  import fs from "fs";
+  import path from "path";
+  import { fileURLToPath } from "url";
+  import { execSync } from "child_process";
+
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const root = path.join(__dirname, "..");
+
+  function getGitSha() {
+    try {
+      return execSync("git rev-parse --short HEAD", {
+        cwd: root, encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
+    } catch { return "nogit"; }
+  }
+
+  const timestamp = Date.now();
+  const buildId = `${timestamp}-${getGitSha()}`;
+  const builtAt = new Date(timestamp).toISOString();
+
+  fs.mkdirSync(path.join(root, "public"), { recursive: true });
+  fs.writeFileSync(
+    path.join(root, "public", "version.json"),
+    JSON.stringify({ buildId, builtAt }, null, 2) + "\n",
+    "utf-8",
+  );
+
+  const envPath = path.join(root, ".env.production.local");
+  let env = "";
+  if (fs.existsSync(envPath)) {
+    env = fs.readFileSync(envPath, "utf-8").split("\n")
+      .filter((l) => l && !l.startsWith("NEXT_PUBLIC_BUILD_ID=")).join("\n");
+    if (env && !env.endsWith("\n")) env += "\n";
+  }
+  env += `NEXT_PUBLIC_BUILD_ID=${buildId}\n`;
+  fs.writeFileSync(envPath, env, "utf-8");
+  console.log(`Build ID: ${buildId} (built at ${builtAt})`);
+  ```
+
+  **Файл 2: `src/components/ui/VersionChecker.tsx`** — примонтировать в body root layout:
+
+  ```tsx
+  "use client";
+  import { useEffect, useRef } from "react";
+
+  const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID;
+  const POLL_INTERVAL_MS = 2 * 60 * 1000;
+  const INITIAL_DELAY_MS = 5 * 1000;
+  const RELOAD_GUARD_KEY = "version-reload-ts";
+  const RELOAD_COOLDOWN_MS = 60 * 1000;
+
+  export default function VersionChecker() {
+    const checkingRef = useRef(false);
+    useEffect(() => {
+      if (!BUILD_ID) return;
+      let cancelled = false;
+      let timer: ReturnType<typeof setTimeout> | null = null;
+
+      async function check() {
+        if (checkingRef.current || cancelled) return;
+        checkingRef.current = true;
+        try {
+          const res = await fetch(`/version.json?t=${Date.now()}`, {
+            cache: "no-store", headers: { "Cache-Control": "no-cache" },
+          });
+          if (!res.ok || cancelled) return;
+          const data = (await res.json()) as { buildId?: string };
+          if (cancelled || !data.buildId || data.buildId === BUILD_ID) return;
+          let last = 0;
+          try { last = Number(sessionStorage.getItem(RELOAD_GUARD_KEY) || "0"); } catch {}
+          if (Date.now() - last < RELOAD_COOLDOWN_MS) return;
+          try { sessionStorage.setItem(RELOAD_GUARD_KEY, String(Date.now())); } catch {}
+          window.location.reload();
+        } catch {} finally { checkingRef.current = false; }
+      }
+
+      function schedule() {
+        if (cancelled) return;
+        timer = setTimeout(async () => { await check(); schedule(); }, POLL_INTERVAL_MS);
+      }
+      function onVisible() {
+        if (document.visibilityState === "visible") check();
+      }
+
+      timer = setTimeout(() => { check().finally(schedule); }, INITIAL_DELAY_MS);
+      document.addEventListener("visibilitychange", onVisible);
+      window.addEventListener("focus", onVisible);
+      return () => {
+        cancelled = true;
+        if (timer) clearTimeout(timer);
+        document.removeEventListener("visibilitychange", onVisible);
+        window.removeEventListener("focus", onVisible);
+      };
+    }, []);
+    return null;
+  }
+  ```
+
+  **В `src/app/layout.tsx`:** импортировать `VersionChecker`, добавить мета-теги в `<head>` и `<VersionChecker />` в `<body>`. В `CLAUDE.md` нового проекта зафиксировать, что cache-busting включён и куда смотреть.
 
 ## Навыки (Skills) — Supabase
 
