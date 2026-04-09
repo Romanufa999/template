@@ -25,6 +25,15 @@ template/
 - **SVG ВСЕГДА в отдельные компоненты.** В каждом проекте создаётся папка `components/svg/` для SVG-компонентов. Любой SVG (иконка, анимация, декор, фон) — это отдельный файл-компонент в `components/svg/`, который затем импортируется. Inline SVG в секциях и других компонентах запрещён. Это правило ОБЯЗАТЕЛЬНО фиксировать в CLAUDE.md каждого нового проекта.
 - **Психология интерфейсов и микровзаимодействия обязательны.** Каждый лэндинг ДОЛЖЕН применять принципы из навыка `ui-psychology`: модель Hook (триггер→действие→награда→инвестиция), «сочные» микровзаимодействия (spring hover, press depth, particle burst), удержание внимания между секциями (staggered entrance, pattern interruption, визуальные связи), игровые механики (прогресс, коллекционирование, разблокировка) и конверсионная психология форм (foot-in-the-door, glow-награды, pulse при входе в viewport). При создании/редактировании лэндинга — **читать навык ui-psychology** и следовать чеклисту.
 - **Layout обязателен.** Каждый сайт ДОЛЖЕН иметь корневой layout (`layout.tsx` для Next.js, или общий HTML-шаблон для статики). В layout размещаются глобальные компоненты: аналитика (Яндекс Метрика), `WebhookListener`, `UtmPersist`, виджет обратного звонка и т.д. Без layout глобальный перехват форм и аналитика не будут работать.
+- **Cache-busting обязателен.** После нового деплоя у посетителей, у которых вкладка была открыта или HTML/JS закеширован, возникают ошибки из-за несовпадения версий. Каждый сайт ДОЛЖЕН реализовать автоматический механизм сброса старого кеша:
+  1. **`BUILD_ID`** генерится в prebuild (скрипт `scripts/generate-build-info.mjs`): таймштамп + git sha.
+  2. Пишется в два места: `public/version.json` (будет отдаваться как `/version.json`) и `.env.production.local` → `NEXT_PUBLIC_BUILD_ID` (инлайнится Next.js в JS-бандл).
+  3. **Клиентский компонент `VersionChecker`** в `src/components/ui/VersionChecker.tsx` подключается в root layout. Раз в 2 минуты (и при `visibilitychange` / `focus`) дергает `/version.json` с `cache: 'no-store'`, сравнивает `buildId` из ответа с `process.env.NEXT_PUBLIC_BUILD_ID`. Если отличается → `window.location.reload()`. Защита от циклов — через `sessionStorage`, не чаще раза в 60 секунд.
+  4. В `<head>` layout.tsx — мета-теги: `<meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />` (подстраховка для HTML).
+  5. `public/version.json` и `.env*.local` — в `.gitignore`.
+  6. На уровне хостинга/nginx (если есть доступ): `/_next/static/**` → `Cache-Control: public, max-age=31536000, immutable`; `/version.json` → `no-store`; `*.html` → `no-cache, no-store, must-revalidate`.
+  
+  Эталонная реализация: `romanufa999/stroymsk1` (`scripts/generate-build-info.mjs`, `src/components/ui/VersionChecker.tsx`, прописано в `CLAUDE.md`). Копировать этот паттерн во все новые Next.js проекты.
 
 ## Навыки (Skills) — Supabase
 
