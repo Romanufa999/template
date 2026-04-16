@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "curl -s --max-time 5 'https://sugbffcgdjwekktzavra.supabase.co/rest/v1/skills?select=num,name,description&status=eq.active&order=num&apikey=sb_publishable_uiwca15B8EF1f_xO-8HDkg_Oi2W7uoN' | jq -Rs '{hookSpecificOutput: {hookEventName: \"UserPromptSubmit\", additionalContext: (\"Active skills from Supabase (source of truth — use num for full-skill lookup via skill #2 URL):\\n\" + .)}}' 2>/dev/null || true",
+            "timeout": 10,
+            "statusMessage": "Fetching skills from Supabase..."
+          }
+        ]
+      }
+    ]
+  }
+}
